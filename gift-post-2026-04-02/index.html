@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Gift Post — Issue 14 · Vol. 2026</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f5f5f0; font-family: Georgia, 'Times New Roman', serif; color: #222; line-height: 1.6; }
+  a { color: #53A318; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .container { max-width: 860px; margin: 32px auto; background: #fff; box-shadow: 0 2px 20px rgba(0,0,0,0.12); }
+
+  /* Ribbon */
+  .ribbon { background: #53A318; color: #fff; text-align: center; padding: 8px 20px; font-family: system-ui, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+
+  /* Masthead */
+  .masthead { text-align: center; padding: 28px 40px 18px; border-bottom: 3px solid #53A318; }
+  .masthead h1 { font-size: 56px; font-weight: 900; letter-spacing: -1px; color: #111; line-height: 1; }
+  .masthead .tagline { font-size: 11px; font-family: system-ui, sans-serif; letter-spacing: 3px; text-transform: uppercase; color: #888; margin-top: 4px; }
+  .masthead .meta { font-size: 12px; font-family: system-ui, sans-serif; color: #555; margin-top: 10px; border-top: 1px solid #e0e0e0; padding-top: 10px; }
+  .masthead .meta a { color: #53A318; font-weight: 600; }
+
+  /* Front Page */
+  .front-page { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid #53A318; }
+  .front-col { padding: 18px 24px; }
+  .front-col:first-child { border-right: 1px solid #e0e0e0; }
+  .front-col h3 { font-family: system-ui, sans-serif; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #53A318; margin-bottom: 10px; }
+  .front-col ul { list-style: none; }
+  .front-col ul li { font-size: 13px; padding: 5px 0; border-bottom: 1px dotted #ddd; line-height: 1.4; }
+  .front-col ul li:last-child { border-bottom: none; }
+  .front-col ul li a { color: #111; font-weight: 600; }
+  .front-col ul li a:hover { color: #53A318; }
+  .lbl { display: inline-block; font-size: 10px; font-family: system-ui, sans-serif; color: #fff; padding: 1px 5px; border-radius: 2px; margin-right: 5px; font-weight: 700; vertical-align: middle; }
+  .lbl-green  { background: #53A318; }
+  .lbl-orange { background: #f59e0b; }
+  .lbl-blue   { background: #3b82f6; }
+  .lbl-red    { background: #dc2626; }
+
+  /* Stat Boxes */
+  .stat-boxes { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 2px solid #53A318; }
+  .stat-box { padding: 18px 16px; text-align: center; border-right: 1px solid #e0e0e0; }
+  .stat-box:last-child { border-right: none; }
+  .stat-label { font-family: system-ui, sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #888; margin-bottom: 6px; }
+  .stat-value { font-size: 28px; font-weight: 900; color: #53A318; line-height: 1; }
+  .stat-value.amber { color: #d97706; }
+  .stat-sub { font-family: system-ui, sans-serif; font-size: 11px; color: #888; margin-top: 4px; }
+
+  /* Section label */
+  .section-label { font-family: system-ui, sans-serif; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2.5px; color: #53A318; padding: 14px 32px 0; }
+
+  /* Lead Story */
+  .lead-story { padding: 20px 32px 24px; border-bottom: 2px solid #53A318; border-left: 5px solid #53A318; }
+  .lead-category { font-family: system-ui, sans-serif; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #53A318; margin-bottom: 8px; }
+  .lead-story h2 { font-size: 25px; font-weight: 900; line-height: 1.25; color: #111; margin-bottom: 14px; }
+  .lead-story p { font-size: 14px; line-height: 1.78; color: #333; margin-bottom: 10px; }
+  .lead-story p:last-of-type { margin-bottom: 0; }
+  .source-line { font-family: system-ui, sans-serif; font-size: 11px; color: #999; margin-top: 10px; }
+
+  /* Scoreboard */
+  .scoreboard { padding: 20px 32px; border-bottom: 2px solid #53A318; }
+  .scoreboard table { width: 100%; border-collapse: collapse; font-family: system-ui, sans-serif; font-size: 13px; }
+  .scoreboard th { background: #53A318; color: #fff; padding: 8px 10px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .scoreboard th:not(:first-child) { text-align: right; }
+  .scoreboard td { padding: 8px 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
+  .scoreboard td:not(:first-child) { text-align: right; }
+  .scoreboard tr:nth-child(even) td { background: #fafafa; }
+  .scoreboard tr.peak td { background: #fff8e6; font-weight: 600; }
+  .rate-good { color: #53A318; font-weight: 700; }
+  .rate-mid  { color: #d97706; font-weight: 700; }
+  .rate-low  { color: #dc2626; font-weight: 700; }
+  .legend { font-size: 11px; color: #777; margin-top: 10px; font-family: system-ui, sans-serif; line-height: 1.7; }
+
+  /* News Room */
+  .newsroom { padding: 20px 32px; border-bottom: 2px solid #53A318; }
+  .news-item { padding: 14px 0; border-bottom: 1px solid #eee; }
+  .news-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .news-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; vertical-align: middle; flex-shrink: 0; }
+  .nd-green  { background: #53A318; }
+  .nd-orange { background: #f59e0b; }
+  .nd-blue   { background: #3b82f6; }
+  .news-item h3 { font-size: 16px; font-weight: 800; color: #111; margin-bottom: 8px; line-height: 1.35; }
+  .news-item p { font-size: 13.5px; line-height: 1.75; color: #444; }
+  .news-source { font-family: system-ui, sans-serif; font-size: 11px; color: #999; margin-top: 8px; }
+
+  /* Pull Quote */
+  .pull-quote { padding: 28px 64px; text-align: center; border-bottom: 2px solid #53A318; background: #f8fff4; }
+  .open-quote { font-size: 72px; color: #53A318; line-height: 0.5; display: block; margin-bottom: 12px; font-family: Georgia, serif; }
+  .pull-quote blockquote { font-size: 19px; font-style: italic; color: #333; line-height: 1.55; font-family: Georgia, serif; }
+  .pull-quote cite { display: block; font-size: 12px; font-family: system-ui, sans-serif; color: #888; margin-top: 12px; font-style: normal; }
+
+  /* Industry News */
+  .industry { padding: 20px 32px; border-bottom: 2px solid #53A318; }
+  .industry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .industry-item { background: #f9f9f7; border-top: 3px solid #53A318; padding: 14px; }
+  .industry-source { font-family: system-ui, sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-bottom: 6px; }
+  .industry-item h4 { font-size: 13px; font-weight: 800; color: #111; margin-bottom: 7px; line-height: 1.35; }
+  .industry-item p { font-size: 12px; line-height: 1.65; color: #555; margin-bottom: 8px; }
+  .industry-item .read-more { font-family: system-ui, sans-serif; font-size: 11px; font-weight: 600; color: #53A318; }
+
+  /* Footer */
+  .footer { display: grid; grid-template-columns: 1fr 1fr; padding: 18px 32px; background: #f5f5f0; border-top: 2px solid #53A318; }
+  .footer-left  { font-family: system-ui, sans-serif; font-size: 11px; color: #777; line-height: 1.8; }
+  .footer-right { font-family: system-ui, sans-serif; font-size: 11px; color: #777; text-align: right; line-height: 1.8; }
+  .footer strong { color: #333; }
+
+  @media (max-width: 680px) {
+    .front-page, .stat-boxes, .industry-grid, .footer { grid-template-columns: 1fr; }
+    .masthead h1 { font-size: 38px; }
+    .pull-quote { padding: 20px 28px; }
+    .footer-right { text-align: left; margin-top: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- RIBBON -->
+  <div class="ribbon">GROUPON GIFTING &nbsp;·&nbsp; INTERNAL BUSINESS INTELLIGENCE &nbsp;·&nbsp; CONFIDENTIAL</div>
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="tagline">The Intelligence Brief for Groupon Gifting Leadership</div>
+    <h1>The Gift Post</h1>
+    <div class="meta">
+      <strong>Thursday, April 2, 2026</strong> &nbsp;·&nbsp; Issue No. 14 &nbsp;·&nbsp; Volume 2026
+      &nbsp;&nbsp;
+      <a href="https://app.asana.com/1/8437193015852/project/1211705895865941" target="_blank">Gifting 2026 ↗</a>
+      &nbsp;·&nbsp;
+      <a href="https://app.asana.com/1/8437193015852/project/1213736809253422" target="_blank">Gifting Intelligence ↗</a>
+      &nbsp;·&nbsp;
+      <a href="https://connection.groupon.keboola.cloud/admin/projects/40/data-apps/01km2rmyw7cgdk25wq227sgr22" target="_blank">Supply Dashboard ↗</a>
+    </div>
+  </div>
+
+  <!-- FRONT PAGE BULLETS -->
+  <div class="front-page">
+    <div class="front-col">
+      <h3>🎯 Initiative Headlines</h3>
+      <ul>
+        <li><span class="lbl lbl-green">SUPPLY</span> <a href="https://app.asana.com/1/8437193015852/project/1211705895865941/task/1211835035677693" target="_blank">20,000+ adventure deals now giftable — Germany back after 3-year pause</a></li>
+        <li><span class="lbl lbl-orange">SUPPLY</span> <a href="https://app.asana.com/1/8437193015852/project/1211705895865941/task/1213699745373638" target="_blank">2,582 deals with fine print errors identified — 368 could open for gifting immediately</a></li>
+        <li><span class="lbl lbl-blue">DISTRIB</span> <a href="https://app.asana.com/1/8437193015852/project/1209535662291313/task/1210067057440484" target="_blank">EU gift card distribution: one contract clause away from launch</a></li>
+      </ul>
+    </div>
+    <div class="front-col">
+      <h3>📊 Metrics Headlines</h3>
+      <ul>
+        <li><span class="lbl lbl-orange">RATE</span> March gift rate 10.6% — first month below 11% since October 2025</li>
+        <li><span class="lbl lbl-green">SUPPLY</span> $1.1M supply gap mapped across 479 category/market combinations</li>
+        <li><span class="lbl lbl-red">ALERT</span> Gifting tag data feed failed April 1 — tag data may be stale</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAT BOXES -->
+  <div class="stat-boxes">
+    <div class="stat-box">
+      <div class="stat-label">Gift Orders<br><small style="font-size:9px;font-family:system-ui">March 2026</small></div>
+      <div class="stat-value">239K</div>
+      <div class="stat-sub">vs 261K in January</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Gift Rate<br><small style="font-size:9px;font-family:system-ui">March 2026</small></div>
+      <div class="stat-value amber">10.6%</div>
+      <div class="stat-sub">🟡 First dip below 11% since Oct</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Gift Margin<br><small style="font-size:9px;font-family:system-ui">March 2026</small></div>
+      <div class="stat-value">$3.6M</div>
+      <div class="stat-sub">vs $3.96M Feb · $11.9M Dec peak</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">3PIP Giftable Deals<br><small style="font-size:9px;font-family:system-ui">This week's milestone</small></div>
+      <div class="stat-value">80%</div>
+      <div class="stat-sub">↑ from 19% — see lead story</div>
+    </div>
+  </div>
+
+  <!-- LEAD STORY -->
+  <div class="section-label">LEAD STORY</div>
+  <div class="lead-story">
+    <div class="lead-category">🚀 Supply · Giftable Inventory</div>
+    <h2>Over 20,000 Adventure Deals Now Available as Gifts — And Germany Is Back After Three Years</h2>
+    <p>For most of Groupon's history, the majority of third-party activity and experience deals — Viator tours, outdoor adventures, attraction tickets — could not be sent as gifts. A buyer who wanted to give a skydiving experience or a city walking tour had no way to do it through Groupon. That changed this week. Following a series of discussions with the Viator partnership team, Groupon confirmed that these experiences can be gifted without any issues at check-in. The result: over 20,000 adventure and outdoor activity deals are now enabled for gifting for the first time.</p>
+    <p>In the same week, Germany was cleared for re-enablement. Germany had been excluded from this category since 2023 — a legacy restriction that legal reviewed and confirmed is no longer needed. Engineering has the green light to enable German deals, with no operational changes required for merchants. Germany's top supply gap — thermal baths — is the single highest-opportunity category in any international market at an estimated $25,000 in additional annual margin at conservative improvement scenarios.</p>
+    <p>The main challenge ahead: buyers who select "send as a gift" on these experience deals are completing their purchase only about half as often as on regular Groupon deals. Understanding and improving that checkout experience is the next priority for the team.</p>
+    <div class="source-line">Source: Asana · <a href="https://app.asana.com/1/8437193015852/project/1211705895865941/task/1211835035677693" target="_blank">3PIP deals giftable — $1.5M M1+VFM</a> · GI Logs March 23–27, 2026</div>
+  </div>
+
+  <!-- SCOREBOARD -->
+  <div class="section-label">MONTHLY SCOREBOARD</div>
+  <div class="scoreboard">
+    <table>
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>Gift Orders</th>
+          <th>Gift Rate</th>
+          <th>Gift Margin</th>
+          <th>New Buyers</th>
+          <th>Returning Buyers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Mar 2026</strong></td>
+          <td>239,092</td>
+          <td class="rate-mid">10.58% 🟡</td>
+          <td>$3,595,817</td>
+          <td>53,713</td>
+          <td>60,843</td>
+        </tr>
+        <tr>
+          <td><strong>Feb 2026</strong></td>
+          <td>250,744</td>
+          <td class="rate-good">12.02% 🟢</td>
+          <td>$3,961,701</td>
+          <td>56,517</td>
+          <td>62,452</td>
+        </tr>
+        <tr>
+          <td><strong>Jan 2026</strong></td>
+          <td>260,946</td>
+          <td class="rate-good">12.03% 🟢</td>
+          <td>$3,858,194</td>
+          <td>55,323</td>
+          <td>63,370</td>
+        </tr>
+        <tr class="peak">
+          <td><strong>Dec 2025</strong> &nbsp;<small style="font-family:system-ui;font-size:10px;color:#888">Peak season</small></td>
+          <td>699,849</td>
+          <td class="rate-good">22.18% 🟢</td>
+          <td>$11,859,480 ⭐</td>
+          <td>145,628</td>
+          <td>187,251</td>
+        </tr>
+        <tr>
+          <td><strong>Nov 2025</strong></td>
+          <td>331,565</td>
+          <td class="rate-good">12.13% 🟢</td>
+          <td>$4,844,323</td>
+          <td>63,167</td>
+          <td>82,261</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="legend">
+      <strong>Gift Rate</strong> = gift orders as a percentage of all orders placed on Groupon. &nbsp;|&nbsp;
+      🟢 ≥11% (on target) &nbsp;·&nbsp; 🟡 10–11% (watch) &nbsp;·&nbsp; 🔴 &lt;10% (below target) &nbsp;·&nbsp; ⭐ highest margin month<br>
+      <em>New Buyers</em> = customers gifting for the first time · <em>Returning Buyers</em> = customers who have gifted before<br>
+      Source: Keboola · Gifting metrics data warehouse · Queried April 2, 2026
+    </div>
+  </div>
+
+  <!-- NEWS ROOM -->
+  <div class="section-label">NEWS ROOM</div>
+  <div class="newsroom">
+
+    <div class="news-item">
+      <h3><span class="news-dot nd-orange"></span>2,582 Deals Have a Fine Print Problem — 368 Could Be Opened for Gifts Right Now</h3>
+      <p>A full scan of the live deal catalog turned up two issues. First: 368 deals that are currently blocked from gifting contain language in their terms suggesting the voucher can be used by anyone — these could be enabled immediately. Second: 2,214 deals that ARE set up for gifting contain "non-transferable" language in their fine print, meaning a merchant could technically use it to refuse a gift voucher. The next step is agreeing across Sales, Legal, and the catalog team on who corrects these and how — starting with the highest-revenue deals first.</p>
+      <div class="news-source">Source: Asana · <a href="https://app.asana.com/1/8437193015852/project/1211705895865941/task/1213699745373638" target="_blank">Gifting supply gaps</a> · GI Log March 23, 2026</div>
+    </div>
+
+    <div class="news-item">
+      <h3><span class="news-dot nd-green"></span>$1.1M Opportunity Mapped Across 479 Category/Market Gaps — Scoring System Next</h3>
+      <p>The gifting opportunity analysis is complete: 479 high-priority combinations of deal category and market where gift sales fall significantly below what the same category achieves elsewhere. At a conservative 15% improvement, the incremental annual margin is $1.1M. The next step — currently being designed — combines this opportunity map with a deal quality scoring system to produce a ranked action list showing which specific deals to fix first and in what order. Once ready, the output goes to Sales and Supply for prioritization discussions.</p>
+      <div class="news-source">Source: Asana · <a href="https://app.asana.com/1/8437193015852/project/1211705895865941/task/1213699745373638" target="_blank">Gifting supply gaps — $1.1M M1+VFM</a> · GI Logs March 24–27, 2026</div>
+    </div>
+
+    <div class="news-item">
+      <h3><span class="news-dot nd-blue"></span>EU Gift Card Distribution: One Contract Clause Away From Launch</h3>
+      <p>Groupon is close to launching an entirely new revenue stream — selling Groupon-issued gift cards through EU retail and B2B networks, beginning with a pilot at iKiosk terminals in Germany and then scaling to over 130 European retail and corporate channels. The commercial agreement is at its final stage: one clause covering how financial losses are handled in a fraud scenario remains open. The Germany pilot has four deals selected and is ready to start the moment the contract is signed. The financial target at medium scale is over €8.4M in annual sales and €1.9M in margin.</p>
+      <div class="news-source">Source: Asana · <a href="https://app.asana.com/1/8437193015852/project/1209535662291313/task/1210067057440484" target="_blank">3rd-Party Gift Cards EU — $4.5M M1+VFM</a> · GI Logs March 20–25, 2026</div>
+    </div>
+
+  </div>
+
+  <!-- PULL QUOTE -->
+  <div class="pull-quote">
+    <span class="open-quote">"</span>
+    <blockquote>The gap is not guesswork. We are measuring where gifting already performs well in one market and doesn't yet in another. Closing it is a matter of fixing what's there, not building something new.</blockquote>
+    <cite>— Supply Gap Analysis · GI Log, March 24, 2026</cite>
+  </div>
+
+  <!-- INDUSTRY NEWS -->
+  <div class="section-label">FROM THE GIFTING WORLD</div>
+  <div class="industry">
+    <div class="industry-grid">
+
+      <div class="industry-item">
+        <div class="industry-source">GlobeNewswire · Feb 2026</div>
+        <h4>Europe Gift Card Market Hits $85.8B — Germany and France Accelerating</h4>
+        <p>Europe's gift card sector is growing 7.8% this year, with Germany and France cited as hotspots for third-party gift card expansion. Notably, Lidl France has already rolled out gift cards in ~1,600 stores via the same distributor (epay) that sits in Groupon's own EU distribution pipeline.</p>
+        <a class="read-more" href="https://www.globenewswire.com/news-release/2026/02/20/3241875/28124/en/Europe-Gift-Card-Business-and-Investment-Report-2026" target="_blank">Read more →</a>
+      </div>
+
+      <div class="industry-item">
+        <div class="industry-source">GlobeNewswire · April 1, 2026</div>
+        <h4>CardCash Partners with Capital One Shopping to Expand Gift Card Distribution</h4>
+        <p>Giftify's CardCash placed its gift card marketplace inside Capital One's loyalty ecosystem, reaching tens of millions of consumers already in a rewards context. The move signals that B2B and loyalty-embedded gift card channels — exactly the model behind Groupon's Lekkerland and Plebicom plans — are becoming mainstream.</p>
+        <a class="read-more" href="https://www.globenewswire.com/news-release/2026/04/01/3266619/0/en/Giftify-s-CardCash-Announces-Distribution-Partnership-with-Capital-One-Shopping" target="_blank">Read more →</a>
+      </div>
+
+      <div class="industry-item">
+        <div class="industry-source">IRF Industry Outlook · Jan 2026</div>
+        <h4>Gift Cards Named Fastest-Growing Corporate Incentive Category</h4>
+        <p>The Incentive Research Foundation's 2026 report names gift cards as the top-growing product in corporate gifting and employee incentive programs. Over 65% of digital gift card transactions now happen on mobile. For Groupon, this validates the B2B corporate benefit channel as a long-term growth vector alongside retail.</p>
+        <a class="read-more" href="https://theirf.org/research_post/industry-outlook-for-2026-merchandise-gift-cards-and-event-gifting/" target="_blank">Read more →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <strong>Data Sources</strong><br>
+      Keboola · Gifting metrics data warehouse · April 2, 2026<br>
+      Asana · Gifting 2026 (GID 1211705895865941)<br>
+      Asana · Gifting Intelligence (GID 1213736809253422)<br>
+      Web: GlobeNewswire, IRF Industry Outlook 2026
+    </div>
+    <div class="footer-right">
+      <strong>The Gift Post</strong> · Issue 14 · Vol. 2026<br>
+      Thursday, April 2, 2026 · Internal &amp; Confidential<br>
+      Audience: Groupon Gifting Leadership<br>
+      Automation: Claude Cowork Mode · claude-sonnet-4-6
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

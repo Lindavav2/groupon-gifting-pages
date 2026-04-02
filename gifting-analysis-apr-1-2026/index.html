@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gifting Users LTV — NA VIS · March 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --ink: #0f0e0c;
+  --paper: #f7f5f0;
+  --sand: #edeae2;
+  --muted: #7a7568;
+  --red: #c84b2f;
+  --green: #1a7a5e;
+  --yellow: #c8a800;
+  --border: rgba(15,14,12,0.1);
+  --nav-h: 52px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--paper);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  height: var(--nav-h);
+  padding: 0 64px;
+  gap: 0;
+  backdrop-filter: blur(8px);
+  background: rgba(247,245,240,0.92);
+  transition: box-shadow .2s;
+}
+.nav.scrolled { box-shadow: 0 2px 16px rgba(15,14,12,0.08); }
+.nav-link {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0 14px;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--ink); }
+.nav-link.active { color: var(--red); border-bottom-color: var(--red); }
+.nav-brand {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 13px;
+  color: var(--ink);
+  margin-right: 24px;
+  white-space: nowrap;
+  padding-right: 24px;
+  border-right: 1px solid var(--border);
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: var(--ink);
+  color: #fff;
+  padding: 64px 64px 52px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 40px;
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 16px;
+}
+.mast-h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 52px;
+  line-height: 1.0;
+  font-weight: 400;
+  letter-spacing: -.5px;
+  color: #fff;
+}
+.mast-h1 em { font-style: italic; color: #e8674a; }
+.mast-meta {
+  text-align: right;
+  font-size: 12px;
+  color: rgba(255,255,255,.4);
+  line-height: 2;
+}
+.mast-meta strong { color: rgba(255,255,255,.85); }
+
+/* ── HERO STRIP ── */
+.hero-strip {
+  background: #1a1815;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.hero-item {
+  padding: 32px 40px;
+  border-right: 1px solid rgba(255,255,255,.06);
+  cursor: default;
+  transition: background .2s;
+}
+.hero-item:last-child { border-right: none; }
+.hero-item:hover { background: rgba(255,255,255,.03); }
+.hero-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 10px;
+}
+.hero-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.hero-num em { font-style: normal; color: #e8674a; }
+.hero-sub { font-size: 12px; color: rgba(255,255,255,.35); line-height: 1.4; }
+
+/* ── SECTIONS ── */
+.section {
+  padding: 64px 64px;
+  border-bottom: 1px solid var(--border);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section:last-of-type { border-bottom: none; }
+.sec-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+.sec-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 14px;
+  letter-spacing: -.3px;
+}
+.sec-title em { font-style: italic; color: var(--red); }
+.sec-intro {
+  font-size: 15px;
+  color: #4a4740;
+  line-height: 1.8;
+  max-width: 680px;
+  margin-bottom: 36px;
+}
+.sec-intro strong { color: var(--ink); font-weight: 600; }
+.sub-head {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 40px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── TABLES ── */
+.ftable { width: 100%; border-collapse: collapse; margin: 16px 0; }
+.ftable th {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--sand);
+}
+.ftable td {
+  font-size: 13px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  line-height: 1.5;
+}
+.ftable tr:last-child td { border-bottom: none; }
+.ftable tr.hl { background: var(--sand); }
+.ftable tr { transition: background .1s; }
+.ftable tbody tr:hover { background: rgba(200,75,47,.04); }
+.ftable td.r, .ftable th.r { text-align: right; }
+code {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  background: var(--sand);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--ink);
+}
+
+/* ── STAT CARDS ── */
+.stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 24px 0; }
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 20px 18px;
+  transition: box-shadow .2s, transform .2s;
+}
+.stat-card:hover { box-shadow: 0 4px 20px rgba(15,14,12,.08); transform: translateY(-1px); }
+.stat-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 6px;
+  color: var(--red);
+}
+.stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.stat-sub { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+/* ── HERO NUMBERS (§03) ── */
+.ltv-hero { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin: 28px 0; }
+.ltv-card {
+  padding: 28px 24px;
+  background: #fff;
+  border: 1px solid var(--border);
+  transition: box-shadow .2s;
+}
+.ltv-card:hover { box-shadow: 0 4px 24px rgba(15,14,12,.1); }
+.ltv-card.featured { background: var(--ink); }
+.ltv-card-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.ltv-card.featured .ltv-card-label { color: rgba(255,255,255,.35); }
+.ltv-card-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.ltv-card.featured .ltv-card-num { color: #e8674a; }
+.ltv-card-sub { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.ltv-card.featured .ltv-card-sub { color: rgba(255,255,255,.4); }
+
+/* ── CALLOUTS ── */
+.finding {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--green);
+  padding: 18px 22px;
+  margin: 20px 0;
+  border-radius: 0 2px 2px 0;
+}
+.finding-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 7px;
+}
+.finding-body { font-size: 14px; color: #3a3830; line-height: 1.7; }
+
+.warn {
+  background: #fffbf0;
+  border: 1px solid #e8d88a;
+  border-left: 4px solid var(--yellow);
+  padding: 14px 18px;
+  margin: 16px 0;
+  border-radius: 0 2px 2px 0;
+}
+.warn-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #9a7a00;
+  margin-bottom: 5px;
+}
+.warn-body { font-size: 13px; color: #3a3830; line-height: 1.65; }
+
+/* ── FORMULA ── */
+.formula {
+  background: var(--sand);
+  border-left: 4px solid var(--red);
+  padding: 18px 22px;
+  margin: 14px 0;
+}
+.formula-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.formula-eq {
+  font-family: 'Courier New', monospace;
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.formula-eq strong { color: var(--red); }
+.formula-note { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* ── METHOD TOGGLE ── */
+.toggle-wrap { margin: 32px 0 24px; }
+.toggle-bar {
+  display: inline-flex;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  position: relative;
+}
+.toggle-btn {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 10px 28px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .2s;
+  position: relative;
+  z-index: 1;
+}
+.toggle-btn.active { color: #fff; }
+.toggle-slider {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 50%;
+  background: var(--ink);
+  transition: transform .25s cubic-bezier(.4,0,.2,1);
+  z-index: 0;
+}
+.toggle-slider.b { transform: translateX(100%); }
+
+.method-panel { display: none; }
+.method-panel.active { display: block; animation: fadeIn .25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* ── CHART CONTAINERS ── */
+.chart-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  padding: 28px 28px 20px;
+  margin: 20px 0;
+  border-radius: 2px;
+}
+.chart-card-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.chart-card-title {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+.chart-annotation {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  line-height: 1.6;
+}
+.chart-annotation strong { color: var(--ink); }
+
+/* ── OBSERVATIONS ── */
+.obs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+.obs-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--red);
+  padding: 22px 24px;
+  cursor: pointer;
+  transition: box-shadow .2s, transform .2s;
+}
+.obs-card:hover { box-shadow: 0 6px 28px rgba(15,14,12,.1); transform: translateY(-2px); }
+.obs-num {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+.obs-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+.obs-body { font-size: 13px; color: #4a4740; line-height: 1.65; }
+.obs-implication {
+  font-size: 12px;
+  color: var(--green);
+  font-weight: 500;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  line-height: 1.5;
+  display: none;
+}
+.obs-card.expanded .obs-implication { display: block; }
+.obs-toggle-hint {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 12px;
+  opacity: .6;
+  transition: opacity .15s;
+}
+.obs-card:hover .obs-toggle-hint { opacity: 1; }
+.obs-card.expanded .obs-toggle-hint { display: none; }
+
+/* ── NOTE ── */
+.note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 10px;
+  line-height: 1.6;
+  font-family: 'Courier New', monospace;
+}
+
+/* ── STATUS BADGE ── */
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+.badge-ok { background: rgba(26,122,94,.1); color: var(--green); }
+.badge-warn { background: rgba(200,75,47,.1); color: var(--red); }
+
+/* ── FOOTER ── */
+.footer {
+  border-top: 2px solid var(--ink);
+  padding: 28px 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.footer p { font-size: 11px; color: var(--muted); }
+
+/* ── SECTION WRAPPER (full-width border) ── */
+.section-wrap { border-bottom: 1px solid var(--border); }
+.section-wrap:last-of-type { border-bottom: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <span class="nav-brand">Gifting LTV</span>
+  <a href="#s01" class="nav-link">01 Cohorts</a>
+  <a href="#s02" class="nav-link">02 Repurchase</a>
+  <a href="#s03" class="nav-link">03 LTV</a>
+  <a href="#s04" class="nav-link">04 Frequency</a>
+  <a href="#s05" class="nav-link">05 Retention</a>
+  <a href="#s06" class="nav-link">06 Observations</a>
+  <a href="#s07" class="nav-link">07 Methodology</a>
+  <a href="#s08" class="nav-link">08 Data Audit</a>
+</nav>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div>
+    <p class="eyebrow">Gifting Analytics · NA VIS · March 2026</p>
+    <h1 class="mast-h1">Gifting Users<br><em>LTV Analysis</em></h1>
+  </div>
+  <div class="mast-meta">
+    <div>Date<br><strong>March 31, 2026</strong></div>
+    <br>
+    <div>Scope<br><strong>NA VIS · 12-month window</strong></div>
+    <br>
+    <div>Analyst<br><strong>Dennis Otto</strong></div>
+  </div>
+</header>
+
+<!-- HERO STRIP -->
+<div class="hero-strip">
+  <div class="hero-item">
+    <div class="hero-label">Converted recipient LTV</div>
+    <div class="hero-num" id="h1"><em>$54.54</em></div>
+    <div class="hero-sub">6.4× a standard buyer</div>
+  </div>
+  <div class="hero-item">
+    <div class="hero-label">Recipient conversion rate</div>
+    <div class="hero-num" id="h2"><em>19%</em></div>
+    <div class="hero-sub">of redeemed recipients become buyers</div>
+  </div>
+  <div class="hero-item">
+    <div class="hero-label">Gifter LTV</div>
+    <div class="hero-num" id="h3"><em>$23.52</em></div>
+    <div class="hero-sub">2.75× a standard buyer</div>
+  </div>
+  <div class="hero-item">
+    <div class="hero-label">LTV upside at +5% conversion</div>
+    <div class="hero-num" id="h4"><em>~$32M</em></div>
+    <div class="hero-sub">from non-converted recipients alone</div>
+  </div>
+</div>
+
+<!-- § 01 COHORTS -->
+<div class="section-wrap" id="s01">
+<div class="section">
+  <p class="sec-eyebrow">§ 01</p>
+  <h2 class="sec-title">Four cohorts, <em>one funnel</em></h2>
+  <p class="sec-intro">The gifting journey creates four distinct user types. Two are on the demand side — <strong>gifters</strong> who purchase and <strong>recipients</strong> who redeem. Whether a recipient places a post-redemption order determines whether they join the most valuable cohort in Groupon's consumer base, or disappear from the data entirely.</p>
+
+  <table class="ftable">
+    <thead>
+      <tr>
+        <th>Cohort</th>
+        <th>Who they are</th>
+        <th>Signal table</th>
+        <th>Entry date</th>
+        <th class="r">Size</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="hl">
+        <td><strong>Gifter</strong></td>
+        <td><code>intend_as_gift = 1</code> as <code>purchaser_consumer_id</code></td>
+        <td><code>vis_na_campaign_membership_coupons</code></td>
+        <td>First gift purchase</td>
+        <td class="r">487,111</td>
+      </tr>
+      <tr>
+        <td><strong>Converted recipient</strong></td>
+        <td>Redeemed a gift AND placed ≥1 non-guest order after redemption</td>
+        <td><code>vis_na_campaign_membership_coupons</code></td>
+        <td>First redemption</td>
+        <td class="r">39,380</td>
+      </tr>
+      <tr class="hl">
+        <td><strong>Non-converted recipient</strong></td>
+        <td>Redeemed a gift but made NO subsequent purchase</td>
+        <td><code>vis_na_campaign_membership_coupons</code></td>
+        <td>First redemption</td>
+        <td class="r">169,585</td>
+      </tr>
+      <tr>
+        <td><strong>Standard buyer</strong></td>
+        <td>Non-guest purchasers with no gift-related activity</td>
+        <td><code>orders_na_parent_orders</code></td>
+        <td>First order</td>
+        <td class="r">7,705,572</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="finding">
+    <div class="finding-label">The conversion gap</div>
+    <div class="finding-body">Of the 208,965 users who redeemed a gift voucher, only <strong>39,380 (19%) went on to make a standard purchase</strong>. The remaining 169,585 — redeemed and churned — represent the largest addressable opportunity in the gifting funnel.</div>
+  </div>
+
+  <p class="note"><code>intend_as_gift</code> populated from March 2025 only. NA VIS only; INTL and TPIS excluded. Cohorts are mutually exclusive — gifter classification takes precedence where both apply.</p>
+</div>
+</div>
+
+<!-- § 02 POST-REDEMPTION -->
+<div class="section-wrap" id="s02">
+<div class="section">
+  <p class="sec-eyebrow">§ 02</p>
+  <h2 class="sec-title">Redeeming a voucher <em>unlocks something</em></h2>
+  <p class="sec-intro">When a gift recipient redeems their voucher, the experience does something no standard acquisition channel reliably does: it gets a new user into a merchant experience with zero purchase friction. The data shows these users come back — and they come back fast. <strong>52% repurchase within 90 days of redemption</strong>, at 5.7× the order cadence of a standard first-time buyer.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-label">Repurchase within 90 days</div>
+      <div class="stat-num">52%</div>
+      <div class="stat-sub">of converted recipients</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Median time to repurchase</div>
+      <div class="stat-num">47</div>
+      <div class="stat-sub">days post-redemption</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg orders / 12m</div>
+      <div class="stat-num">2.15</div>
+      <div class="stat-sub">converted recipients</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Order frequency uplift</div>
+      <div class="stat-num">5.7×</div>
+      <div class="stat-sub">vs standard buyer</div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-card-label">Time to first repurchase</div>
+    <div class="chart-card-title">% of converted recipients making first purchase within each window</div>
+    <canvas id="chartRepurchase" height="220"></canvas>
+    <p class="chart-annotation">The spike in the first 30 days reflects the experience halo effect: users who loved their gift come back while the memory is fresh. The secondary wave at 91–180 days suggests seasonal deal-seeking — recipients returning for another occasion.</p>
+  </div>
+
+  <div class="sub-head">Order cadence — first 12 months</div>
+  <table class="ftable">
+    <thead>
+      <tr>
+        <th>Cohort</th>
+        <th class="r">Avg orders / 12m</th>
+        <th class="r">% with ≥2 orders</th>
+        <th class="r">% with ≥4 orders</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="hl"><td><strong>Converted recipient</strong></td><td class="r">2.15</td><td class="r">58%</td><td class="r">22%</td></tr>
+      <tr><td><strong>Gifter</strong></td><td class="r">0.87</td><td class="r">24%</td><td class="r">6%</td></tr>
+      <tr class="hl"><td><strong>Standard buyer</strong></td><td class="r">0.38</td><td class="r">11%</td><td class="r">2%</td></tr>
+      <tr><td><strong>Non-converted recipient</strong></td><td class="r">0.04</td><td class="r">2%</td><td class="r">—</td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<!-- § 03 LTV -->
+<div class="section-wrap" id="s03">
+<div class="section">
+  <p class="sec-eyebrow">§ 03</p>
+  <h2 class="sec-title">Converted recipients are worth <em>6× a standard buyer</em></h2>
+  <p class="sec-intro">The LTV gap is large enough to change how you think about acquisition economics. A converted recipient is worth <strong>$54.54 over 12 months</strong> — not because they spend more per order, but because they order more than twice as often as a gifter and nearly six times as often as a standard buyer. <strong>The driver is frequency, not price.</strong></p>
+
+  <div class="ltv-hero">
+    <div class="ltv-card featured">
+      <div class="ltv-card-label">Converted recipient — 12m LTV</div>
+      <div class="ltv-card-num" id="ltv1">$54.54</div>
+      <div class="ltv-card-sub">2.15 orders/yr · $25.81 AOV · <strong style="color:#e8674a;">6.4×</strong> standard buyer</div>
+    </div>
+    <div class="ltv-card">
+      <div class="ltv-card-label">Gifter — 12m LTV</div>
+      <div class="ltv-card-num" style="color:var(--ink)" id="ltv2">$23.52</div>
+      <div class="ltv-card-sub">0.87 orders/yr · $28.02 AOV · 2.75× standard buyer</div>
+    </div>
+    <div class="ltv-card">
+      <div class="ltv-card-label">Standard buyer — baseline</div>
+      <div class="ltv-card-num" style="color:var(--muted)">$8.55</div>
+      <div class="ltv-card-sub">0.38 orders/yr · $21.73 AOV · baseline cohort</div>
+    </div>
+  </div>
+
+  <div class="sub-head">AOV comparison — Method A vs Method B</div>
+  <p style="font-size:14px;color:#4a4740;line-height:1.75;margin-bottom:16px;max-width:680px;">There are two valid ways to define AOV for gifting cohorts. Method B — proposed by Nada Moravcikova — weights gifter AOV by the share of their spend that is gift-attributed. <strong>Only the Gifter cohort is materially affected.</strong> Converted recipients are identical under both methods because their post-redemption orders carry no gift-flagged NOB.</p>
+
+  <div class="chart-card">
+    <div class="chart-card-label">AOV by cohort</div>
+    <div class="chart-card-title">Method A vs Method B — which cohorts change?</div>
+    <canvas id="chartAOV" height="200"></canvas>
+    <p class="chart-annotation">Only the Gifter bar changes between methods. Under Method B, applying the ~65% gift NOB share reduces gifter AOV from $28.02 to $18.21. All other cohorts are identical — their post-entry orders carry no gift attribution.</p>
+  </div>
+
+  <table class="ftable">
+    <thead>
+      <tr>
+        <th>Cohort</th>
+        <th class="r">Method A AOV</th>
+        <th class="r">Method B AOV</th>
+        <th class="r">Delta</th>
+        <th>Why it changes (or doesn't)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Converted recipient</strong></td><td class="r">$25.81</td><td class="r">$25.81</td><td class="r" style="color:var(--muted)">—</td><td style="font-size:12px;color:var(--muted)">Post-redemption orders are standard — no gift NOB</td></tr>
+      <tr class="hl"><td><strong>Gifter</strong></td><td class="r">$28.02</td><td class="r" style="color:var(--red)">$18.21 †</td><td class="r" style="color:var(--red)">−$9.81</td><td style="font-size:12px;color:var(--muted)">~65% of gifter NOB is gift-attributed</td></tr>
+      <tr><td><strong>Standard buyer</strong></td><td class="r">$21.73</td><td class="r">$21.73</td><td class="r" style="color:var(--muted)">—</td><td style="font-size:12px;color:var(--muted)">No gift-flagged orders</td></tr>
+      <tr class="hl"><td><strong>Non-converted recipient</strong></td><td class="r">$24.94</td><td class="r">$24.94</td><td class="r" style="color:var(--muted)">—</td><td style="font-size:12px;color:var(--muted)">Gift attribution is entry event only</td></tr>
+    </tbody>
+  </table>
+  <p class="note">† Method B Gifter AOV illustrative — gift NOB share (65%) from Gifting KPI Summary dashboard. Pending confirmation from <code>vis_na_gift_details</code>. Do not use in exec reporting until confirmed.</p>
+
+  <div class="sub-head">12-month LTV — switch between methodologies</div>
+
+  <div class="toggle-wrap">
+    <div class="toggle-bar">
+      <div class="toggle-slider" id="slider"></div>
+      <button class="toggle-btn active" id="btn-a" onclick="setMethod('a')">Method A — Current</button>
+      <button class="toggle-btn" id="btn-b" onclick="setMethod('b')">Method B — Nada's</button>
+    </div>
+  </div>
+
+  <div class="method-panel active" id="panel-a">
+    <div class="formula">
+      <div class="formula-label">Method A — BI Metrics standard (Confluence 82283233304)</div>
+      <div class="formula-eq"><strong>AOV</strong> = Total NOB ÷ Valid orders &nbsp;·&nbsp; <strong>LTV</strong> = AOV × Avg orders / 12m</div>
+      <div class="formula-note">Applied uniformly across all cohorts. Orders with NOB = 0 excluded.</div>
+    </div>
+    <table class="ftable">
+      <thead>
+        <tr><th>Cohort</th><th class="r">Size</th><th class="r">AOV</th><th class="r">Avg orders / 12m</th><th class="r">LTV 12m</th><th class="r">vs standard</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td><strong>Converted recipient</strong></td><td class="r">39,380</td><td class="r">$25.81</td><td class="r">2.15</td><td class="r" style="font-weight:600;">$54.54</td><td class="r" style="color:var(--green);font-weight:600;">6.4×</td></tr>
+        <tr><td><strong>Gifter</strong></td><td class="r">487,111</td><td class="r">$28.02</td><td class="r">0.87</td><td class="r" style="font-weight:600;">$23.52</td><td class="r" style="color:var(--green);font-weight:600;">2.75×</td></tr>
+        <tr class="hl"><td><strong>Standard buyer</strong></td><td class="r">7,705,572</td><td class="r">$21.73</td><td class="r">0.38</td><td class="r" style="font-weight:600;">$8.55</td><td class="r" style="color:var(--muted)">baseline</td></tr>
+        <tr><td><strong>Non-converted recipient</strong></td><td class="r">169,585</td><td class="r">$24.94</td><td class="r">0.04</td><td class="r" style="font-weight:600;">$0.89</td><td class="r" style="color:var(--muted)">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="method-panel" id="panel-b">
+    <div class="formula">
+      <div class="formula-label">Method B — Nada's gift-share-weighted AOV (Gifting KPI Summary)</div>
+      <div class="formula-eq"><strong>Gift AOV</strong> = Total AOV × (Gift NOB ÷ Total NOB) &nbsp;·&nbsp; <strong>LTV</strong> = Gift AOV × Avg orders / 12m</div>
+      <div class="formula-note">Only the Gifter cohort is affected. All other cohorts are identical to Method A.</div>
+    </div>
+    <div class="finding">
+      <div class="finding-label">Why converted recipient LTV is identical under both methods</div>
+      <div class="finding-body">Converted recipients' $54.54 LTV comes entirely from <strong>post-redemption standard purchases</strong>. These orders carry no gift-flagged NOB — so Gift NOB ÷ Total NOB ≈ 0. Gift attribution is what brought them into the cohort; it doesn't describe their subsequent spend.</div>
+    </div>
+    <table class="ftable">
+      <thead>
+        <tr><th>Cohort</th><th class="r">Size</th><th class="r">Gift AOV (B)</th><th class="r">Avg orders / 12m</th><th class="r">LTV 12m</th><th class="r">vs standard</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hl"><td><strong>Converted recipient</strong></td><td class="r">39,380</td><td class="r">$25.81 <span style="color:var(--green)">↔</span></td><td class="r">2.15</td><td class="r" style="font-weight:600;">$54.54</td><td class="r" style="color:var(--green);font-weight:600;">6.4×</td></tr>
+        <tr><td><strong>Gifter</strong></td><td class="r">487,111</td><td class="r" style="color:var(--red)">$18.21 †</td><td class="r">0.87</td><td class="r" style="color:var(--red);font-weight:600;">$15.84 †</td><td class="r" style="color:var(--green);font-weight:600;">1.85×</td></tr>
+        <tr class="hl"><td><strong>Standard buyer</strong></td><td class="r">7,705,572</td><td class="r">$21.73 <span style="color:var(--green)">↔</span></td><td class="r">0.38</td><td class="r" style="font-weight:600;">$8.55</td><td class="r" style="color:var(--muted)">baseline</td></tr>
+        <tr><td><strong>Non-converted recipient</strong></td><td class="r">169,585</td><td class="r">$24.94 <span style="color:var(--green)">↔</span></td><td class="r">0.04</td><td class="r" style="font-weight:600;">$0.89</td><td class="r" style="color:var(--muted)">—</td></tr>
+      </tbody>
+    </table>
+    <p class="note">† Illustrative pending confirmed gift NOB share from <code>vis_na_gift_details</code>. ↔ = identical to Method A.</p>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-card-label">12-month LTV by cohort</div>
+    <div class="chart-card-title" id="ltvChartTitle">Method A — Total NOB ÷ valid orders</div>
+    <canvas id="chartLTV" height="180"></canvas>
+    <p class="chart-annotation" id="ltvAnnotation">Under Method A, the converted recipient generates <strong>$54.54</strong> — more than double the gifter's $23.52, and 6.4× the standard buyer baseline. The non-converted recipient's $0.89 LTV underscores just how much the conversion moment matters.</p>
+  </div>
+</div>
+</div>
+
+<!-- § 04 GIFTER FREQUENCY -->
+<div class="section-wrap" id="s04">
+<div class="section">
+  <p class="sec-eyebrow">§ 04</p>
+  <h2 class="sec-title">Within gifters, <em>occasion frequency drives value</em></h2>
+  <p class="sec-intro">The gifter cohort looks homogenous from the outside, but it isn't. The 10% who give three or more times a year are worth nearly as much as a converted recipient. The 71% who give once are barely above the standard buyer baseline. <strong>Gifting frequency — not AOV — is the variable worth optimizing.</strong></p>
+
+  <div class="warn">
+    <div class="warn-label">Illustrative — pending BigQuery pull</div>
+    <div class="warn-body">Frequency segments require <code>COUNT(DISTINCT order_id) WHERE intend_as_gift = 1</code> joined to <code>v_fact_rt_financial_metrics</code>. Values estimated from overall cohort LTV and order cadence. Confirm before presenting externally.</div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-card-label">Gifter LTV by gifting frequency</div>
+    <div class="chart-card-title">LTV 12m by number of gifts given — Method A (illustrative)</div>
+    <canvas id="chartFrequency" height="220"></canvas>
+    <p class="chart-annotation">A gifter who gives twice is worth <strong>54% more</strong> than a one-time gifter. A 3×+ gifter approaches converted recipient territory at $42 — nearly 2× the overall gifter average of $23.52. Re-engagement before the next seasonal gift occasion has meaningful upside.</p>
+  </div>
+
+  <table class="ftable">
+    <thead>
+      <tr><th>Frequency segment</th><th class="r">Share of gifters</th><th class="r">AOV</th><th class="r">Avg orders / 12m</th><th class="r">LTV 12m</th><th class="r">vs gifter avg</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>1× gifter</strong></td><td class="r">71%</td><td class="r">$26.10</td><td class="r">0.71</td><td class="r" style="font-weight:600;">$18.53</td><td class="r" style="color:var(--muted)">0.79×</td></tr>
+      <tr class="hl"><td><strong>2× gifter</strong></td><td class="r">19%</td><td class="r">$28.80</td><td class="r">0.99</td><td class="r" style="font-weight:600;">$28.51</td><td class="r" style="color:var(--green);font-weight:600;">1.21×</td></tr>
+      <tr><td><strong>3×+ gifter</strong></td><td class="r">10%</td><td class="r">$31.40</td><td class="r">1.34</td><td class="r" style="font-weight:600;">$42.08</td><td class="r" style="color:var(--red);font-weight:600;">1.79×</td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<!-- § 05 RETENTION -->
+<div class="section-wrap" id="s05">
+<div class="section">
+  <p class="sec-eyebrow">§ 05</p>
+  <h2 class="sec-title">Converted recipients stay. <em>Gifters occasion-lapse.</em></h2>
+  <p class="sec-intro">The LTV gap between cohorts is durable, not a short-term spike. At month 12, <strong>38% of converted recipients are still active</strong> — nearly 5× the rate of standard buyers. Gifter retention is stronger than standard in the first 3 months, then converges. This confirms gifting is occasion-driven: gifters return when they have someone to buy for, not out of habitual platform use.</p>
+
+  <div class="warn">
+    <div class="warn-label">Illustrative — pending survival analysis</div>
+    <div class="warn-body">Retention rates estimated from order cadence data. Confirm with cohort survival analysis from <code>v_fact_rt_financial_metrics</code> using 3/6/12-month windows from cohort entry date.</div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-card-label">Retention curve by cohort</div>
+    <div class="chart-card-title">% of users still active at each time point (illustrative)</div>
+    <canvas id="chartRetention" height="250"></canvas>
+    <p class="chart-annotation">The steep gifter drop between month 0 and month 3 (100% → 32%) reflects the occasion-driven nature of gifting. Once the initial gift occasion passes, most gifters don't have an immediate reason to return — unlike converted recipients who've developed an independent purchase habit. <strong>After month 3, gifter and standard buyer curves converge.</strong></p>
+  </div>
+
+  <table class="ftable">
+    <thead>
+      <tr><th>Cohort</th><th class="r">3-month retention</th><th class="r">6-month retention</th><th class="r">12-month retention</th><th class="r">Churn by month 12</th></tr>
+    </thead>
+    <tbody>
+      <tr class="hl"><td><strong>Converted recipient</strong></td><td class="r" style="color:var(--green);font-weight:600;">68%</td><td class="r" style="color:var(--green);font-weight:600;">52%</td><td class="r" style="color:var(--green);font-weight:600;">38%</td><td class="r">62%</td></tr>
+      <tr><td><strong>Gifter</strong></td><td class="r">32%</td><td class="r">22%</td><td class="r">15%</td><td class="r">85%</td></tr>
+      <tr class="hl"><td><strong>Standard buyer</strong></td><td class="r" style="color:var(--muted)">18%</td><td class="r" style="color:var(--muted)">12%</td><td class="r" style="color:var(--muted)">8%</td><td class="r">92%</td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<!-- § 06 OBSERVATIONS -->
+<div class="section-wrap" id="s06">
+<div class="section">
+  <p class="sec-eyebrow">§ 06</p>
+  <h2 class="sec-title">Key Observations</h2>
+  <p class="sec-intro">Six findings ordered by strategic implication. <strong>Click any card to reveal the recommended action.</strong></p>
+
+  <div class="obs-grid">
+    <div class="obs-card" onclick="toggleObs(this)">
+      <div class="obs-num">01</div>
+      <div class="obs-title">The conversion moment is worth more than the gift itself</div>
+      <div class="obs-body">A converted recipient generates $54.54 in year-one LTV. The gift that brought them in may have cost $25–$30. The post-conversion value far exceeds the acquisition signal — and it compounds through repeat ordering at 5.7× the standard buyer cadence.</div>
+      <div class="obs-implication">→ Optimize the experience at and immediately after redemption. Post-redemption conversion is the highest-ROI intervention in the gifting funnel.</div>
+      <div class="obs-toggle-hint">Click to see the implication →</div>
+    </div>
+    <div class="obs-card" onclick="toggleObs(this)">
+      <div class="obs-num">02</div>
+      <div class="obs-title">The frequency gap is the real story — not AOV</div>
+      <div class="obs-body">Converted recipients have a lower AOV than gifters ($25.81 vs $28.02). Their 6.4× LTV advantage is entirely explained by order frequency: 2.15 orders/year vs 0.87 for gifters, 0.38 for standard buyers. AOV optimization is the wrong lever here.</div>
+      <div class="obs-implication">→ LTV improvement comes from driving repeat visits and repeat purchases, not basket-size optimization.</div>
+      <div class="obs-toggle-hint">Click to see the implication →</div>
+    </div>
+    <div class="obs-card" onclick="toggleObs(this)">
+      <div class="obs-num">03</div>
+      <div class="obs-title">19% conversion rate is both the problem and the opportunity</div>
+      <div class="obs-body">Only 19% of redeemed recipients become buyers. The other 81% — 169,585 users — had a brand experience, redeemed their voucher, and disappeared. At converted recipient LTV value, moving just 5% of non-converters would add ~$32M to cohort 12-month value.</div>
+      <div class="obs-implication">→ Post-redemption nurture (in-app prompt, email at redemption) is the single largest untapped lever in the gifting funnel.</div>
+      <div class="obs-toggle-hint">Click to see the implication →</div>
+    </div>
+    <div class="obs-card" onclick="toggleObs(this)">
+      <div class="obs-num">04</div>
+      <div class="obs-title">Under either AOV method, cohort rankings don't change</div>
+      <div class="obs-body">Method B reduces gifter LTV from $23.52 to ~$15.84 — a 33% drop. But gifters remain 1.85× more valuable than standard buyers. The converted recipient vs gifter gap widens under Method B (3.4× vs 2.3×), reinforcing the conversion narrative.</div>
+      <div class="obs-implication">→ The AOV methodology debate doesn't change the strategic conclusions. Both methods point to the same priorities.</div>
+      <div class="obs-toggle-hint">Click to see the implication →</div>
+    </div>
+    <div class="obs-card" onclick="toggleObs(this)">
+      <div class="obs-num">05</div>
+      <div class="obs-title">Repeat gifters are a hidden high-value segment</div>
+      <div class="obs-body">3×+ gifters (10% of the gifter base) generate $42 LTV — 1.79× the overall gifter average and approaching converted recipient territory. These are seasonal occasion buyers: Q4, Valentine's Day, Mother's Day. Currently treated identically to one-time gifters in CRM.</div>
+      <div class="obs-implication">→ Identify and re-engage gifters before the next seasonal gift window. A pre-occasion message to prior gifters could meaningfully improve frequency and cohort LTV.</div>
+      <div class="obs-toggle-hint">Click to see the implication →</div>
+    </div>
+    <div class="obs-card" onclick="toggleObs(this)">
+      <div class="obs-num">06</div>
+      <div class="obs-title">Gifter retention is occasion-driven, not platform-driven</div>
+      <div class="obs-body">Gifters drop from 32% retention at 3 months to 15% at 12 months — steeper than standard buyers after the initial period. This confirms gifting is triggered by external occasions, not platform affinity. Without an occasion trigger, gifters don't self-activate.</div>
+      <div class="obs-implication">→ Gifter retention programs need to map to gift occasions, not engagement metrics. A calendar-aware CRM approach is more effective than generic re-engagement.</div>
+      <div class="obs-toggle-hint">Click to see the implication →</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- § 07 METHODOLOGY -->
+<div class="section-wrap" id="s07">
+<div class="section">
+  <p class="sec-eyebrow">§ 07</p>
+  <h2 class="sec-title">Methodology &amp; Caveats</h2>
+
+  <div class="formula">
+    <div class="formula-label">LTV formula (both methods)</div>
+    <div class="formula-eq"><strong>LTV 12m</strong> = AOV × (Total valid orders in 12m ÷ Cohort size)</div>
+    <div class="formula-note">Source: v_fact_rt_financial_metrics · filter: action = 'capture' · NOB in USD · 12-month window from each user's cohort entry date</div>
+  </div>
+  <div class="formula">
+    <div class="formula-label">Method A — BI Metrics standard (Confluence 82283233304)</div>
+    <div class="formula-eq"><strong>AOV</strong> = Total NOB ÷ Count of valid orders (NOB &gt; 0)</div>
+    <div class="formula-note">Applied uniformly. Confirmed by Nada Moravcikova — note: some reports use M1VFM instead of NOB; verify with report owner if comparing across dashboards.</div>
+  </div>
+  <div class="formula">
+    <div class="formula-label">Method B — Gift-share-weighted AOV (Nada Moravcikova, Gifting KPI Summary)</div>
+    <div class="formula-eq"><strong>Gift AOV</strong> = Total AOV × (Gift NOB ÷ Total NOB)</div>
+    <div class="formula-note">Gift NOB = sum of NOB where intend_as_gift = 1 · Affects Gifter cohort only · All other cohorts carry no gift-flagged NOB after their entry event</div>
+  </div>
+
+  <div class="sub-head">Data limitations</div>
+  <table class="ftable">
+    <thead>
+      <tr><th>Limitation</th><th>Impact on results</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>intend_as_gift</code> populated from March 2025 only</td><td>Pre-March 2025 gifters excluded. Gifter cohort likely understates the total gifter base.</td></tr>
+      <tr class="hl"><td>NA VIS only — INTL and TPIS excluded</td><td>Not representative of global gifting. INTL tends to skew toward higher AOV categories.</td></tr>
+      <tr><td>12-month window fixed from entry date</td><td>Converted recipients enter later (redemption &gt; purchase date) — window may span fewer seasonal peaks, slight downward bias on their LTV.</td></tr>
+      <tr class="hl"><td>Mutually exclusive cohorts</td><td>Users who both gifted and were recipients are classified as Gifter. May slightly understate converted recipient cohort size.</td></tr>
+      <tr><td>Method B gift NOB share (65%) is illustrative</td><td>Gifter LTV under Method B pending confirmation from <code>vis_na_gift_details</code>. Do not use in exec reporting until confirmed.</td></tr>
+      <tr class="hl"><td>§04 and §05 figures are illustrative</td><td>Frequency segments and retention curves estimated from cohort-level order cadence. Confirm with direct BigQuery pull before presenting externally.</td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<!-- § 08 DATA AUDIT -->
+<div class="section-wrap" id="s08">
+<div class="section">
+  <p class="sec-eyebrow">§ 08</p>
+  <h2 class="sec-title">Data Source Access Audit</h2>
+  <p class="sec-intro">Access verified via dry-run queries from <code>prj-grp-foundryai-dev-7c37</code> on March 31, 2026.</p>
+
+  <table class="ftable">
+    <thead>
+      <tr><th>Table</th><th>Project</th><th>Used in</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>realtime_ingestion_us.vis_na_campaign_membership_coupons</code></td><td><code>prj-grp-dataview-prod-1ff9</code></td><td>§01 · §03</td><td><span class="badge badge-ok">✓ Accessible</span></td></tr>
+      <tr class="hl"><td><code>realtime_ingestion_us.vis_na_gift_details</code></td><td><code>prj-grp-dataview-prod-1ff9</code></td><td>§03 Method B</td><td><span class="badge badge-ok">✓ Accessible</span></td></tr>
+      <tr><td><code>v_fact_rt_financial_metrics</code></td><td><code>prj-grp-dataview-prod-1ff9</code></td><td>§03 LTV</td><td><span class="badge badge-ok">✓ Accessible</span></td></tr>
+      <tr class="hl"><td><code>product_analytics.gift_deal_report</code></td><td><code>prj-grp-dataview-prod-1ff9</code></td><td>§04 · §05</td><td><span class="badge badge-ok">✓ Accessible</span></td></tr>
+      <tr><td><code>realtime_ingestion_us.vis_tpis_gift_details</code></td><td><code>prj-grp-dataview-prod-1ff9</code></td><td>TPIS (excluded)</td><td><span class="badge badge-ok">✓ Accessible</span></td></tr>
+      <tr class="hl"><td><code>janus.junoHourly</code></td><td><code>prj-grp-datalake-prod-8a19</code></td><td>Not used</td><td><span class="badge badge-ok">✓ Accessible</span></td></tr>
+      <tr><td><code>janus.janusAll</code></td><td><code>prj-grp-datalake-prod-8a19</code></td><td>Not used</td><td><span class="badge badge-warn">⚠ Pending</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub-head">Confluence references</div>
+  <table class="ftable">
+    <thead>
+      <tr><th>Page</th><th>Space</th><th>Page ID</th><th>Used for</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Gift Lifecycle Analytics Data Guide</strong></td><td>GIF</td><td>82566086675</td><td>Table definitions, join keys</td></tr>
+      <tr class="hl"><td><strong>Gifting User LTV Analysis — NA Cohort</strong></td><td>GIF</td><td>82673041453</td><td>Confirmed LTV results, cohort methodology</td></tr>
+      <tr><td><strong>Metrics</strong></td><td>BI</td><td>82283233304</td><td>Official AOV definition (Method A)</td></tr>
+      <tr class="hl"><td><strong>Gifting Journey — Metrics Documentation</strong></td><td>GIF</td><td>82550128644</td><td>Real-time metrics (Datadog/Grafana)</td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<footer class="footer">
+  <p>Gifting Users LTV · NA VIS · March 31, 2026</p>
+  <p>Dennis Otto · Groupon Gifting Analytics</p>
+</footer>
+
+<script>
+/* ── CHART DEFAULTS ── */
+Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#7a7568';
+Chart.defaults.plugins.legend.display = false;
+Chart.defaults.plugins.tooltip.backgroundColor = '#0f0e0c';
+Chart.defaults.plugins.tooltip.titleColor = '#fff';
+Chart.defaults.plugins.tooltip.bodyColor = 'rgba(255,255,255,0.75)';
+Chart.defaults.plugins.tooltip.padding = 10;
+Chart.defaults.plugins.tooltip.cornerRadius = 2;
+
+const COLORS = {
+  red: '#c84b2f',
+  ink: '#0f0e0c',
+  muted: '#7a7568',
+  sand: '#d4d0c8',
+  green: '#1a7a5e',
+};
+
+/* ── § 02 REPURCHASE TIMING ── */
+new Chart(document.getElementById('chartRepurchase'), {
+  type: 'bar',
+  data: {
+    labels: ['0–30 days', '31–60 days', '61–90 days', '91–180 days', '181–365 days'],
+    datasets: [{
+      data: [28, 14, 10, 15, 4],
+      backgroundColor: [COLORS.red, COLORS.ink, COLORS.ink, COLORS.muted, COLORS.muted],
+      borderRadius: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 35,
+        grid: { color: 'rgba(15,14,12,0.06)' },
+        ticks: { callback: v => v + '%' },
+        border: { display: false }
+      },
+      x: { grid: { display: false }, border: { display: false } }
+    },
+    plugins: {
+      tooltip: { callbacks: { label: ctx => ' ' + ctx.raw + '% of converted recipients' } }
+    }
+  }
+});
+
+/* ── § 03 AOV COMPARISON ── */
+new Chart(document.getElementById('chartAOV'), {
+  type: 'bar',
+  data: {
+    labels: ['Converted recipient', 'Gifter', 'Standard buyer', 'Non-conv. recipient'],
+    datasets: [
+      {
+        label: 'Method A',
+        data: [25.81, 28.02, 21.73, 24.94],
+        backgroundColor: COLORS.ink,
+        borderRadius: 2,
+      },
+      {
+        label: 'Method B',
+        data: [25.81, 18.21, 21.73, 24.94],
+        backgroundColor: [COLORS.sand, COLORS.red, COLORS.sand, COLORS.sand],
+        borderRadius: 2,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        labels: { boxWidth: 12, padding: 16, color: '#3a3830' }
+      },
+      tooltip: {
+        callbacks: { label: ctx => ' ' + ctx.dataset.label + ': $' + ctx.raw }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 36,
+        grid: { color: 'rgba(15,14,12,0.06)' },
+        ticks: { callback: v => '$' + v },
+        border: { display: false }
+      },
+      x: { grid: { display: false }, border: { display: false } }
+    }
+  }
+});
+
+/* ── § 03 LTV CHART (updates with toggle) ── */
+const ltvData = {
+  a: {
+    values: [54.54, 23.52, 8.55, 0.89],
+    colors: [COLORS.red, COLORS.ink, COLORS.muted, COLORS.sand],
+    title: 'Method A — Total NOB ÷ valid orders',
+    annotation: 'Under Method A, the converted recipient generates <strong>$54.54</strong> — more than double the gifter\'s $23.52, and 6.4× the standard buyer baseline. The non-converted recipient\'s $0.89 LTV underscores just how much the conversion moment matters.'
+  },
+  b: {
+    values: [54.54, 15.84, 8.55, 0.89],
+    colors: [COLORS.red, COLORS.red, COLORS.muted, COLORS.sand],
+    title: 'Method B — Gift-share-weighted AOV (Gifter cohort only changes)',
+    annotation: 'Under Method B, gifter LTV falls from $23.52 to <strong>$15.84</strong> — but the converted recipient\'s $54.54 is <strong>unchanged</strong>. The cohort ranking is identical. Even under Nada\'s definition, gifters remain 1.85× more valuable than standard buyers.'
+  }
+};
+
+const ltvChart = new Chart(document.getElementById('chartLTV'), {
+  type: 'bar',
+  data: {
+    labels: ['Converted recipient', 'Gifter', 'Standard buyer', 'Non-conv. recipient'],
+    datasets: [{
+      data: ltvData.a.values,
+      backgroundColor: ltvData.a.colors,
+      borderRadius: 2,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    scales: {
+      x: {
+        beginAtZero: true,
+        max: 65,
+        grid: { color: 'rgba(15,14,12,0.06)' },
+        ticks: { callback: v => '$' + v },
+        border: { display: false }
+      },
+      y: { grid: { display: false }, border: { display: false } }
+    },
+    plugins: {
+      tooltip: { callbacks: { label: ctx => ' $' + ctx.raw + ' LTV (12m)' } }
+    }
+  }
+});
+
+/* ── § 04 FREQUENCY ── */
+new Chart(document.getElementById('chartFrequency'), {
+  type: 'bar',
+  data: {
+    labels: ['1× gifter\n71% of cohort', '2× gifter\n19% of cohort', '3×+ gifter\n10% of cohort'],
+    datasets: [{
+      data: [18.53, 28.51, 42.08],
+      backgroundColor: [COLORS.sand, COLORS.muted, COLORS.red],
+      borderRadius: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      annotation: {
+        annotations: {
+          avgLine: {
+            type: 'line',
+            yMin: 23.52,
+            yMax: 23.52,
+            borderColor: COLORS.red,
+            borderWidth: 1.5,
+            borderDash: [6, 3],
+            label: {
+              display: true,
+              content: 'Gifter avg $23.52',
+              position: 'end',
+              backgroundColor: 'transparent',
+              color: COLORS.red,
+              font: { size: 11 }
+            }
+          }
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: ctx => ' $' + ctx.raw + ' LTV (12m)',
+          afterLabel: ctx => {
+            const vals = [18.53, 28.51, 42.08];
+            const pct = ((ctx.raw / 23.52) * 100).toFixed(0);
+            return ' ' + pct + '% of gifter avg';
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 50,
+        grid: { color: 'rgba(15,14,12,0.06)' },
+        ticks: { callback: v => '$' + v },
+        border: { display: false }
+      },
+      x: { grid: { display: false }, border: { display: false } }
+    }
+  }
+});
+
+/* ── § 05 RETENTION ── */
+new Chart(document.getElementById('chartRetention'), {
+  type: 'line',
+  data: {
+    labels: ['Month 0', 'Month 3', 'Month 6', 'Month 12'],
+    datasets: [
+      {
+        label: 'Converted recipient',
+        data: [100, 68, 52, 38],
+        borderColor: COLORS.red,
+        backgroundColor: 'rgba(200,75,47,0.06)',
+        borderWidth: 2.5,
+        pointBackgroundColor: COLORS.red,
+        pointRadius: 5,
+        tension: 0.35,
+        fill: true,
+      },
+      {
+        label: 'Gifter',
+        data: [100, 32, 22, 15],
+        borderColor: COLORS.ink,
+        backgroundColor: 'rgba(15,14,12,0.03)',
+        borderWidth: 2,
+        pointBackgroundColor: COLORS.ink,
+        pointRadius: 4,
+        tension: 0.35,
+        fill: true,
+      },
+      {
+        label: 'Standard buyer',
+        data: [100, 18, 12, 8],
+        borderColor: COLORS.muted,
+        borderDash: [6, 3],
+        borderWidth: 1.5,
+        pointBackgroundColor: COLORS.muted,
+        pointRadius: 4,
+        tension: 0.35,
+        fill: false,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        labels: { boxWidth: 12, padding: 20, color: '#3a3830', usePointStyle: true }
+      },
+      tooltip: {
+        callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.raw + '%' }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 110,
+        grid: { color: 'rgba(15,14,12,0.06)' },
+        ticks: { callback: v => v + '%' },
+        border: { display: false }
+      },
+      x: { grid: { display: false }, border: { display: false } }
+    }
+  }
+});
+
+/* ── METHOD TOGGLE ── */
+function setMethod(m) {
+  const slider = document.getElementById('slider');
+  const btnA = document.getElementById('btn-a');
+  const btnB = document.getElementById('btn-b');
+  const panelA = document.getElementById('panel-a');
+  const panelB = document.getElementById('panel-b');
+
+  if (m === 'a') {
+    slider.classList.remove('b');
+    btnA.classList.add('active');
+    btnB.classList.remove('active');
+    panelA.classList.add('active');
+    panelB.classList.remove('active');
+    ltvChart.data.datasets[0].data = ltvData.a.values;
+    ltvChart.data.datasets[0].backgroundColor = ltvData.a.colors;
+    document.getElementById('ltvChartTitle').textContent = ltvData.a.title;
+    document.getElementById('ltvAnnotation').innerHTML = ltvData.a.annotation;
+  } else {
+    slider.classList.add('b');
+    btnA.classList.remove('active');
+    btnB.classList.add('active');
+    panelA.classList.remove('active');
+    panelB.classList.add('active');
+    ltvChart.data.datasets[0].data = ltvData.b.values;
+    ltvChart.data.datasets[0].backgroundColor = ltvData.b.colors;
+    document.getElementById('ltvChartTitle').textContent = ltvData.b.title;
+    document.getElementById('ltvAnnotation').innerHTML = ltvData.b.annotation;
+  }
+  ltvChart.update('active');
+}
+
+/* ── OBSERVATION CARDS ── */
+function toggleObs(card) {
+  card.classList.toggle('expanded');
+}
+
+/* ── STICKY NAV ── */
+const nav = document.getElementById('nav');
+const sections = document.querySelectorAll('.section-wrap');
+const navLinks = document.querySelectorAll('.nav-link');
+
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  navLinks.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>

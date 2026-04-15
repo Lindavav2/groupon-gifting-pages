@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuyBox 3P Gift Cards — Iteration Report · Apr 8–15, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f2f0; color: #1a1a1a; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 920px; margin: 32px auto; padding: 0 16px 64px; }
+
+  /* Header */
+  .header { background: #1d3a2e; color: white; border-radius: 12px 12px 0 0; padding: 28px 36px; }
+  .header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 4px; }
+  .header .meta { font-size: 13px; opacity: 0.75; }
+  .header .iteration-name { font-size: 15px; font-weight: 500; margin-top: 6px; opacity: 0.92; }
+
+  /* Card */
+  .card { background: white; border-radius: 0; padding: 28px 36px; border-bottom: 1px solid #e8ebe8; }
+  .card:last-child { border-radius: 0 0 12px 12px; border-bottom: none; }
+  .card h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #5a6a5a; margin-bottom: 16px; }
+  .card h3 { font-size: 14px; font-weight: 600; color: #1d3a2e; margin: 18px 0 8px; }
+
+  /* Executive Summary */
+  .exec-summary { display: flex; gap: 20px; align-items: flex-start; }
+  .gate-badge { flex-shrink: 0; padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; text-align: center; min-width: 130px; }
+  .gate-continue-flag { background: #fff3cd; color: #856404; border: 1.5px solid #ffc107; }
+  .gate-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; opacity: 0.7; }
+  .gate-value { font-size: 15px; }
+  .gate-rate { font-size: 11px; margin-top: 3px; opacity: 0.7; }
+  .exec-text { font-size: 14px; line-height: 1.7; color: #333; }
+
+  /* Stats row */
+  .stats-row { display: flex; gap: 12px; margin-bottom: 8px; }
+  .stat-card { flex: 1; background: #f6f9f6; border-radius: 8px; padding: 14px 16px; text-align: center; border: 1px solid #e0e8e0; }
+  .stat-label { font-size: 11px; color: #6a7a6a; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .stat-value { font-size: 22px; font-weight: 700; color: #1d3a2e; }
+
+  /* Stream badge */
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-right: 4px; }
+  .badge-buybox { background: #d4edda; color: #155724; }
+  .badge-lekkerland { background: #cce5ff; color: #004085; }
+  .badge-general { background: #e2e3e5; color: #383d41; }
+
+  /* Ticket list */
+  .ticket-list { border: 1px solid #e8ebe8; border-radius: 8px; overflow: hidden; margin-top: 8px; }
+  .ticket-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-bottom: 1px solid #f0f2f0; }
+  .ticket-row:last-child { border-bottom: none; }
+  .ticket-row.inprogress { background: #fffef5; }
+  .ticket-key { font-size: 12px; font-weight: 600; color: #1d6fa4; min-width: 80px; font-family: monospace; }
+  .ticket-summary { flex: 1; font-size: 13px; color: #333; }
+  .ticket-assignee { font-size: 11px; color: #888; min-width: 100px; text-align: right; }
+  .ticket-status { font-size: 11px; padding: 2px 7px; border-radius: 4px; background: #fff3cd; color: #856404; white-space: nowrap; }
+  .status-qa { background: #d4edda; color: #155724; }
+  .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #9a9a9a; padding: 6px 14px; background: #f9faf9; border-bottom: 1px solid #e8ebe8; }
+
+  /* Learnings grid */
+  .learnings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+  .learnings-col { border-radius: 8px; padding: 16px; }
+  .learnings-col.worked { background: #f0faf3; border: 1px solid #b7dfbf; }
+  .learnings-col.didnt { background: #fff8f0; border: 1px solid #f5c89e; }
+  .learnings-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; }
+  .learnings-col.worked h4 { color: #155724; }
+  .learnings-col.didnt h4 { color: #7c3d0d; }
+  .learnings-col ul { list-style: none; }
+  .learnings-col ul li { font-size: 13px; line-height: 1.5; padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.06); color: #333; }
+  .learnings-col ul li:last-child { border-bottom: none; }
+  .learnings-col ul li::before { margin-right: 6px; font-size: 12px; }
+  .learnings-col.worked ul li::before { content: "✅"; }
+  .learnings-col.didnt ul li::before { content: "⚠️"; }
+
+  /* Next steps */
+  .next-steps-list { counter-reset: steps; list-style: none; margin-top: 8px; }
+  .next-steps-list li { counter-increment: steps; display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f0f2f0; font-size: 13px; align-items: flex-start; }
+  .next-steps-list li:last-child { border-bottom: none; }
+  .next-steps-list li::before { content: counter(steps); display: flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; background: #1d3a2e; color: white; border-radius: 50%; font-size: 11px; font-weight: 700; margin-top: 1px; }
+  .step-owner { font-size: 11px; color: #888; margin-top: 2px; }
+  .step-date { font-size: 11px; font-weight: 600; color: #c45c00; background: #fff3cd; padding: 1px 6px; border-radius: 4px; white-space: nowrap; }
+
+  /* GROW section */
+  .grow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+  .grow-block { background: #f6f9f6; border: 1px solid #ddeedd; border-radius: 8px; padding: 14px 16px; }
+  .grow-block.full { grid-column: 1 / -1; }
+  .grow-block h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #3a6a4a; margin-bottom: 8px; }
+  .grow-block p, .grow-block ul { font-size: 13px; color: #333; line-height: 1.6; }
+  .grow-block ul { list-style: none; }
+  .grow-block ul li { padding: 3px 0; }
+  .grow-block ul li::before { content: "•"; margin-right: 6px; color: #2d6a4f; font-weight: 700; }
+
+  /* RASCI table */
+  .rasci-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+  .rasci-table th { background: #1d3a2e; color: white; padding: 7px 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .rasci-table td { padding: 7px 12px; border-bottom: 1px solid #f0f2f0; }
+  .rasci-table tr:last-child td { border-bottom: none; }
+  .rasci-table tr:nth-child(even) td { background: #f9faf9; }
+  .rasci-r { font-weight: 700; color: #155724; background: #d4edda; padding: 2px 7px; border-radius: 4px; font-size: 11px; }
+  .rasci-a { font-weight: 700; color: #004085; background: #cce5ff; padding: 2px 7px; border-radius: 4px; font-size: 11px; }
+
+  /* Roadmap table */
+  .roadmap-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  .roadmap-table th { background: #f0f2f0; color: #555; padding: 7px 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #ddd; }
+  .roadmap-table td { padding: 9px 12px; border-bottom: 1px solid #f0f2f0; vertical-align: top; }
+  .roadmap-table tr:hover td { background: #fafcfa; }
+  .due-near { color: #c45c00; font-weight: 600; }
+
+  /* Config note */
+  .config-note { background: #fff8e1; border: 1px solid #ffcc02; border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 16px; color: #664d00; }
+  .config-note strong { display: block; margin-bottom: 4px; }
+
+  /* Divider */
+  .section-divider { height: 1px; background: #e8ebe8; margin: 20px 0; }
+
+  /* Footer */
+  .footer { text-align: center; font-size: 11px; color: #aaa; margin-top: 24px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="meta">Groupon Gifting · BuyBox Third-Party Gift Card Distribution</div>
+    <h1>Iteration Report</h1>
+    <div class="iteration-name">Week 1 — Gate 0 &amp; Engineering Kickoff</div>
+    <div class="meta" style="margin-top:8px;">Apr 8 – Apr 15, 2026 &nbsp;·&nbsp; Generated Apr 15, 2026 &nbsp;·&nbsp; DRI: Linda Vavrikova</div>
+  </div>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <div class="card">
+    <h2>Executive Summary</h2>
+    <div class="exec-summary">
+      <div>
+        <div class="gate-badge gate-continue-flag">
+          <div class="gate-label">Gate Decision</div>
+          <div class="gate-value">CONTINUE</div>
+          <div class="gate-rate">Low confidence · 0% delivery rate</div>
+        </div>
+        <div style="margin-top:10px;">
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-label">Tickets Done</div>
+              <div class="stat-value">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">In Progress</div>
+              <div class="stat-value">3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="exec-text">
+        <p>This sprint was a <strong>contract &amp; legal sprint</strong> — the core milestone was advancing the BuyBox MSA to final form (✅ achieved). Engineering kicked off Apr 13 as planned. Zero Jira tickets were completed, but this is expected for a pre-start phase focused on legal and scoping work.</p>
+        <p style="margin-top:10px;">Two risks require immediate attention: the <strong>Lekkerland contract remains unsigned</strong> (Benjamin Hoelbeck / ePay blocking), and <strong>BuyBox Appendix 1</strong> has not been delivered, both of which sit on the critical path to the Apr 30 Gate 0 deadline.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ITERATION RESULTS -->
+  <div class="card">
+    <h2>Iteration Results</h2>
+
+    <div class="ticket-list">
+      <div class="section-label">✅ Completed — BuyBox Integration (0)</div>
+      <div class="ticket-row">
+        <div class="ticket-summary" style="color:#aaa; font-style:italic;">No tickets completed in this window. Engineering in pre-start phase — kickoff Apr 13.</div>
+      </div>
+
+      <div class="section-label">🔄 In Progress — BuyBox Integration (3)</div>
+      <div class="ticket-row inprogress">
+        <div class="ticket-key">GPD-190</div>
+        <div>
+          <div class="ticket-summary">Reject gift card redemption requests without a valid user UUID</div>
+          <div style="margin-top:4px;"><span class="badge badge-buybox">BuyBox Integration</span> <span class="ticket-status status-qa">QA</span></div>
+        </div>
+        <div class="ticket-assignee">Rahul Agrawal</div>
+      </div>
+      <div class="ticket-row inprogress">
+        <div class="ticket-key">GPD-171</div>
+        <div>
+          <div class="ticket-summary">Implement two-step BuyBox redemption flow in Encore with error handling &amp; currency validation</div>
+          <div style="margin-top:4px;"><span class="badge badge-buybox">BuyBox Integration</span> <span class="ticket-status">Backlog</span></div>
+        </div>
+        <div class="ticket-assignee">Rahul Agrawal</div>
+      </div>
+      <div class="ticket-row inprogress">
+        <div class="ticket-key">GPD-170</div>
+        <div>
+          <div class="ticket-summary">Implement BuyBox NVP API client in Encore</div>
+          <div style="margin-top:4px;"><span class="badge badge-buybox">BuyBox Integration</span> <span class="ticket-status">Backlog</span></div>
+        </div>
+        <div class="ticket-assignee">Rahul Agrawal</div>
+      </div>
+    </div>
+
+    <div class="config-note" style="margin-top:12px;">
+      <strong>⚠ Config note</strong>
+      Rahul Agrawal (Engineering) owns all active Jira tickets but is not yet in the team config. Add his Jira account ID to enable Tempo time tracking in future sprints.
+    </div>
+  </div>
+
+  <!-- KEY LEARNINGS -->
+  <div class="card">
+    <h2>Key Learnings</h2>
+    <div class="learnings-grid">
+      <div class="learnings-col worked">
+        <h4>✅ What Worked</h4>
+        <ul>
+          <li>BuyBox MSA reached final form — terms resolved (150% liability cap, ~40-day settlement, no fraud set-off); Coupa PO queued</li>
+          <li>Engineering kickoff completed Apr 13 — team aligned on Phase 1 API scope</li>
+          <li>Engineering Bet fixes delivered by Dennis → re-review with Marie, unblocking Q2 foundational gifting engineering</li>
+          <li>German 3PIP deals decision made: enable 241 deals in next sprint (Apr 15 Gifting Sync)</li>
+          <li><strong>✅ Lekkerland / ePay contract signed Apr 13</strong> — Benjamin Holbeck confirmed. Soft launch planned end of April; pilot revised to 2 PoS initially (Lekkerland supply chain delay on vending machines)</li>
+          <li>Giftability Scoring Framework v1 complete — Supply Depth Bet advancing in parallel</li>
+        </ul>
+      </div>
+      <div class="learnings-col didnt">
+        <h4>⚠️ What Didn't Work</h4>
+        <ul>
+          <li>Lekkerland vending machine supply chain delay — reduces pilot from 50 to 2 PoS initially; soft launch end of April instead of May 7</li>
+          <li>BuyBox Appendix 1 still pending on BuyBox side — blocks final MSA completion</li>
+          <li>Dynamic gift card experiment paused — awaiting Carl's kill/ship decision; consumes team attention</li>
+          <li>GPD-190 in QA but not merged — validation of user UUID check not yet closed</li>
+          <li>Tempo not responding — no time tracking data available for this sprint</li>
+          <li>Recipient enablement blocked pending Pavel Cerník coordination (broader gifting risk)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="card">
+    <h2>Next Steps</h2>
+    <ul class="next-steps-list">
+      <li>
+        <div>
+          <div><strong>Sign BuyBox MSA</strong> — contract in final form; execute signature</div>
+          <div class="step-owner">Roberto Fiorenza · Linda Vavrikova &nbsp;<span class="step-date">Target: Apr 17</span></div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div><strong>Chase BuyBox Appendix 1</strong> — T&amp;Cs, min/max, 15% commission, MPV/SPV still on BuyBox side</div>
+          <div class="step-owner">Linda Vavrikova &nbsp;<span class="step-date">⚠ Blocks Gate 0</span></div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div><strong>Confirm Lekkerland soft launch logistics</strong> — contract ✅ signed Apr 13; align on 2 PoS launch scope, voucher code supply, iKiosk setup timeline with Benjamin/ePay</div>
+          <div class="step-owner">Nada Moravcikova &nbsp;<span class="step-date">Target: end of April</span></div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div><strong>Finalize API scope + create Jira tickets</strong> — activation, redemption, webhook, pipeline, monitoring (~8 MD)</div>
+          <div class="step-owner">Dennis Otto · Rahul Agrawal &nbsp;<span class="step-date">By Apr 22</span></div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div><strong>Schedule Epay commercial intro meeting</strong> — already on BuyBox network, no engineering needed for Phase 4</div>
+          <div class="step-owner">Quentin Fodda &nbsp;<span class="step-date">By Apr 22</span></div>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div><strong>Add Rahul Agrawal Jira account ID to team config</strong> — enables Tempo time tracking</div>
+          <div class="step-owner">Linda Vavrikova (config update)</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- GROW² NEXT ITERATION -->
+  <div class="card">
+    <h2>GROW² — Next Iteration (Apr 15–28)</h2>
+
+    <div class="grow-grid">
+      <div class="grow-block full">
+        <h4>Goal</h4>
+        <p>Close Gate 0 completely (BuyBox MSA signed, Lekkerland contract signed) and transition the bet from legal groundwork into active engineering delivery — BuyBox API scope finalized and Jira sprint backlog populated and ready to build by end of sprint.</p>
+      </div>
+
+      <div class="grow-block">
+        <h4>Results &amp; Kill Gates</h4>
+        <ul>
+          <li>Gate 0 cleared (binary) — MSA + Lekkerland signed</li>
+          <li>API Jira backlog created (binary) — T3 sprint ready</li>
+          <li>Hard deadline: Apr 30 — both items required to unblock Phase 1</li>
+        </ul>
+      </div>
+
+      <div class="grow-block">
+        <h4>Workplan by Stream</h4>
+        <ul>
+          <li><span class="badge badge-buybox">BuyBox</span> MSA signature + Appendix 1 — 2–3 days</li>
+          <li><span class="badge badge-buybox">BuyBox</span> API scope agreed + Jira tickets — 3–5 days</li>
+          <li><span class="badge badge-buybox">BuyBox</span> Epay intro meeting scheduled — 1 day</li>
+          <li><span class="badge badge-lekkerland">Lekkerland</span> Contract follow-up + GC code list — ongoing</li>
+          <li><span class="badge badge-lekkerland">Lekkerland</span> Pilot setup prep (50 PoS, 500 codes) — 3 days post-contract</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Owners (RASCI)</h3>
+    <table class="rasci-table">
+      <thead>
+        <tr><th>Role</th><th>People</th><th>Area</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="rasci-r">R</span></td><td>Linda Vavrikova, Roberto Fiorenza</td><td>MSA &amp; Legal</td></tr>
+        <tr><td><span class="rasci-r">R</span></td><td>Nada Moravcikova</td><td>Lekkerland contract</td></tr>
+        <tr><td><span class="rasci-r">R</span></td><td>Dennis Otto, Rahul Agrawal</td><td>API scope &amp; Jira</td></tr>
+        <tr><td><span class="rasci-a">A</span></td><td>Marie Havlíčková</td><td>All</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- APPENDIX: ROADMAP -->
+  <div class="card">
+    <h2>Appendix — Roadmap</h2>
+    <table class="roadmap-table">
+      <thead>
+        <tr><th>Item</th><th>Stream</th><th>Owner</th><th>Due</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>GROW T1 — Gate 0 &amp; Legal</strong><br><span style="color:#666;font-size:12px;">Execute MSA · Whitelist Lekkerland email · Create 5 non-public deals on Groupon.de</span></td>
+          <td><span class="badge badge-buybox">BuyBox</span></td>
+          <td>Linda / Roberto</td>
+          <td class="due-near">Apr 30</td>
+        </tr>
+        <tr>
+          <td><strong>API Scoped + Jira Tickets Created</strong><br><span style="color:#666;font-size:12px;">~8 MD effort. Dependent on Gate 0.</span></td>
+          <td><span class="badge badge-buybox">BuyBox</span></td>
+          <td>Dennis Otto</td>
+          <td class="due-near">Apr 30</td>
+        </tr>
+        <tr>
+          <td><strong>Pilot Soft Launch: 2 iKiosk PoS</strong><br><span style="color:#666;font-size:12px;">✅ Contract signed Apr 13. Supply chain delay reduced scope to 2 PoS initially → scale to 50 PoS when vending machines available</span></td>
+          <td><span class="badge badge-lekkerland">Lekkerland</span></td>
+          <td>Nada Moravcikova</td>
+          <td>May 7</td>
+        </tr>
+        <tr>
+          <td><strong>Start Epay Commercial Conversation</strong><br><span style="color:#666;font-size:12px;">Phase 4 potential: €10–30m GMV. BuyBox already integrated.</span></td>
+          <td><span class="badge badge-buybox">BuyBox</span></td>
+          <td>Quentin Fodda</td>
+          <td>May 15</td>
+        </tr>
+        <tr>
+          <td><strong>Pilot Mid-Check: Operations &amp; SLAs (Week 4)</strong></td>
+          <td><span class="badge badge-lekkerland">Lekkerland</span></td>
+          <td>Nada Moravcikova</td>
+          <td>Jun 1</td>
+        </tr>
+        <tr>
+          <td><strong>BuyBox API Live in 1 Country — end-to-end validated</strong><br><span style="color:#666;font-size:12px;">Reconciliation ≥99.5%. Fraud monitoring active.</span></td>
+          <td><span class="badge badge-buybox">BuyBox</span></td>
+          <td>Dennis Otto</td>
+          <td>Jun 30</td>
+        </tr>
+        <tr>
+          <td><strong>Lekkerland Pilot Gate: GMV ≥ €0.4–0.6m → Phase 2 go/no-go</strong></td>
+          <td><span class="badge badge-lekkerland">Lekkerland</span></td>
+          <td>Linda Vavrikova</td>
+          <td>Jun 30</td>
+        </tr>
+        <tr>
+          <td><strong>Phase 2 Plan: BuyBox EU 5 markets + Lekkerland 1,000 PoS</strong></td>
+          <td><span class="badge badge-buybox">BuyBox</span></td>
+          <td>Linda Vavrikova</td>
+          <td>Jul 15</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Generated by Cowork · BuyBox 3P Gift Card Distribution · Apr 15, 2026 &nbsp;·&nbsp; DRI: Linda Vavrikova
+  </div>
+
+</div>
+</body>
+</html>

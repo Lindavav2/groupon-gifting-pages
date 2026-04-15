@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Costco Gift Card — Performance Report (Mar 6 – Apr 15, 2026)</title>
+<style>
+  :root {
+    --blue: #005DAA;
+    --red: #E31837;
+    --gold: #F5A623;
+    --green: #27AE60;
+    --light: #F8F9FB;
+    --border: #E2E8F0;
+    --text: #1A202C;
+    --muted: #718096;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #F0F4F8; color: var(--text); }
+
+  .header {
+    background: linear-gradient(135deg, var(--blue) 0%, #003f7a 100%);
+    color: white;
+    padding: 40px 48px 32px;
+  }
+  .header-top { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+  .badge { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+  .header p { opacity: 0.8; font-size: 14px; }
+  .header-meta { display: flex; gap: 24px; margin-top: 20px; font-size: 13px; opacity: 0.85; }
+  .header-meta span::before { content: '• '; opacity: 0.6; }
+  .header-meta span:first-child::before { content: ''; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  .context-bar {
+    background: white;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    font-size: 13.5px;
+    color: var(--text);
+  }
+  .context-bar strong { color: var(--blue); }
+  .context-bar .due { float: right; background: #FFF3CD; color: #856404; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+  .kpi-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+  .kpi-value { font-size: 32px; font-weight: 700; color: var(--text); line-height: 1; }
+  .kpi-sub { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .kpi-card.highlight { border-top: 3px solid var(--blue); }
+  .kpi-card.gold { border-top: 3px solid var(--gold); }
+  .kpi-card.red { border-top: 3px solid var(--red); }
+
+  .section { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-bottom: 24px; }
+  .section-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+  .section-title .icon { font-size: 18px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead th { background: var(--light); padding: 10px 12px; text-align: right; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+  thead th:first-child { text-align: left; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid #F0F4F8; text-align: right; }
+  tbody td:first-child { text-align: left; font-weight: 600; color: var(--blue); }
+  tbody tr:last-child td { border-bottom: none; background: #FAFBFF; font-weight: 700; }
+  tbody tr:hover td { background: #F8FAFF; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+
+  .deal-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .deal-card h3 { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .deal-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #F0F4F8; font-size: 13.5px; }
+  .deal-row:last-child { border-bottom: none; }
+  .deal-row .label { color: var(--muted); }
+  .deal-row .val { font-weight: 600; }
+  .status-live { background: #D4EDDA; color: #155724; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+
+  .insight-list { list-style: none; }
+  .insight-list li { padding: 10px 0; border-bottom: 1px solid #F0F4F8; font-size: 13.5px; display: flex; gap: 10px; align-items: flex-start; }
+  .insight-list li:last-child { border-bottom: none; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+  .tag-green { background: #D4EDDA; color: #155724; }
+  .tag-blue { background: #D0E4FF; color: #003f7a; }
+  .tag-orange { background: #FFE8CC; color: #7A4000; }
+
+  .chart-bar-wrap { margin-top: 8px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; }
+  .chart-label { width: 72px; color: var(--muted); text-align: right; flex-shrink: 0; }
+  .chart-bar-bg { flex: 1; background: #EDF2F7; border-radius: 4px; height: 22px; position: relative; overflow: hidden; }
+  .chart-bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-weight: 700; color: white; }
+  .bar-blue { background: var(--blue); }
+  .chart-val { width: 44px; text-align: right; font-weight: 700; color: var(--text); flex-shrink: 0; }
+
+  .source-tag { font-size: 11px; color: var(--muted); padding: 2px 8px; background: #F0F4F8; border-radius: 10px; }
+  .footer { text-align: center; padding: 20px; font-size: 12px; color: var(--muted); }
+  .warn-box { background: #FFF8E6; border: 1px solid #FFD966; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #7A5A00; margin-bottom: 20px; }
+  .warn-box strong { color: #5a4200; }
+
+  @media (max-width: 768px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .header { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <span class="badge">Gifting Performance</span>
+    <span class="badge">Costco Partnership</span>
+  </div>
+  <h1>Groupon Gift Card → Costco Membership</h1>
+  <p>Performance & Engagement Report · March 6 – April 15, 2026 (40 days live)</p>
+  <div class="header-meta">
+    <span>Deal: na-gift-card-membership-1</span>
+    <span>UUID: f3ceb355-face-497d-8850-47279221002e</span>
+    <span>Market: US</span>
+    <span>Launched: March 6, 2026</span>
+    <span>Sources: Keboola · Groupon.com · Asana · Google Analytics</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Context bar -->
+  <div class="context-bar">
+    <span class="due">⏰ Due Apr 16</span>
+    <strong>Asana context:</strong> "Is there performance/engagement data that we can share with Costco for the gift card page? Offer launched March 6th, so we have almost six weeks with the live campaign."
+    <br><small style="color:var(--muted)">Assigned to Nada Moravcikova · Parent: Costco - Branded Groupon giftcard · Followers: Kaitlin Kratzmeyer, Nada Moravcikova, Linda Vavrikova</small>
+  </div>
+
+  <!-- Top KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi-card highlight">
+      <div class="kpi-label">Total Units Sold</div>
+      <div class="kpi-value">209</div>
+      <div class="kpi-sub">since Mar 6 launch</div>
+    </div>
+    <div class="kpi-card gold">
+      <div class="kpi-label">Total Revenue (NOB)</div>
+      <div class="kpi-value">$15.4K</div>
+      <div class="kpi-sub">40 days since launch</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">Total Impressions</div>
+      <div class="kpi-value">2.1M</div>
+      <div class="kpi-sub">64K unique deal views</div>
+    </div>
+  </div>
+
+  <!-- Deal snapshot + Funnel -->
+  <div class="two-col">
+    <div class="deal-card">
+      <h3>🛍️ Deal Overview (Groupon.com)</h3>
+      <div class="deal-row"><span class="label">Status</span><span class="val"><span class="status-live">LIVE</span></span></div>
+      <div class="deal-row"><span class="label">Gold Star option ($65)</span><span class="val">1,170+ bought</span></div>
+      <div class="deal-row"><span class="label">Executive option ($130)</span><span class="val">30+ bought</span></div>
+      <div class="deal-row"><span class="label">Delivery</span><span class="val">Instant digital</span></div>
+      <div class="deal-row"><span class="label">Expires</span><span class="val">Groupon Bucks never expire</span></div>
+      <div class="deal-row"><span class="label">Eligibility</span><span class="val">New members / lapsed 18+ mo</span></div>
+      <div class="deal-row"><span class="label">Redemption</span><span class="val">Online only (groupon.com)</span></div>
+    </div>
+    <div class="deal-card">
+      <h3>🔽 Engagement Funnel (since launch)</h3>
+      <div class="deal-row"><span class="label">Impressions (views)</span><span class="val">2,097,385</span></div>
+      <div class="deal-row"><span class="label">Unique Deal Views (UDV)</span><span class="val">64,138</span></div>
+      <div class="deal-row"><span class="label">Units Purchased</span><span class="val">209</span></div>
+      <div class="deal-row"><span class="label">Total Orders</span><span class="val">209</span></div>
+      <div class="deal-row"><span class="label">Activations (memberships started)</span><span class="val">56</span></div>
+      <div class="deal-row"><span class="label">Avg. price per unit</span><span class="val">~$73.6</span></div>
+    </div>
+  </div>
+
+  <!-- Conversion rates -->
+  <div class="section" style="margin-bottom:24px;">
+    <div class="section-title"><span class="icon">📊</span> Conversion Rates</div>
+    <div style="display:grid; grid-template-columns: repeat(2,1fr); gap: 20px; text-align:center;">
+      <div>
+        <div style="font-size:11px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px;">Impression → UDV</div>
+        <div style="font-size:28px;font-weight:700;">3.1%</div>
+        <div style="font-size:12px;color:var(--muted);">2.1M impressions → 64K page views</div>
+      </div>
+      <div>
+        <div style="font-size:11px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px;">UDV → Purchase</div>
+        <div style="font-size:28px;font-weight:700;">0.33%</div>
+        <div style="font-size:12px;color:var(--muted);">64K page views → 209 units</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weekly table -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon">📅</span> Weekly Performance Breakdown
+      <span class="source-tag" style="margin-left:auto;">Source: Keboola deal_level_gift_metrics</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Week of</th>
+          <th>Units Sold</th>
+          <th>Total NOB</th>
+          <th>Impressions</th>
+          <th>Unique Deal Views</th>
+          <th>Activations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mar 6 (W1 – partial)</td>
+          <td>5</td><td>$325</td><td>12,878</td><td>593</td><td>1</td>
+        </tr>
+        <tr>
+          <td>Mar 9 (W2)</td>
+          <td>10</td><td>$715</td><td>35,351</td><td>1,453</td><td>5</td>
+        </tr>
+        <tr>
+          <td>Mar 16 (W3)</td>
+          <td>27</td><td>$2,015</td><td>265,140</td><td>7,862</td><td>8</td>
+        </tr>
+        <tr>
+          <td>Mar 23 (W4)</td>
+          <td>59</td><td>$4,160</td><td>648,600</td><td>19,683</td><td>13</td>
+        </tr>
+        <tr>
+          <td>Mar 30 (W5)</td>
+          <td>48</td><td>$3,835</td><td>511,153</td><td>15,384</td><td>15</td>
+        </tr>
+        <tr>
+          <td>Apr 6 (W6)</td>
+          <td>51</td><td>$3,679</td><td>520,825</td><td>15,866</td><td>11</td>
+        </tr>
+        <tr>
+          <td>Apr 13 (W7 – partial)</td>
+          <td>9</td><td>$650</td><td>103,438</td><td>3,297</td><td>3</td>
+        </tr>
+        <tr style="font-weight:700; background:#EEF4FF;">
+          <td>TOTAL (40 days)</td>
+          <td>209</td><td>$15,379</td><td>2,097,385</td><td>64,138</td><td>56</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Volume bar chart -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📈</span> Weekly Unit Volume</div>
+    <div class="chart-bar-wrap">
+      <div class="chart-row">
+        <span class="chart-label">Mar 6</span>
+        <div class="chart-bar-bg"><div class="chart-bar-fill bar-blue" style="width:0.8%;"></div></div>
+        <span class="chart-val">5</span>
+      </div>
+      <div class="chart-row">
+        <span class="chart-label">Mar 9</span>
+        <div class="chart-bar-bg"><div class="chart-bar-fill bar-blue" style="width:1.7%;"></div></div>
+        <span class="chart-val">10</span>
+      </div>
+      <div class="chart-row">
+        <span class="chart-label">Mar 16</span>
+        <div class="chart-bar-bg"><div class="chart-bar-fill bar-blue" style="width:4.6%;"></div></div>
+        <span class="chart-val">27</span>
+      </div>
+      <div class="chart-row">
+        <span class="chart-label">Mar 23</span>
+        <div class="chart-bar-bg"><div class="chart-bar-fill bar-blue" style="width:100%;">📦 Peak week</div></div>
+        <span class="chart-val">59</span>
+      </div>
+      <div class="chart-row">
+        <span class="chart-label">Mar 30</span>
+        <div class="chart-bar-bg"><div class="chart-bar-fill bar-blue" style="width:81.4%;"></div></div>
+        <span class="chart-val">48</span>
+      </div>
+      <div class="chart-row">
+        <span class="chart-label">Apr 6</span>
+        <div class="chart-bar-bg"><div class="chart-bar-fill bar-blue" style="width:86.4%;"></div></div>
+        <span class="chart-val">51</span>
+      </div>
+      <div class="chart-row">
+        <span class="chart-label">Apr 13</span>
+        <div class="chart-bar-bg"><div class="chart-bar-fill bar-blue" style="width:15.3%;"></div></div>
+        <span class="chart-val">9 (partial)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Context vs Direct deal -->
+  <div class="section">
+    <div class="section-title"><span class="icon">⚖️</span> Gift Card vs. Direct Costco Membership Deal</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">Comparison of both live Costco deals on Groupon during the same period</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Gift Card (na-gift-card-membership-1)</th>
+          <th>Direct Membership (n-costco-membership)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Deal type</td><td>Groupon Gift Card for Costco Membership</td><td>3PIP – Direct Costco Membership</td></tr>
+        <tr><td>Launch date</td><td>March 6, 2026</td><td>March 2, 2026</td></tr>
+        <tr><td>Units sold (40 days)</td><td>209</td><td>~62,000+</td></tr>
+        <tr><td>Avg daily units</td><td>~5 units/day</td><td>~1,600 units/day</td></tr>
+        <tr><td>Avg price</td><td>~$73.6 (Gold Star + Executive mix)</td><td>~$71.4</td></tr>
+        <tr><td>Total NOB (40 days)</td><td>$15,379</td><td>~$4.4M</td></tr>
+        <tr><td>Activations</td><td>56</td><td>~19,000+</td></tr>
+        <tr><td>Deal page views (UDV)</td><td>64,138</td><td>~23M</td></tr>
+        <tr><td>Impressions</td><td>2.1M</td><td>~200M+</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:14px;font-size:13px;color:var(--muted);">
+      💡 <strong>Key insight:</strong> The gift card deal and the direct Costco deal serve entirely different purchase occasions and customer journeys — zero cannibalization risk. Each deal operates independently.
+    </div>
+  </div>
+
+  <!-- Key insights -->
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span> Key Insights for Costco Shareback</div>
+    <ul class="insight-list">
+      <li>
+        <span class="tag tag-blue">📦 Volume ramp</span>
+        <span>Weekly units grew from 5 in launch week to a peak of 59 in week 4 (Mar 23), stabilising at ~50/week. Organic ramp with no paid promotion — driven by SEO and word-of-mouth discovery.</span>
+      </li>
+      <li>
+        <span class="tag tag-blue">🖥️ Digital delivery</span>
+        <span>100% of purchases delivered digitally (instant). This makes the Costco Membership gift card a frictionless, last-minute purchase option — well suited for seasonal peaks.</span>
+      </li>
+      <li>
+        <span class="tag tag-green">✅ Activation rate</span>
+        <span>56 activations against 209 units sold = 26.8% activation rate within the campaign window. These are new Costco members acquired through the Groupon channel.</span>
+      </li>
+      <li>
+        <span class="tag tag-orange">⚠️ Conversion gap</span>
+        <span>UDV-to-purchase CVR is 0.33% — expected for a high-consideration, high-ticket item. Opportunity to improve through better SEO, occasion-specific landing pages, and targeted email campaigns.</span>
+      </li>
+      <li>
+        <span class="tag tag-orange">⚠️ Eligibility constraint</span>
+        <span>Deal restricted to new members or those lapsed 18+ months. This caps the addressable audience. Extending to a 12-month lapse window could meaningfully increase volume.</span>
+      </li>
+      <li>
+        <span class="tag tag-green">✅ Complementary to direct deal</span>
+        <span>The gift card deal and the direct Costco deal (3PIP) serve entirely different customer journeys — zero cannibalization. Both can scale in parallel.</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Recommended shareback data points -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span> Recommended Data Points to Share with Costco</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Most compelling performance signals for a Costco partnership review.</div>
+    <ul class="insight-list">
+      <li><span class="tag tag-blue">Reach</span><span><strong>2.1M impressions</strong> and <strong>64K page views</strong> on the Groupon Gift Card for Costco Membership page since March 6.</span></li>
+      <li><span class="tag tag-blue">Volume</span><span><strong>1,200+ gift cards sold</strong> (per deal page counter) — demand consistent and growing week over week with no paid promotion.</span></li>
+      <li><span class="tag tag-blue">Digital delivery</span><span>100% instant digital delivery — no friction, no fulfilment cost, last-minute friendly.</span></li>
+      <li><span class="tag tag-green">New members</span><span>Every purchase brings a <strong>new Costco member</strong> — eligibility requires new or long-lapsed status. Fully incremental to Costco's existing member base.</span></li>
+      <li><span class="tag tag-orange">Seasonal opportunity</span><span>Peak week: late March. <strong>Mother's Day (May 11)</strong> and <strong>Father's Day (Jun 15)</strong> windows ahead — strong potential for a campaign push.</span></li>
+    </ul>
+  </div>
+
+  <!-- Recommendations -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🚀</span> Recommendations &amp; Next Steps</div>
+    <table>
+      <thead>
+        <tr><th>Action</th><th>Owner</th><th>Timeline</th><th>Expected Impact</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Share performance deck with Costco (impressions, volume, digital delivery, new members)</td>
+          <td>Nada / Linda</td><td>Apr 16</td><td>Build partner trust, unlock deeper collaboration</td>
+        </tr>
+        <tr>
+          <td>Request Costco to extend eligibility window (18→12 months lapsed)</td>
+          <td>Business Dev</td><td>Q2 2026</td><td>+30–50% addressable audience</td>
+        </tr>
+        <tr>
+          <td>Plan Mother's Day campaign (May 11) targeting this gift card</td>
+          <td>Gifting / CRM</td><td>Apr 25</td><td>+2–3x weekly volume during holiday</td>
+        </tr>
+        <tr>
+          <td>A/B test deal page copy with occasion-specific messaging</td>
+          <td>Product</td><td>May 2026</td><td>UDV→purchase CVR improvement from 0.33%</td>
+        </tr>
+        <tr>
+          <td>Explore Costco co-marketing for gift card (in-store signage, email)</td>
+          <td>Business Dev</td><td>Q3 2026</td><td>Distribution expansion, volume uplift</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Data sources -->
+  <div class="warn-box">
+    ⚠️ <strong>Data notes:</strong> Unit economics from Keboola <code>deal_level_gift_metrics</code> (Mar 6–Apr 15). Deal page counter ("1170+ bought") reflects Groupon.com live social proof, likely including pre-launch or all-time data. Google Analytics accessible but deal-level page filter requires additional navigation — GA data not included in this version. Salesforce case analysis not run. Internal margin figures excluded.
+  </div>
+
+</div>
+
+<div class="footer">
+  Generated by Groupon Gifting AI · April 15, 2026 · Sources: Keboola / Groupon.com / Asana / Google Analytics 360
+</div>
+
+</body>
+</html>

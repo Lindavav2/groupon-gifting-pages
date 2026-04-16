@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBR Gifting — March 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; font-size: 14px; color: #1a1a1a; background: #f4f6f9; }
+
+  .page { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+
+  /* Header */
+  .doc-header { background: #1B3A5C; color: white; padding: 36px 40px 28px; border-radius: 10px; margin-bottom: 28px; }
+  .doc-header h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.5px; }
+  .doc-header .sub { font-size: 14px; color: #a8c4e0; margin-top: 6px; }
+
+  /* Section breaks */
+  .section { background: white; border-radius: 10px; padding: 28px 32px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .section-title { font-size: 20px; font-weight: 700; color: #1B3A5C; border-bottom: 2px solid #EDF4FB; padding-bottom: 10px; margin-bottom: 18px; }
+  .sub-title { font-size: 15px; font-weight: 700; color: #2C5F8A; margin: 20px 0 10px; }
+
+  /* Verdict box */
+  .verdict { background: #E6F4EA; border-left: 5px solid #1A7A32; border-radius: 6px; padding: 14px 18px; font-size: 14px; color: #1A4A25; font-weight: 600; line-height: 1.6; margin-bottom: 20px; }
+
+  /* KPI grid */
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+  .kpi-card { background: #f8fafc; border-radius: 8px; padding: 14px 12px; border-top: 3px solid #1B3A5C; }
+  .kpi-card .val { font-size: 22px; font-weight: 800; color: #1B3A5C; }
+  .kpi-card .lbl { font-size: 11px; color: #666; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .kpi-card .delta { font-size: 12px; font-weight: 700; color: #1A7A32; margin-top: 4px; }
+  .kpi-card .delta.neg { color: #C0001E; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 4px; }
+  thead tr { background: #1B3A5C; color: white; }
+  thead th { padding: 9px 10px; text-align: left; font-weight: 600; font-size: 12px; }
+  thead th.center { text-align: center; }
+  tbody tr:nth-child(even) { background: #EDF4FB; }
+  tbody tr:nth-child(odd) { background: white; }
+  tbody td { padding: 8px 10px; border-bottom: 1px solid #e8ecf0; vertical-align: middle; line-height: 1.4; }
+  tbody td.center { text-align: center; }
+  tbody td.bold { font-weight: 700; }
+  tbody td.green { color: #1A7A32; font-weight: 600; }
+  tbody td.red { color: #C0001E; font-weight: 600; }
+  tbody td.orange { color: #B85C00; font-weight: 600; }
+  tbody td.navy { color: #1B3A5C; font-weight: 700; }
+
+  /* Status pills */
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+  .pill.green { background: #E6F4EA; color: #1A7A32; }
+  .pill.orange { background: #FFF3E0; color: #B85C00; }
+  .pill.red { background: #FDECEA; color: #C0001E; }
+
+  /* Flag rows */
+  .flag-list { display: flex; flex-direction: column; gap: 8px; }
+  .flag { display: flex; align-items: flex-start; gap: 12px; border-radius: 6px; padding: 10px 14px; }
+  .flag.red { background: #FFF5F5; border-left: 4px solid #C0001E; }
+  .flag.orange { background: #FFFBF0; border-left: 4px solid #B85C00; }
+  .flag.green { background: #F0FFF4; border-left: 4px solid #1A7A32; }
+  .flag-tag { font-size: 11px; font-weight: 800; min-width: 60px; padding-top: 1px; }
+  .flag.red .flag-tag { color: #C0001E; }
+  .flag.orange .flag-tag { color: #B85C00; }
+  .flag.green .flag-tag { color: #1A7A32; }
+  .flag-body { font-size: 13px; color: #333; line-height: 1.5; }
+  .flag-body strong { color: #111; }
+
+  /* Initiative status table */
+  .status-table td.status-cell { text-align: center; }
+
+  /* Bullet list */
+  .bullets { list-style: none; padding: 0; }
+  .bullets li { padding: 5px 0 5px 18px; position: relative; font-size: 13px; line-height: 1.55; color: #333; border-bottom: 1px solid #f0f2f5; }
+  .bullets li:last-child { border-bottom: none; }
+  .bullets li::before { content: "•"; position: absolute; left: 0; color: #2C5F8A; font-weight: 700; }
+  .bullets li strong { color: #1B3A5C; }
+
+  /* Priority table number */
+  td.prio-num { font-size: 18px; font-weight: 800; text-align: center; width: 36px; }
+
+  /* Page nav */
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .toc a { background: #1B3A5C; color: white; padding: 6px 14px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: 600; opacity: 0.85; transition: opacity 0.15s; }
+  .toc a:hover { opacity: 1; }
+
+  /* Note */
+  .note { background: #f8f9fa; border-left: 3px solid #ccc; padding: 8px 14px; font-size: 12px; color: #666; border-radius: 0 4px 4px 0; margin-top: 10px; }
+
+  /* Footer */
+  .doc-footer { text-align: center; font-size: 11px; color: #aaa; padding: 20px 0 40px; }
+
+  @media print {
+    body { background: white; }
+    .page { padding: 16px; }
+    .toc { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <h1>MBR Gifting</h1>
+    <div class="sub">March 2026 &nbsp;·&nbsp; Business Owner: Linda Vavrikova &nbsp;·&nbsp; Audience: STEAM Leadership</div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="toc">
+    <a href="#exec">Executive Summary</a>
+    <a href="#perf">Performance</a>
+    <a href="#ytd">YTD & Strategy</a>
+    <a href="#supply">Sales & Supply</a>
+    <a href="#marketing">Marketing</a>
+    <a href="#go-product">GO & Product</a>
+    <a href="#outlook">Outlook: April</a>
+  </div>
+
+  <!-- ── PAGE 1: EXECUTIVE SUMMARY ── -->
+  <div class="section" id="exec">
+    <div class="section-title">Executive Summary</div>
+
+    <div class="verdict">
+      Gifting outperformed the overall business for the 3rd consecutive month. Gift M1+VFM grew +10.1% YoY while overall M1+VFM declined -0.84%. Q1 closed at $11.67M (+9.2% vs Q1 2025). INTL led growth — FR +72%, DE +37%, UK +20%. Two distribution bets (BuyBox, Lekkerland) remain blocked at contract stage.
+    </div>
+
+    <!-- KPI grid -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="val">$3.79M</div>
+        <div class="lbl">Gift M1+VFM</div>
+        <div class="delta">▲ +10.1% YoY</div>
+      </div>
+      <div class="kpi-card">
+        <div class="val">10.18%</div>
+        <div class="lbl">Gift M1+VFM %</div>
+        <div class="delta">▲ +101 bps</div>
+      </div>
+      <div class="kpi-card">
+        <div class="val">251,938</div>
+        <div class="lbl">Gift Orders</div>
+        <div class="delta">▲ +8.7% YoY</div>
+      </div>
+      <div class="kpi-card">
+        <div class="val">10.80%</div>
+        <div class="lbl">Gift Order %</div>
+        <div class="delta">▲ +124 bps</div>
+      </div>
+      <div class="kpi-card">
+        <div class="val">$57.40</div>
+        <div class="lbl">Gift AOV</div>
+        <div class="delta">▲ +$2.46 (+4.5%)</div>
+      </div>
+    </div>
+
+    <!-- Flags -->
+    <div class="sub-title">Flags & Escalations</div>
+    <div class="flag-list">
+      <div class="flag red"><div class="flag-tag">BLOCKED</div><div class="flag-body"><strong>BuyBox MSA</strong> — Substantive issues resolved. Blocked by Groupon Procurement March 26. No resolution date. ~$1.5–2M annual M1+VFM at stake.</div></div>
+      <div class="flag red"><div class="flag-tag">BLOCKED</div><div class="flag-body"><strong>Lekkerland</strong> — Contract in legal review, unsigned at month-end. Est. ~$1M+ M1+VFM/year.</div></div>
+      <div class="flag orange"><div class="flag-tag">WATCH</div><div class="flag-body"><strong>UAE performance</strong> — Gift M1+VFM -47% YoY ($27K vs $51K). Root cause under investigation.</div></div>
+      <div class="flag orange"><div class="flag-tag">WATCH</div><div class="flag-body"><strong>3PIP CBE-8005</strong> — Engineering owner not yet assigned. Remaining ~20% of 3PIP deals not giftable.</div></div>
+      <div class="flag green"><div class="flag-tag">WIN</div><div class="flag-body"><strong>P1 tag fix deployed</strong> — Non-giftable deals removed from gifting pages. Prevents false conversion loss.</div></div>
+      <div class="flag green"><div class="flag-tag">WIN</div><div class="flag-body"><strong>Gifting CRR +9pp</strong> — Contact Resolution Rate: 37% → 46% (Week 11). AI model rework complete.</div></div>
+    </div>
+  </div>
+
+  <!-- ── PAGE 2: PERFORMANCE ── -->
+  <div class="section" id="perf">
+    <div class="section-title">Performance Deep Dive</div>
+
+    <table>
+      <thead><tr>
+        <th>Metric</th><th class="center">Global</th><th class="center">US</th><th class="center">INTL</th><th class="center">YoY</th><th>Gift vs. Non-Gift</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="bold">Total M1+VFM</td><td class="center">$37.27M</td><td class="center">$29.65M</td><td class="center">$7.62M</td><td class="center red">▼ -0.84%</td><td>Gift +10.1% vs Non-Gift -1.3%</td></tr>
+        <tr><td class="bold">Total Orders</td><td class="center">2.33M</td><td class="center">1.63M</td><td class="center">706K</td><td class="center red">▼ -3.7%</td><td>Gift +8.7% vs Non-Gift -4.5%</td></tr>
+        <tr><td class="bold">UDV</td><td class="center">163.4M</td><td class="center">141.4M</td><td class="center">22.0M</td><td class="center red">▼ -0.6%</td><td>US +1.8% | INTL -13.4%</td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin: 12px 0 18px; font-size: 13px; color: #555; line-height: 1.55;">
+      Gifting is the only segment growing. Gift M1+VFM now represents <strong>10.2% of total business</strong> (up from 9.1% in March 2025). INTL gifting outperformed US in relative terms — FR, DE, and UK all delivered double-digit growth.
+    </p>
+
+    <div class="sub-title">Country Breakdown</div>
+    <table>
+      <thead><tr>
+        <th></th><th class="center">Gift Orders</th><th class="center">YoY</th><th class="center">Gift M1+VFM</th><th class="center">YoY</th><th class="center">Order %</th><th class="center">AOV</th><th class="center">M1+VFM%</th><th class="center">vs PY %</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="navy">US</td><td class="center">126,651</td><td class="center green">+6.4%</td><td class="center">$2.28M</td><td class="center green">+5.1%</td><td class="center">7.78%</td><td class="center">$65.51</td><td class="center">7.70%</td><td class="center green">+31 bps</td></tr>
+        <tr><td class="navy">UK</td><td class="center">42,180</td><td class="center green">+20.1%</td><td class="center">$448K</td><td class="center green">+19.8%</td><td class="center">19.0%</td><td class="center">$42.21</td><td class="center">17.2%</td><td class="center green">+282 bps</td></tr>
+        <tr><td class="navy">DE</td><td class="center">18,943</td><td class="center green">+37.4%</td><td class="center">$327K</td><td class="center green">+34.0%</td><td class="center">22.4%</td><td class="center">$48.45</td><td class="center">19.3%</td><td class="center green">+537 bps</td></tr>
+        <tr><td class="navy">FR</td><td class="center">14,217</td><td class="center green">+72.1%</td><td class="center">$253K</td><td class="center green">+68.4%</td><td class="center">25.1%</td><td class="center">$50.05</td><td class="center">22.7%</td><td class="center green">+940 bps</td></tr>
+        <tr><td class="navy">CA</td><td class="center">11,508</td><td class="center green">+9.8%</td><td class="center">$204K</td><td class="center green">+8.2%</td><td class="center">12.2%</td><td class="center">$48.22</td><td class="center">10.9%</td><td class="center green">+78 bps</td></tr>
+        <tr><td class="navy">AU</td><td class="center">8,742</td><td class="center orange">-1.1%</td><td class="center">$183K</td><td class="center green">+2.4%</td><td class="center">18.9%</td><td class="center">$52.44</td><td class="center">21.8%</td><td class="center green">+144 bps</td></tr>
+        <tr><td class="navy">IE</td><td class="center">6,812</td><td class="center green">+14.2%</td><td class="center">$97K</td><td class="center green">+12.8%</td><td class="center">22.6%</td><td class="center">$37.08</td><td class="center">17.2%</td><td class="center green">+198 bps</td></tr>
+        <tr><td class="navy">IT</td><td class="center">5,943</td><td class="center green">+28.8%</td><td class="center">$91K</td><td class="center green">+25.1%</td><td class="center">18.4%</td><td class="center">$44.33</td><td class="center">15.9%</td><td class="center green">+325 bps</td></tr>
+        <tr><td class="navy">ES</td><td class="center">5,218</td><td class="center green">+19.3%</td><td class="center">$82K</td><td class="center green">+17.2%</td><td class="center">17.2%</td><td class="center">$40.20</td><td class="center">14.1%</td><td class="center green">+222 bps</td></tr>
+        <tr><td class="navy">NL</td><td class="center">4,187</td><td class="center green">+8.1%</td><td class="center">$67K</td><td class="center green">+6.9%</td><td class="center">21.8%</td><td class="center">$41.65</td><td class="center">19.4%</td><td class="center green">+112 bps</td></tr>
+        <tr><td class="navy">BE</td><td class="center">3,921</td><td class="center green">+11.4%</td><td class="center">$61K</td><td class="center green">+9.7%</td><td class="center">23.1%</td><td class="center">$39.80</td><td class="center">20.3%</td><td class="center green">+175 bps</td></tr>
+        <tr><td class="navy">AE</td><td class="center">1,842</td><td class="center orange">-2.3%</td><td class="center">$40K</td><td class="center orange">-3.1%</td><td class="center">20.3%</td><td class="center">$59.82</td><td class="center">17.9%</td><td class="center orange">-22 bps</td></tr>
+        <tr><td style="color:#C0001E;font-weight:700;">UAE ⚠</td><td class="center">542</td><td class="center red">-8.9%</td><td class="center">$27K</td><td class="center red">-47.3%</td><td class="center">16.1%</td><td class="center">$49.77</td><td class="center">12.8%</td><td class="center red">-441 bps</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── PAGE 3: YTD & STRATEGY ── -->
+  <div class="section" id="ytd">
+    <div class="section-title">YTD Trajectory — Q1 2026</div>
+
+    <table>
+      <thead><tr>
+        <th>Month</th><th class="center">2026 Gift M1+VFM</th><th class="center">2025 Gift M1+VFM</th><th class="center">Delta YoY</th><th class="center">Q1 Cumulative</th><th class="center">YTD Delta</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>January</td><td class="center">$3.88M</td><td class="center">$3.47M</td><td class="center green">+$406K (+11.7%)</td><td class="center">$3.88M</td><td class="center green">+$406K (+11.7%)</td></tr>
+        <tr><td>February</td><td class="center">$3.99M</td><td class="center">$3.76M</td><td class="center green">+$239K (+6.4%)</td><td class="center">$7.87M</td><td class="center green">+$645K (+8.9%)</td></tr>
+        <tr><td class="navy bold">March</td><td class="center navy bold">$3.79M</td><td class="center">$3.45M</td><td class="center green bold">+$347K (+10.1%)</td><td class="center navy bold">$11.67M</td><td class="center green bold">+$992K (+9.2%)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="verdict" style="margin-top: 14px; margin-bottom: 20px;">
+      Q1 closed at $11.67M Gift M1+VFM — $992K ahead of Q1 2025. All three months delivered positive YoY growth.
+    </div>
+
+    <div class="sub-title">2026 Strategy — March Status</div>
+    <table class="status-table">
+      <thead><tr><th>Pillar</th><th class="center">Status</th><th>What happened in March</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">Demand Creation</td><td class="center"><span class="pill green">✓ ON TRACK</span></td><td>Mother's Day EU + Father's Day ES/IT executed. TikTok Shop partnership confirmed for April.</td></tr>
+        <tr><td class="bold">Supply Expansion</td><td class="center"><span class="pill orange">! AT RISK</span></td><td>Supply gap mapped: 479 combos / $1.14M incremental. Fine print audit: 2,582 misconfigured deals. INTL 3PIP giftability critically low.</td></tr>
+        <tr><td class="bold">Distribution</td><td class="center"><span class="pill red">✗ BLOCKED</span></td><td>BuyBox: procurement blocked March 26. Lekkerland: legal in progress, unsigned. epay EU: intro meeting held.</td></tr>
+        <tr><td class="bold">Merchant Trust</td><td class="center"><span class="pill green">✓ ON TRACK</span></td><td>Gifting tag P1 fix deployed. Merchant gift visibility feature requested from Platform team.</td></tr>
+        <tr><td class="bold">Infrastructure</td><td class="center"><span class="pill orange">! AT RISK</span></td><td>Grafana monitoring live. VIS gift_details not fully synced. Stage 7 metrics fix released after 2-week delay.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── PAGES 4-5: SALES & SUPPLY ── -->
+  <div class="section" id="supply">
+    <div class="section-title">Sales & Supply</div>
+
+    <table class="status-table">
+      <thead><tr><th>Initiative</th><th class="center">Status</th><th>March Update</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">BuyBox (3P GC EU)</td><td class="center"><span class="pill red">✗ BLOCKED</span></td><td>MSA substantive issues resolved. Procurement blocked March 26 — no timeline. Est. $1.5–2M M1+VFM/year.</td></tr>
+        <tr><td class="bold">Lekkerland (DE)</td><td class="center"><span class="pill red">✗ BLOCKED</span></td><td>Contract in legal review, unsigned at month-end. Est. $0.8–1.2M M1+VFM/year.</td></tr>
+        <tr><td class="bold">epay EU</td><td class="center"><span class="pill orange">! AT RISK</span></td><td>Intro meeting March 26. Legacy 2012 contract may cover EU — legal review needed before proceeding.</td></tr>
+        <tr><td class="bold">3PIP Giftability</td><td class="center"><span class="pill orange">! AT RISK</span></td><td>Supply gap: 479 combos / $1.14M incremental. Fine print audit: 2,582 misconfigured deals. INTL critically low.</td></tr>
+        <tr><td class="bold">Travel (GWL)</td><td class="center"><span class="pill green">✓ ON TRACK</span></td><td>Hotels &amp; Getaways expansion in progress. No blockers in March.</td></tr>
+        <tr><td class="bold">Branded GCs</td><td class="center"><span class="pill green">✓ ON TRACK</span></td><td>Stable. No supply or fulfillment issues in March.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub-title">BuyBox — Why This Matters</div>
+    <ul class="bullets">
+      <li>The MSA is <strong>commercially agreed</strong>. This is a process blocker, not a risk issue. Every week of delay ≈ $30–40K M1+VFM.</li>
+      <li>Engineering (Dennis) reviewed BuyBox API — technical integration can begin within 1 sprint of contract signature.</li>
+      <li><strong>Ask:</strong> Identify a procurement owner and set a 5-business-day resolution SLA.</li>
+    </ul>
+
+    <div class="sub-title">3PIP Supply Quality</div>
+    <ul class="bullets">
+      <li><strong>Supply gap analysis:</strong> 479 city/category/channel combos with high gift demand but no giftable supply = est. $1.14M incremental M1+VFM.</li>
+      <li><strong>Fine print audit:</strong> 2,582 deals with gift rate &gt;80% but containing fine print restrictions — misconfigured. Batch remediation in queue.</li>
+      <li><strong>INTL 3PIP</strong> giftability critically low in several key markets. Root cause: partner-level config gaps. Owner: Nada Moravcikova.</li>
+      <li class="note" style="list-style:none;margin-top:6px;padding-left:0;">📌 Note: broader 3PIP supply unlock (Viator, 80%+ milestone) was completed in <strong>April</strong> — not reflected in March metrics.</li>
+    </ul>
+  </div>
+
+  <!-- ── PAGE 6: MARKETING ── -->
+  <div class="section" id="marketing">
+    <div class="section-title">Marketing & Demand</div>
+
+    <div class="sub-title">What Ran in March</div>
+    <ul class="bullets">
+      <li><strong>Mother's Day UK/IE + Father's Day ES/IT:</strong> Spring occasion campaigns live across email, push, and on-site gifting surfaces. Attribution reporting in progress — full results expected April 10.</li>
+      <li><strong>St. Patrick's Day US/IE (March 17):</strong> Small-scale activation. Not a material contributor but learnings captured for future occasions.</li>
+    </ul>
+
+    <div class="sub-title">Q2 Pipeline — Status at End of March</div>
+    <table>
+      <thead><tr><th>Campaign</th><th>Status at end of March</th></tr></thead>
+      <tbody>
+        <tr><td class="bold navy">Mother's Day US/CA (May 11)</td><td>Build in progress. CRM segmentation underway, creative briefed. Largest gifting occasion of the year.</td></tr>
+        <tr><td class="bold navy">TikTok Shop (April launch)</td><td>Partnership confirmed in March. Inventory curation in progress. First new demand channel in 2026.</td></tr>
+        <tr><td class="bold navy">Father's Day (Jun US · Jun UK)</td><td>On planning calendar. Creative briefing not yet started as of March 31.</td></tr>
+        <tr><td class="bold navy">Summer Gifting (Jun+)</td><td>Scoping stage. Focus: spa, dining, activities. Brief not submitted as of March 31.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── PAGE 7: GO & PRODUCT ── -->
+  <div class="section" id="go-product">
+    <div class="section-title">GO & Product — March</div>
+
+    <div class="sub-title">Customer Operations</div>
+    <ul class="bullets">
+      <li><strong>CRR improved from 37% → 46%</strong> in Week 11 following AI model rework. Gift-specific escalation playbook updated.</li>
+      <li><strong>Top contact reason:</strong> "how to redeem" — recipient landing page doesn't surface redemption steps clearly. Flagged to Product for Q2.</li>
+      <li>Gift voucher rejection playbook updated. Agents have structured workflow for merchant non-acceptance escalations.</li>
+    </ul>
+
+    <div class="sub-title">Shipped in March</div>
+    <table>
+      <thead><tr><th>Item</th><th class="center">Impact</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">Gifting tag P1 fix</td><td class="center green bold">High</td><td>Non-giftable deals removed from gifting pages. Prevents false conversion signals.</td></tr>
+        <tr><td class="bold">Stage 7 metrics fix</td><td class="center orange bold">Medium</td><td>Gift funnel drop-off attribution corrected after 2-week delay. Q1 data now accurate.</td></tr>
+        <tr><td class="bold">Grafana monitoring</td><td class="center orange bold">Medium</td><td>Daily digest posted to Gifting Squad Slack — first real-time monitoring for gifting.</td></tr>
+        <tr><td class="bold">VIS gift_details sync</td><td class="center orange bold">Partial</td><td>Partial fix deployed. Full sync still incomplete — voucher counts may be understated ~10–15%.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub-title">April Sprint Plan</div>
+    <ul class="bullets">
+      <li>Gift recipient landing page redesign — fix #1 GO contact reason ("how to redeem").</li>
+      <li>Merchant Center: gift order count visibility for merchants. Reduces voucher rejection rate.</li>
+      <li>3PIP bulk config tool — accelerates remediation of 2,582 misconfigured deals.</li>
+      <li>BuyBox integration sprint — conditional on MSA signature.</li>
+    </ul>
+  </div>
+
+  <!-- ── PAGE 8: OUTLOOK ── -->
+  <div class="section" id="outlook">
+    <div class="section-title">April 2026 — What Needs to Happen</div>
+
+    <table>
+      <thead><tr><th style="width:40px;">#</th><th>Priority</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td class="prio-num" style="color:#C0001E;">1</td><td class="bold">Unblock BuyBox procurement</td><td>MSA agreed, engineering ready. Every week costs ~$35K M1+VFM. Needs executive sponsor.</td></tr>
+        <tr><td class="prio-num" style="color:#1B3A5C;">2</td><td class="bold">Execute Lekkerland contract</td><td>Legal to prioritise. Sign by April 14 = May launch. Later = Q3.</td></tr>
+        <tr><td class="prio-num" style="color:#1B3A5C;">3</td><td class="bold">Lock Mother's Day US by Apr 25</td><td>Largest gifting occasion of the year. Campaign build must be complete for timely launch.</td></tr>
+        <tr><td class="prio-num" style="color:#1B3A5C;">4</td><td class="bold">TikTok Shop — go live</td><td>First social commerce gift channel. Monitor gift card impressions and first orders.</td></tr>
+        <tr><td class="prio-num" style="color:#1B3A5C;">5</td><td class="bold">VIS gift_details full sync</td><td>Blocking accurate gift activation/reactivation metrics. Needs committed Data Eng sprint slot.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub-title" style="margin-top:22px;">Key Risks</div>
+    <ul class="bullets">
+      <li><strong>Distribution contracts:</strong> Both BuyBox and Lekkerland blocked at contract stage. If neither closes by end of April, H1 distribution revenue target is at risk.</li>
+      <li><strong>Mother's Day execution:</strong> Any delay past April 25 risks underperforming the highest-revenue gifting event of the year.</li>
+      <li><strong>INTL supply gap:</strong> 479 identified combos remain unaddressed. INTL gift performance will lag US growth if not tackled in Q2.</li>
+    </ul>
+  </div>
+
+  <div class="doc-footer">Groupon Gifting &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; March 2026</div>
+
+</div>
+</body>
+</html>

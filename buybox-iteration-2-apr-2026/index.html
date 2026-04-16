@@ -8,5 +8,298 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; background: #f0f2f5; color: #1a1a2e; font-size: 15px; line-height: 1.6; }
   .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+  header { background: #1a1a2e; color: #fff; border-left: 6px solid #00a650; padding: 28px 32px; border-radius: 10px 10px 0 0; margin-bottom: 0; }
+  header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  header .meta { font-size: 13px; color: #a0a8b8; line-height: 1.5; }
+  .gate-badge { display: inline-block; margin-top: 12px; padding: 6px 18px; border-radius: 20px; font-weight: 700; font-size: 14px; }
+  .gate-green { background: #00a650; color: #fff; }
+  .gate-amber { background: #f5a623; color: #1a1a2e; }
+  .gate-red { background: #d93025; color: #fff; }
+
+  .card { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 24px 28px; margin-top: 16px; }
+  .card h2 { font-size: 17px; font-weight: 700; margin-bottom: 14px; border-bottom: 2px solid #f0f2f5; padding-bottom: 8px; }
+  .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .card p { margin-bottom: 10px; }
+  .card ul { margin: 8px 0 8px 20px; }
+  .card li { margin-bottom: 4px; }
+
+  .section-divider { background: #1a1a2e; color: #00a650; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 2px; padding: 10px; margin-top: 20px; border-radius: 6px; text-transform: uppercase; }
+
+  .findings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .finding-card { background: #f8f9fa; border-radius: 8px; padding: 16px; border-left: 4px solid #ddd; }
+  .finding-card.wins { border-left-color: #00a650; }
+  .finding-card.issues { border-left-color: #d93025; }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 14px; }
+  th { background: #f0f2f5; text-align: left; padding: 8px 10px; font-weight: 600; font-size: 13px; }
+  td { padding: 8px 10px; border-bottom: 1px solid #eee; }
+
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; color: #fff; }
+  .pill-buybox { background: #2d6a4f; }
+  .pill-lekkerland { background: #1d6fa4; }
+  .pill-backlog { background: #6c757d; }
+  .pill-inprog { background: #f5a623; color: #1a1a2e; }
+
+  .stat-row { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .stat-box { flex: 1; min-width: 120px; background: #f8f9fa; border-radius: 8px; padding: 14px; text-align: center; }
+  .stat-box .num { font-size: 28px; font-weight: 700; }
+  .stat-box .label { font-size: 12px; color: #666; }
+  .stat-green { color: #00a650; }
+  .stat-amber { color: #f5a623; }
+  .stat-red { color: #d93025; }
+
+  .grow2 { border-left: 4px solid #00a650; }
+  .grow-section { margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #f0f2f5; }
+  .grow-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .links-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .links-grid a { display: inline-block; padding: 8px 16px; background: #1a1a2e; color: #00a650; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; transition: opacity 0.2s; }
+  .links-grid a:hover { opacity: 0.85; }
+
+  footer { text-align: center; color: #999; font-size: 12px; padding: 24px; }
+  .footnote { font-size: 12px; color: #888; margin-top: 6px; }
+
+  @media (max-width: 600px) {
+    .findings-grid { grid-template-columns: 1fr; }
+    .stat-row { flex-direction: column; }
+    header { padding: 20px; }
+    .card { padding: 18px; }
+  }
 </style>
-</head><body><p>test</p></body></html>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<header>
+  <h1>BuyBox — Lekkerland DE Pilot → EMEA Scale</h1>
+  <div class="meta">
+    Iteration 2 &middot; Apr 2 → Apr 16, 2026 &middot; DRI Phase 1 (Project Setup) — Day 3<br>
+    DRI: Linda Vavrikova &middot; Sponsor: Marie Havlíčková &middot; Approved: Apr 13, 2026
+  </div>
+  <div class="gate-badge gate-amber">🟡 CONTINUE + FLAG — Engineering just started, 0 tickets resolved (expected at Day 3)</div>
+</header>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section-divider">Part 1: Retrospective — Completed Iteration</div>
+<!-- ═══════════════════════════════════════ -->
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="card">
+  <h2>📋 Executive Summary</h2>
+  <p>This iteration marks the operational launch of the BuyBox bet. Gate 0 was cleared in record time — all three blocking dependencies (MSA sign-off, Lekkerland email whitelist, Groupon.de deal creation) were resolved within 48 hours of bet approval. The BuyBox MSA contract is in final form with signing entity confirmed (Groupon Inc., US), 150% liability cap accepted, and no fraud set-off. Engineering kicked off on April 13 with Rahul Agrawal starting Encore platform onboarding (GPD-168) and environment configuration (GPD-169). No Jira tickets are resolved yet — expected for Day 3 of the bet. Appendix 1 (T&Cs, commission structure) remains on BuyBox's side and is the primary dependency for API integration start.</p>
+</div>
+
+<!-- ITERATION RESULTS -->
+<div class="card">
+  <h2>📊 Iteration Results</h2>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="num stat-green">3</div>
+      <div class="label">Asana tasks completed</div>
+    </div>
+    <div class="stat-box">
+      <div class="num stat-amber">0</div>
+      <div class="label">Jira tickets resolved</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">2</div>
+      <div class="label">Jira in progress</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">9</div>
+      <div class="label">Jira backlog</div>
+    </div>
+  </div>
+
+  <h3>Asana — Completed This Iteration</h3>
+  <table>
+    <thead><tr><th>Task</th><th>Track</th><th>Assignee</th><th>Completed</th></tr></thead>
+    <tbody>
+      <tr><td>⚡ Execute BuyBox MSA — sign-off on Section 12 + Clause 15</td><td><span class="pill pill-buybox">BuyBox Integration</span></td><td>Linda Vavrikova</td><td>Apr 14</td></tr>
+      <tr><td>⚡ Whitelist Lekkerland email in Groupon fraud system</td><td><span class="pill pill-lekkerland">Lekkerland</span></td><td>Jarot Czuba</td><td>Apr 13</td></tr>
+      <tr><td>⚡ Create 5 non-public deals on Groupon.de — 100 units each</td><td><span class="pill pill-lekkerland">Lekkerland</span></td><td>Nada Moravcikova</td><td>Apr 13</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Jira — Engineering Pipeline (GPD-167)</h3>
+  <table>
+    <thead><tr><th>Key</th><th>Summary</th><th>Stream</th><th>Assignee</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>GPD-168</td><td>Encore platform understanding and onboarding</td><td><span class="pill pill-buybox">BuyBox</span></td><td>Rahul Agrawal</td><td><span class="pill pill-inprog">In Progress</span></td></tr>
+      <tr><td>GPD-169</td><td>Buy Box environment configuration and credentials setup</td><td><span class="pill pill-buybox">BuyBox</span></td><td>Rahul Agrawal</td><td><span class="pill pill-inprog">In Progress</span></td></tr>
+      <tr><td>GPD-170</td><td>Implement Buy Box NVP API client in Encore</td><td><span class="pill pill-buybox">BuyBox</span></td><td>Rahul Agrawal</td><td><span class="pill pill-backlog">Backlog</span></td></tr>
+      <tr><td>GPD-171</td><td>Implement two-step Buy Box redemption flow in Encore</td><td><span class="pill pill-buybox">BuyBox</span></td><td>Rahul Agrawal</td><td><span class="pill pill-backlog">Backlog</span></td></tr>
+      <tr><td>GPD-172</td><td>Integrate Orders API in Encore for bucks allocation</td><td><span class="pill pill-buybox">BuyBox</span></td><td>—</td><td><span class="pill pill-backlog">Backlog</span></td></tr>
+      <tr><td>GPD-173</td><td>Transaction idempotency and failure recovery</td><td><span class="pill pill-buybox">BuyBox</span></td><td>—</td><td><span class="pill pill-backlog">Backlog</span></td></tr>
+      <tr><td>GPD-174</td><td>Add Buy Box card detection + Encore delegation</td><td><span class="pill pill-buybox">BuyBox</span></td><td>—</td><td><span class="pill pill-backlog">Backlog</span></td></tr>
+      <tr><td>GPD-175</td><td>[MBNXT] Card type detection in next-pwa-app</td><td><span class="pill pill-buybox">BuyBox</span></td><td>—</td><td><span class="pill pill-backlog">Backlog</span></td></tr>
+      <tr><td>GPD-176</td><td>[MBNXT] GiftCodePinModal 4-digit PIN support</td><td><span class="pill pill-buybox">BuyBox</span></td><td>—</td><td><span class="pill pill-backlog">Backlog</span></td></tr>
+      <tr><td>GPD-177</td><td>Grafana monitoring for Buy Box redemptions</td><td><span class="pill pill-buybox">BuyBox</span></td><td>—</td><td><span class="pill pill-backlog">Backlog</span></td></tr>
+      <tr><td>GPD-178</td><td>Buy Box sandbox integration testing</td><td><span class="pill pill-buybox">BuyBox</span></td><td>—</td><td><span class="pill pill-backlog">Backlog</span></td></tr>
+      <tr><td>GPD-179</td><td>Staging validation and edge case testing</td><td><span class="pill pill-buybox">BuyBox</span></td><td>—</td><td><span class="pill pill-backlog">Backlog</span></td></tr>
+    </tbody>
+  </table>
+  <p class="footnote">Jira delivery rate: 0% (0 of 11) — expected at Day 3. Engineering started Apr 13; first resolutions anticipated in Iteration 3.</p>
+</div>
+
+<!-- KEY LEARNINGS -->
+<div class="card">
+  <h2>🔍 Key Learnings</h2>
+  <div class="findings-grid">
+    <div class="finding-card wins">
+      <h3>✅ What Worked</h3>
+      <ul>
+        <li><strong>Gate 0 cleared in 48h</strong> — all 3 blocking dependencies resolved within 2 days of bet approval (MSA, whitelist, deals)</li>
+        <li><strong>MSA contract finalized</strong> — Groupon Inc. as signing entity, 150% liability cap, no fraud set-off, ~40-day settlement</li>
+        <li><strong>Engineering kick-off on time</strong> — Rahul started Encore onboarding and env config (GPD-168, GPD-169) on Day 1</li>
+        <li><strong>Bet project structure</strong> — DRI Academy setup, GROW tasks, kill-gates, and RASCI all in place by Day 2</li>
+      </ul>
+    </div>
+    <div class="finding-card issues">
+      <h3>❌ What Didn't Work</h3>
+      <ul>
+        <li><strong>Appendix 1 not yet delivered by BuyBox</strong> — T&Cs, min/max values, commission structure (15%), MPV/SPV still pending. Blocks API integration specifics.</li>
+        <li><strong>Rahul's Jira account ID not in config</strong> — Tempo time tracking can't filter by engineer until added</li>
+        <li><strong>GI task activity thin in iteration window</strong> — most recent BuyBox-relevant GI comments are from March (pre-bet)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- KILL GATE STATUS -->
+<div class="card">
+  <h2>🎯 Kill Gate Status</h2>
+  <table>
+    <thead><tr><th>Track</th><th>Threshold</th><th>Deadline</th><th>Risk Flag</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>T1 — Gate 0</strong></td>
+        <td>All 3 blockers cleared (MSA + whitelist + deals)</td>
+        <td>Apr 30</td>
+        <td>Apr 20</td>
+        <td>🟢 On Track — 3/3 blockers cleared</td>
+      </tr>
+      <tr>
+        <td><strong>T2 — Lekkerland Pilot</strong></td>
+        <td>Pilot GMV ≥ €0.4–0.6M over 8–12 weeks + SLAs met</td>
+        <td>Jun 30</td>
+        <td>May 31</td>
+        <td>🟢 On Track — pilot launch due May 7</td>
+      </tr>
+      <tr>
+        <td><strong>T3 — BuyBox API</strong></td>
+        <td>API live in 1 country + end-to-end lifecycle validated</td>
+        <td>Jun 30</td>
+        <td>May 31</td>
+        <td>🟢 On Track — engineering started, 2 tickets in progress</td>
+      </tr>
+      <tr>
+        <td><strong>T4 — Phase 2 Go/No-Go</strong></td>
+        <td>Phase 1 results positive → proceed to EU rollout</td>
+        <td>Jul 31</td>
+        <td>Jul 15</td>
+        <td>⬜ TBD — depends on T2 + T3 outcomes</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- BLOCKERS -->
+<div class="card">
+  <h2>🚧 Blockers & Dependencies</h2>
+  <table>
+    <thead><tr><th>Blocker</th><th>Owner</th><th>Expected Resolution</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Appendix 1 (T&Cs, commission, MPV/SPV) not delivered</td>
+        <td>BuyBox (external)</td>
+        <td>Tracking — no confirmed date</td>
+        <td>Blocks API integration specifics for T3</td>
+      </tr>
+      <tr>
+        <td>Rahul Agrawal Jira account ID missing in config</td>
+        <td>Linda</td>
+        <td>This iteration</td>
+        <td>Tempo time tracking incomplete</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section-divider">Part 2: GROW² — Next Iteration Plan</div>
+<!-- ═══════════════════════════════════════ -->
+
+<div class="card grow2">
+  <h2>🚀 GROW² — Next Iteration Plan</h2>
+
+  <div class="grow-section">
+    <h3>🎯 Goal</h3>
+    <p>Close Gate 0 GROW task, secure Appendix 1 from BuyBox, and advance Lekkerland pilot setup toward the May 7 launch date. Ensure engineering has unblocked path through GPD-169 → GPD-170 (NVP API client) to maintain Jun 30 API deadline.</p>
+  </div>
+
+  <div class="grow-section">
+    <h3>📈 Results</h3>
+    <ul>
+      <li><strong>T1:</strong> GROW task closed → Gate 0 formally complete by Apr 30</li>
+      <li><strong>T3:</strong> GPD-169 (env config) resolved + GPD-170 (NVP API client) started by Apr 30</li>
+      <li><strong>T2:</strong> Pilot materials and 500 card codes prepared for May 7 launch</li>
+    </ul>
+  </div>
+
+  <div class="grow-section">
+    <h3>👥 Owners</h3>
+    <table>
+      <thead><tr><th>Role</th><th>Name</th><th>Scope</th></tr></thead>
+      <tbody>
+        <tr><td><strong>A</strong></td><td>Marie Havlíčková</td><td>Bet success, budget, gate decisions</td></tr>
+        <tr><td><strong>R</strong></td><td>Linda Vavrikova</td><td>End-to-end delivery, scope, sequencing</td></tr>
+        <tr><td>S</td><td>Dennis Otto</td><td>T3 — API integration, Jira oversight</td></tr>
+        <tr><td>S</td><td>Nada Moravcikova</td><td>T2 — Lekkerland pilot execution</td></tr>
+        <tr><td>S</td><td>Lucie Halbichova</td><td>BuyBox ops, settlement, reporting</td></tr>
+        <tr><td>Eng</td><td>Rahul Agrawal</td><td>Encore integration (GPD-167 children)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grow-section">
+    <h3>📋 Workplan</h3>
+    <table>
+      <thead><tr><th>Stream</th><th>Item</th><th>Assignee</th><th>Due</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill pill-buybox">BuyBox</span></td><td>Chase Appendix 1 from BuyBox</td><td>Linda</td><td>Apr 23</td></tr>
+        <tr><td><span class="pill pill-buybox">BuyBox</span></td><td>Close GROW: T1 — Gate 0 & Legal</td><td>Linda</td><td>Apr 30</td></tr>
+        <tr><td><span class="pill pill-buybox">BuyBox</span></td><td>GPD-169: Complete env config + credentials</td><td>Rahul</td><td>Apr 23</td></tr>
+        <tr><td><span class="pill pill-buybox">BuyBox</span></td><td>GPD-170: Start NVP API client implementation</td><td>Rahul</td><td>Apr 30</td></tr>
+        <tr><td><span class="pill pill-buybox">BuyBox</span></td><td>API scoped + Jira tickets confirmed in roadmap</td><td>Dennis</td><td>Apr 30</td></tr>
+        <tr><td><span class="pill pill-lekkerland">Lekkerland</span></td><td>Pilot launch prep: 500 card codes across 50 PoS</td><td>Nada</td><td>May 7</td></tr>
+        <tr><td><span class="pill pill-lekkerland">Lekkerland</span></td><td>Confirm Cyclops feasibility for code replacement</td><td>Adithya</td><td>Apr 23</td></tr>
+        <tr><td><span class="pill pill-buybox">BuyBox</span></td><td>Start Epay commercial conversation</td><td>Quentin Fodda</td><td>May 15</td></tr>
+        <tr><td>—</td><td>Add Rahul's Jira account ID to config</td><td>Linda</td><td>Apr 18</td></tr>
+      </tbody>
+    </table>
+    <p class="footnote">Estimated effort: ~15 person-days (within capacity). No overallocation risk.</p>
+  </div>
+</div>
+
+<!-- IMPORTANT LINKS -->
+<div class="card">
+  <h2>🔗 Important Links</h2>
+  <div class="links-grid">
+    <a href="https://app.asana.com/1/8437193015852/project/1214063404259630">Bet Project</a>
+    <a href="https://app.asana.com/1/8437193015852/project/1211705895865941">Gifting 2026</a>
+    <a href="https://app.asana.com/1/8437193015852/project/1213736809253422">Gifting Intelligence</a>
+    <a href="https://app.asana.com/1/8437193015852/project/1204909591256968">5/15 Linda</a>
+    <a href="https://groupon.atlassian.net/browse/GPD-167">Jira Epic GPD-167</a>
+    <a href="https://app.asana.com/1/8437193015852/project/1213991755786564">DRI Academy</a>
+  </div>
+</div>
+
+<footer>Generated by Claude · Groupon Gifting · April 16, 2026 · DRY RUN (not posted to Asana)</footer>
+
+</div>
+</body>
+</html>

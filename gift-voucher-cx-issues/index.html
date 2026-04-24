@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gift Voucher — Gift-Specific Customer Issues</title>
+<style>
+  :root { --bg:#f8fafc; --card:#fff; --border:#e2e8f0; --text:#1e293b; --muted:#64748b; --blue:#1d4ed8; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); padding:32px 24px; font-size:14px; max-width:960px; margin:0 auto; }
+  h1 { font-size:20px; font-weight:700; margin-bottom:4px; }
+  .subtitle { color:var(--muted); font-size:13px; margin-bottom:28px; }
+
+  .kpis { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:28px; }
+  .kpi { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:14px 20px; }
+  .kpi .n { font-size:26px; font-weight:700; color:var(--blue); }
+  .kpi .l { font-size:12px; color:var(--muted); margin-top:2px; }
+
+  table { width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:32px; }
+  thead { background:#f1f5f9; }
+  th { text-align:left; padding:10px 14px; font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; border-bottom:1px solid var(--border); }
+  td { padding:11px 14px; border-bottom:1px solid var(--border); font-size:13px; vertical-align:middle; }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:#f8fafc; }
+  a { color:var(--blue); text-decoration:none; font-weight:600; }
+  a:hover { text-decoration:underline; }
+
+  .bar-wrap { background:#e2e8f0; border-radius:4px; height:8px; width:110px; display:inline-block; vertical-align:middle; margin-left:8px; }
+  .bar { height:8px; border-radius:4px; display:block; }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+  .resolve { font-weight:700; }
+  .r-low { color:#dc2626; }
+  .r-med { color:#ea580c; }
+
+  details { background:var(--card); border:1px solid var(--border); border-radius:10px; margin-bottom:12px; }
+  summary { cursor:pointer; padding:16px 20px; font-weight:700; font-size:14px; display:flex; align-items:center; gap:10px; list-style:none; user-select:none; }
+  summary::-webkit-details-marker { display:none; }
+  summary .arrow { margin-left:auto; color:var(--muted); font-size:13px; transition:.15s; }
+  details[open] summary .arrow { transform:rotate(90deg); }
+
+  .detail-body { padding:0 20px 20px; border-top:1px solid var(--border); }
+  .desc { font-size:13px; color:var(--muted); line-height:1.65; padding:14px 0 16px; }
+  .desc strong { color:var(--text); }
+
+  .tag { display:inline-block; font-size:11px; font-weight:600; padding:2px 9px; border-radius:20px; margin-top:10px; margin-right:4px; }
+  .tag-warn { background:#fef3c7; border:1px solid #fcd34d; color:#92400e; }
+  .tag-ok   { background:#dcfce7; border:1px solid #86efac; color:#166534; }
+  .tag-crit { background:#fee2e2; border:1px solid #fca5a5; color:#991b1b; }
+
+  .quotes { display:grid; gap:10px; margin-top:4px; }
+  .q { border-radius:8px; padding:11px 14px; font-size:13px; line-height:1.6; }
+  .q-cx  { background:#eff6ff; border-left:4px solid #3b82f6; }
+  .q-bot { background:#f0fdf4; border-left:4px solid #22c55e; }
+  .ql { font-size:10px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+
+  footer { color:#94a3b8; font-size:12px; margin-top:28px; }
+</style>
+</head>
+<body>
+
+<h1>🎁 Gift Voucher — Gift-Specific Customer Issues</h1>
+<p class="subtitle">Last 90 days · Salted CX B2C · Gift flow–specific issues only · eGift cards and expiry cases excluded</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="n">1,698</div><div class="l">Gift-specific cases (90 days)</div></div>
+  <div class="kpi"><div class="n">~19/day</div><div class="l">Avg. daily volume</div></div>
+  <div class="kpi"><div class="n">5 types</div><div class="l">Gift-specific issue types</div></div>
+  <div class="kpi"><div class="n">7%</div><div class="l">Avg. resolve rate</div></div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Issue</th>
+      <th>Cases (90 days)</th>
+      <th>Top markets</th>
+      <th>Resolved</th>
+      <th>Pillar</th>
+      <th>Detail</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="dot" style="background:#ea580c"></span><strong>Recipient didn't receive email/SMS with voucher</strong></td>
+      <td>709 <span class="bar-wrap"><span class="bar" style="width:100%;background:#ea580c"></span></span></td>
+      <td>🇺🇸 US · 🇬🇧 GB</td>
+      <td class="resolve r-low">10%</td>
+      <td>Demand / UX</td>
+      <td><a href="#noemail">↓</a></td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:#ca8a04"></span><strong>Bought as guest — broken gift flow</strong></td>
+      <td>337 <span class="bar-wrap"><span class="bar" style="width:47%;background:#ca8a04"></span></span></td>
+      <td>🇺🇸 US · 🇬🇧 GB</td>
+      <td class="resolve r-med">16%</td>
+      <td>Product</td>
+      <td><a href="#guest">↓</a></td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:#7c3aed"></span><strong>Buyer can't find the "Give as a gift" button</strong></td>
+      <td>263 <span class="bar-wrap"><span class="bar" style="width:37%;background:#7c3aed"></span></span></td>
+      <td>🇺🇸 US · 🇬🇧 GB</td>
+      <td class="resolve r-low">7%</td>
+      <td>Product / UX</td>
+      <td><a href="#button">↓</a></td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:#dc2626"></span><strong>Gift voucher shows "already redeemed"</strong></td>
+      <td>255 <span class="bar-wrap"><span class="bar" style="width:36%;background:#dc2626"></span></span></td>
+      <td>🇺🇸 US · 🌐 INTL</td>
+      <td class="resolve r-low">3%</td>
+      <td>Product / Merchant</td>
+      <td><a href="#redeemed">↓</a></td>
+    </tr>
+    <tr>
+      <td><span class="dot" style="background:#059669"></span><strong>Gift voucher not visible in recipient's account</strong></td>
+      <td>134 <span class="bar-wrap"><span class="bar" style="width:19%;background:#059669"></span></span></td>
+      <td>🇬🇧 GB · 🇺🇸 US</td>
+      <td class="resolve r-med">12%</td>
+      <td>UX / Onboarding</td>
+      <td><a href="#invisible">↓</a></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<details id="noemail">
+  <summary>
+    <span>📧</span>
+    Recipient didn't receive email/SMS with voucher
+    <span style="font-size:12px;color:var(--muted);font-weight:400;margin-left:6px">709 cases · 10% resolved</span>
+    <span class="arrow">▸</span>
+  </summary>
+  <div class="detail-body">
+    <div class="desc">
+      Buyer sent a gift voucher but the recipient didn't receive it via email or SMS. Root causes: email blocked by spam filters, wrong address entered at send time, SMS not delivered, or recipient looks in My Groupons instead of their inbox.<br><br>
+      <strong>Our response:</strong> Look for an email from <code>notify@r.groupon.com</code> → click "Add to My Groupon". Alternatively use SMS or QR code from a printed voucher.
+      <span class="tag tag-warn">⚠️ UX gap: recipient doesn't know where to look — email is not an obvious entry point for a new user</span>
+      <span class="tag tag-warn">⚠️ Gift delivery relies entirely on email deliverability with no fallback</span>
+    </div>
+    <div class="quotes">
+      <div class="q q-cx">
+        <div class="ql">Buyer — US</div>
+        "I just made a purchase as a guest and entered my work email for the gift voucher. It's a gift for my husband — I tried not to let him see the email. I logged in but a code sent to my work email was never received. Could it be rerouted from my work email to my personal?"
+      </div>
+      <div class="q q-cx">
+        <div class="ql">Buyer — ES</div>
+        "I bought a hair spa treatment as a gift. The person went to the center and was delighted with the treatment but they did not give her the product pack included. She claimed it, they said they'd send it home — a month has passed and she still hasn't received it. As the buyer I am looking very bad."
+      </div>
+      <div class="q q-bot">
+        <div class="ql">Our response (bot)</div>
+        "Check your work email for a message from notify@r.groupon.com. Open the email and click 'Add to My Groupon'. When the page loads, select 'Add to Groupon Account' and log in with your personal email. You'll then find it under My Stuff in the app."
+      </div>
+    </div>
+  </div>
+</details>
+
+
+<details id="guest">
+  <summary>
+    <span>👤</span>
+    Bought as guest — broken gift flow
+    <span style="font-size:12px;color:var(--muted);font-weight:400;margin-left:6px">337 cases · 16% resolved</span>
+    <span class="arrow">▸</span>
+  </summary>
+  <div class="detail-body">
+    <div class="desc">
+      Buyer purchased without logging in (guest checkout) — typically to hide the purchase from a partner — and is now unable to manage, forward or customise the voucher. The gift management flow requires a logged-in account.<br><br>
+      <strong>Our response:</strong> Find the purchase confirmation email, click the link and add to account via "Add to My Groupon".
+      <span class="tag tag-crit">🔴 Product gap: guest gift purchase is broken — buyer loses access to gift management</span>
+      <span class="tag tag-warn">⚠️ Guest checkout motivation is typically privacy (surprise gift) — cannot be dismissed</span>
+    </div>
+    <div class="quotes">
+      <div class="q q-cx">
+        <div class="ql">Buyer — US</div>
+        "I just made a purchase as a guest and entered my work email for the gift voucher. It's a gift for my husband — I was trying not to let him see the email on our shared account. The system says it sent a confirmation code to my work email but I've never received it. Please help."
+      </div>
+      <div class="q q-cx">
+        <div class="ql">Buyer — INTL</div>
+        "My husband received a massage and loved it, so I gave him the same as a gift voucher for his birthday. He made a new appointment with the merchant, but the owner then asked for ID as birthday proof, and canceled the appointment. This is fraud. I want clarification before closing our Groupon accounts."
+      </div>
+      <div class="q q-bot">
+        <div class="ql">Our response (bot)</div>
+        "Check your work email for a message from notify@r.groupon.com. Open the email and click 'Add to My Groupon'. When the page loads, select 'Add to Groupon Account' and log in using your personal email. You'll then find it under My Stuff."
+      </div>
+    </div>
+  </div>
+</details>
+
+
+<details id="button">
+  <summary>
+    <span>🎁</span>
+    Buyer can't find the "Give as a gift" button
+    <span style="font-size:12px;color:var(--muted);font-weight:400;margin-left:6px">263 cases · 7% resolved</span>
+    <span class="arrow">▸</span>
+  </summary>
+  <div class="detail-body">
+    <div class="desc">
+      Buyer sees "go to My Groupons and click Give as a gift" in the confirmation email — but can't find the button in the UI. Three root causes: (1) the deal is not giftable, (2) the button doesn't appear immediately — there is a ~10-minute delay after purchase, (3) UI labels differ between desktop ("Give as a gift") and mobile app ("Regift").<br><br>
+      <strong>Our response:</strong> My Groupons → Give as a gift (desktop) or Regift (app). If the button is missing, wait 10 minutes. If the deal isn't giftable, options are limited.
+      <span class="tag tag-warn">⚠️ UX gap: email instructions and actual UI labels don't match (desktop vs. mobile)</span>
+      <span class="tag tag-warn">⚠️ 10-minute delay is not communicated to the customer — appears as a bug</span>
+    </div>
+    <div class="quotes">
+      <div class="q q-cx">
+        <div class="ql">Buyer — US</div>
+        "Voucher states: 'To personalize and send a gift voucher, go to My Groupons and click Give as a gift.' — I cannot find this button anywhere in My Groupons."
+      </div>
+      <div class="q q-cx">
+        <div class="ql">Buyer — US</div>
+        "I accidentally pressed the redeem button right after my Costco membership confirmation. It shows I redeemed the $20 digital gift voucher — but I did not actually redeem it. The store was not even open at that time. How do I get the voucher back to give as a gift?"
+      </div>
+    </div>
+  </div>
+</details>
+
+
+<details id="redeemed">
+  <summary>
+    <span>🔴</span>
+    Gift voucher shows "already redeemed"
+    <span style="font-size:12px;color:var(--muted);font-weight:400;margin-left:6px">255 cases · 3% resolved</span>
+    <span class="arrow">▸</span>
+  </summary>
+  <div class="detail-body">
+    <div class="desc">
+      Recipient's gift voucher shows as used even though the recipient never redeemed it. Three root causes: (1) Groupon "1 voucher per customer" limit — merchant refuses a second voucher for the same business even when it belongs to the gift recipient, (2) technical error during transfer to recipient's account, (3) merchant marks voucher as redeemed simply by scanning the QR code to view it.<br><br>
+      <strong>Our response:</strong> Escalation — bot cannot resolve this. <strong>Lowest resolve rate of all categories: 3%.</strong>
+      <span class="tag tag-crit">🔴 Critical gap: 97% of these cases go unresolved</span>
+      <span class="tag tag-crit">🔴 "1 per customer" limit penalises gift recipients who unknowingly violate a rule they were never shown</span>
+    </div>
+    <div class="quotes">
+      <div class="q q-cx">
+        <div class="ql">Buyer — US</div>
+        "I purchased 2 vouchers from Fancy Meds. Their policy states only 1 per customer, so I gifted one to my husband — it is not yet redeemed. This voucher might show redeemed, but Fancy Meds will not honor it. If you're not going to honor it, I expect a full refund."
+      </div>
+      <div class="q q-cx">
+        <div class="ql">Recipient — INTL</div>
+        "I went to the site today with a coupon given to me by my daughter. The person at the front desk helped me get to the QR code. Then I saw the value had been deducted from my bank — but it was already paid for by my daughter as a gift. Now it says already redeemed and neither of us can return it. What can I do?"
+      </div>
+    </div>
+  </div>
+</details>
+
+
+<details id="invisible">
+  <summary>
+    <span>👁️</span>
+    Gift voucher not visible in recipient's account
+    <span style="font-size:12px;color:var(--muted);font-weight:400;margin-left:6px">134 cases · 12% resolved</span>
+    <span class="arrow">▸</span>
+  </summary>
+  <div class="detail-body">
+    <div class="desc">
+      Recipient accepted the gift voucher (or believes they did) but it doesn't appear in My Groupons / My Stuff. Most common cause: recipient is logged in with a different email than the one the voucher was sent to, or the "Add to account" link in the notification email didn't complete correctly.<br><br>
+      <strong>Our response:</strong> Look for an email from <code>notify@r.groupon.com</code> → Add to Groupon Account. Confirm you're logged in with the correct email.
+      <span class="tag tag-warn">⚠️ Recipient onboarding gap: gift recipient arrives on Groupon without context and without guidance</span>
+      <span class="tag tag-ok">✅ Relatively resolvable — if the recipient can find the right email</span>
+    </div>
+    <div class="quotes">
+      <div class="q q-cx">
+        <div class="ql">Recipient — US</div>
+        "I was given vouchers and they are not pulling up in my account."
+      </div>
+      <div class="q q-cx">
+        <div class="ql">Buyer — FR</div>
+        "Hello, I purchased a gift voucher for a friend and I cannot find it on my Groupon account — I want to send it to her."
+      </div>
+      <div class="q q-bot">
+        <div class="ql">Our response (bot)</div>
+        "Look for a message from notify@r.groupon.com. Click 'Add to My Groupon'. Once added, you'll find it in My Groupons (web) or My Stuff (app). If sent via SMS, search your messages for 'Groupon Gift Voucher from' and click the link."
+      </div>
+    </div>
+  </div>
+</details>
+
+<footer>Groupon Gifting · Salted CX B2C · prj-grp-dataview-prod-1ff9.ingestion_saltedcx · 2026-04-24</footer>
+</body>
+</html>

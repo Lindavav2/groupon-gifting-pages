@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[SPL] Supply Bet — Iteration 1 | Apr 14–28, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #2d2d2d;
+    background: #f4f5f7;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px 48px; }
+
+  /* ── HEADER ── */
+  header {
+    background: #1a1a2e;
+    border-left: 6px solid #00a650;
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    color: #fff;
+  }
+  header h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  header .meta { font-size: 13px; color: #aab; margin-bottom: 14px; line-height: 1.7; }
+  header .meta span { margin-right: 18px; }
+  .gate-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .gate-amber { background: #fff3cd; color: #856404; }
+  .gate-green { background: #d1f0db; color: #155724; }
+  .gate-red   { background: #f8d7da; color: #721c24; }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #00a650;
+    margin: 32px 0 10px;
+  }
+  .section-divider {
+    border: none;
+    border-top: 2px solid #00a650;
+    margin: 8px 0 20px;
+    opacity: 0.25;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 24px 28px;
+    margin-bottom: 16px;
+  }
+  .card h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  .card p { margin-bottom: 10px; color: #444; }
+  .card p:last-child { margin-bottom: 0; }
+
+  /* ── FINDINGS GRID ── */
+  .findings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
+  @media (max-width: 600px) { .findings-grid { grid-template-columns: 1fr; } }
+  .finding-card { border-radius: 8px; padding: 16px 18px; }
+  .finding-card.wins { background: #f0faf5; border-left: 4px solid #00a650; }
+  .finding-card.issues { background: #fff8f0; border-left: 4px solid #f5a623; }
+  .finding-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: #1a1a2e; }
+  .finding-card ul { padding-left: 18px; }
+  .finding-card li { margin-bottom: 6px; font-size: 14px; color: #444; }
+
+  /* ── STAT BAR ── */
+  .stat-row { display: flex; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+  .stat-box {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 14px 20px;
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+  }
+  .stat-box .num { font-size: 28px; font-weight: 800; color: #1a1a2e; }
+  .stat-box .lbl { font-size: 12px; color: #777; margin-top: 2px; }
+  .delivery-rate { font-size: 13px; font-weight: 600; margin-bottom: 14px; color: #444; }
+
+  /* ── TABLES ── */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead tr { background: #f4f5f7; }
+  th { padding: 9px 12px; text-align: left; font-weight: 600; font-size: 12px; color: #555; letter-spacing: 0.3px; }
+  td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .pill {
+    display: inline-block; padding: 2px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: 600; white-space: nowrap;
+  }
+  .pill-t1 { background: #e8f5e9; color: #2e7d32; }
+  .pill-t2 { background: #e3f2fd; color: #1565c0; }
+  .pill-t3 { background: #f3e5f5; color: #6a1b9a; }
+  .pill-cross { background: #fce4ec; color: #880e4f; }
+  .status-green { color: #00a650; font-weight: 700; }
+  .status-amber { color: #f5a623; font-weight: 700; }
+  .status-red   { color: #d93025; font-weight: 700; }
+
+  /* ── GROW PLAN ── */
+  .grow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 4px; }
+  @media (max-width: 600px) { .grow-grid { grid-template-columns: 1fr; } }
+  .grow-item { background: #f8f9ff; border-radius: 8px; padding: 16px 18px; border-top: 3px solid #1a1a2e; }
+  .grow-item h3 { font-size: 12px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: #1a1a2e; margin-bottom: 8px; }
+  .grow-item p, .grow-item li { font-size: 14px; color: #444; }
+  .grow-item ul { padding-left: 18px; }
+  .grow-item li { margin-bottom: 5px; }
+  .grow-workplan { grid-column: 1 / -1; }
+
+  /* ── BLOCKER ── */
+  .blocker-row { background: #fff8f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #f5a623; }
+  .blocker-row:last-child { margin-bottom: 0; }
+  .blocker-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; color: #1a1a2e; }
+  .blocker-meta { font-size: 13px; color: #666; }
+
+  /* ── FOOTER ── */
+  footer { text-align: center; font-size: 12px; color: #aaa; margin-top: 32px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <h1>[SPL] Gifting Supply Depth &amp; Merchant Readiness</h1>
+    <div class="meta">
+      <span>📅 Iteration 1</span>
+      <span>Apr 14 – Apr 28, 2026</span>
+      <span>DRI Phase 4 — Day 14</span>
+      <br>
+      <span>DRI: Linda Vavrikova</span>
+      <span>Approved: Apr 14, 2026</span>
+    </div>
+    <span class="gate-badge gate-amber">🟡 CONTINUE + FLAG — T3 at risk</span>
+  </header>
+
+  <!-- ═══ PART 1: RETROSPECTIVE ═══ -->
+  <div class="section-label">Part 1 — Retrospective</div>
+  <hr class="section-divider">
+
+  <!-- Executive Summary -->
+  <div class="card">
+    <h2>📋 Executive Summary</h2>
+    <p>Iteration 1 delivered significant structural progress on T1 Supply Gaps, establishing the full Opportunity Scoring pipeline and producing the first real activations — over $10K in M1+VFM from Branch A deals. The Opportunity Scoring Dashboard is live, Branch B has been scoped to 368 non-giftable deals with confirmed gifting signals, and the Top Gifts Tag Automation is operational. MD Next Best Action integration was confirmed by Peter Sulak (Apr 15), giving the scoring output a direct Sales motion entry point.</p>
+    <p>T2 Merchant Gifting advanced steadily with merchant materials reaching the final stage and the Salted data connection architecture defined. T3 Sales Visibility carries the primary risk: the Groupon IQ integration missed its Apr 30 kill-gate deadline. Next step is a direct timeline renegotiation with Jan Šrůmek — no escalation required.</p>
+    <p>INTL Awareness was formally descoped as a decision: no INTL trainers are available to deliver merchant education, making execution infeasible at this stage. The overall gate decision is <strong>CONTINUE</strong> — T1 and T2 are on track; T3 is flagged for timeline reset.</p>
+  </div>
+
+  <!-- Iteration Results -->
+  <div class="card">
+    <h2>📊 Iteration Results</h2>
+    <div class="stat-row">
+      <div class="stat-box"><div class="num">5</div><div class="lbl">Completed</div></div>
+      <div class="stat-box"><div class="num">3</div><div class="lbl">In Progress</div></div>
+      <div class="stat-box"><div class="num">1</div><div class="lbl">At Risk / Missed</div></div>
+      <div class="stat-box"><div class="num">56%</div><div class="lbl">Delivery Rate</div></div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Deliverable</th>
+          <th>Track</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Opportunity Scoring Dashboard live</td>
+          <td><span class="pill pill-t1">T1</span></td>
+          <td><span class="status-green">✅ Done</span></td>
+          <td>deal-opportunity-scoring dashboard deployed</td>
+        </tr>
+        <tr>
+          <td>Branch A: giftable deals scored &amp; activated</td>
+          <td><span class="pill pill-t1">T1</span></td>
+          <td><span class="status-green">✅ Done</span></td>
+          <td>$10K+ M1+VFM delivered via GIQ cases → Sales+Merchant+Content routing</td>
+        </tr>
+        <tr>
+          <td>Top Gifts Tag Automation live</td>
+          <td><span class="pill pill-t1">T1</span></td>
+          <td><span class="status-green">✅ Done</span></td>
+          <td>Manual-top-gifts auto-tag + not-top-gifts conflict removal</td>
+        </tr>
+        <tr>
+          <td>MD Next Best Action: gifting score confirmed as NBA step</td>
+          <td><span class="pill pill-t1">T1</span></td>
+          <td><span class="status-green">✅ Done</span></td>
+          <td>Peter Sulak confirmed Apr 15 · cadence set with Petr Fišer</td>
+        </tr>
+        <tr>
+          <td>Branch B: 368 non-giftable deals with gifting signals scoped</td>
+          <td><span class="pill pill-t1">T1</span></td>
+          <td><span class="status-green">✅ Done</span></td>
+          <td>3 signals: Fine Print language, merchandising tags, historical gift sales</td>
+        </tr>
+        <tr>
+          <td>Oula: AI agent integration into Opp Scoring Dashboard</td>
+          <td><span class="pill pill-t1">T1</span></td>
+          <td><span class="status-amber">🔄 In Progress</span></td>
+          <td>Replaces deprecated Tomáš Záruba Keboola table plan · task GID 1214349282576673</td>
+        </tr>
+        <tr>
+          <td>Merchant gifting materials (final stage)</td>
+          <td><span class="pill pill-t2">T2</span></td>
+          <td><span class="status-amber">🔄 In Progress</span></td>
+          <td>Salted data connection architecture defined · materials ready for rollout</td>
+        </tr>
+        <tr>
+          <td>Branch B activations: isGiftable=TRUE for 368 deals</td>
+          <td><span class="pill pill-t1">T1</span></td>
+          <td><span class="status-amber">🔄 In Progress</span></td>
+          <td>Pipeline defined · activation process to begin Iteration 2</td>
+        </tr>
+        <tr>
+          <td>Groupon IQ: gifting score integration</td>
+          <td><span class="pill pill-t3">T3</span></td>
+          <td><span class="status-red">⚠️ Missed</span></td>
+          <td>Apr 30 kill-gate deadline missed · renegotiating timeline with Jan Šrůmek</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Key Learnings -->
+  <div class="card">
+    <h2>🔍 Key Learnings</h2>
+    <div class="findings-grid">
+      <div class="finding-card wins">
+        <h3>✅ What Worked</h3>
+        <ul>
+          <li>Scoring architecture built end-to-end in one iteration: Opportunity Score (Pavel Štěpánek) × Criteria Score (AI agent, 9 criteria) = Priority Score</li>
+          <li>$10K+ M1+VFM delivered from Branch A activations — first measurable supply quality revenue impact</li>
+          <li>Top Gifts Tag Automation eliminated manual tagging overhead</li>
+          <li>MD NBA integration confirmed — gifting signal now enters the Sales motion</li>
+          <li>Branch B scoped to 368 concrete deals with 3 verified gifting signals — ready for activation</li>
+          <li>Pivot from Tomáš Záruba Keboola table to Oula's direct dashboard integration executed cleanly</li>
+        </ul>
+      </div>
+      <div class="finding-card issues">
+        <h3>❌ What Didn't Work</h3>
+        <ul>
+          <li>T3 Groupon IQ deadline (Apr 30) missed — not yet integrated as a live view for Sales team</li>
+          <li>INTL Awareness descoped — no INTL trainers available to deliver merchant education; task closed as a decision, not a delivery</li>
+          <li>Original Tomáš Záruba Keboola migration plan deprecated mid-iteration — late pivot required to Oula's approach (more resilient long-term, but created short-term uncertainty)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kill Gate Status -->
+  <div class="card">
+    <h2>🎯 Kill Gate Status</h2>
+    <table>
+      <thead>
+        <tr><th>Track</th><th>Threshold</th><th>Deadline</th><th>Risk Flag Date</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pill pill-t1">T1</span> Supply Gaps</td>
+          <td>&lt; $50K M1+VFM from activated deals after Q2</td>
+          <td>Jun 30, 2026</td>
+          <td>May 31</td>
+          <td><span class="status-green">🟢 On Track</span><br><small>$10K+ already delivered from Branch A; Branch B pipeline ready</small></td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-t2">T2</span> Merchant Gifting</td>
+          <td>Merchant refusals not below 15/month by Q2</td>
+          <td>Jun 30, 2026</td>
+          <td>May 31</td>
+          <td><span class="status-amber">🟡 TBD</span><br><small>Materials in final stage · baseline refusal rate not yet measured</small></td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-t3">T3</span> Sales Visibility</td>
+          <td>Gifting score not live in Groupon IQ by Apr 30</td>
+          <td>Apr 30, 2026</td>
+          <td>Apr 14</td>
+          <td><span class="status-red">🔴 Missed</span><br><small>Deadline passed · renegotiating new timeline with Jan Šrůmek</small></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Blockers -->
+  <div class="card">
+    <h2>🚧 Blockers &amp; Dependencies</h2>
+    <div class="blocker-row">
+      <div class="blocker-title">T3 — Groupon IQ integration: no confirmed new timeline</div>
+      <div class="blocker-meta">Owner: Linda Vavrikova · Action: Schedule alignment call with Jan Šrůmek to agree new delivery date · Target: before May 15 (Linda returns from OOO)</div>
+    </div>
+    <div class="blocker-row">
+      <div class="blocker-title">T1 — Oula's AI agent dashboard integration in progress</div>
+      <div class="blocker-meta">Owner: Oula · Asana: task 1214349282576673 · Expected: Iteration 2 · No hard blocker — monitoring</div>
+    </div>
+    <div class="blocker-row">
+      <div class="blocker-title">T2 — Merchant refusal baseline not yet measured</div>
+      <div class="blocker-meta">Owner: Nada Moravcikova · Action: Define measurement methodology and set baseline before materials go live · Target: Iteration 2</div>
+    </div>
+  </div>
+
+  <!-- ═══ PART 2: GROW² PLAN ═══ -->
+  <div class="section-label" style="margin-top:40px;">Part 2 — GROW² Plan · Iteration 2</div>
+  <hr class="section-divider">
+
+  <div class="card">
+    <h2>🌱 GROW² Plan — Iteration 2: Apr 28 – May 12, 2026</h2>
+    <div class="grow-grid">
+
+      <div class="grow-item">
+        <h3>🎯 Goal</h3>
+        <p>Activate Branch B non-giftable deals (368 identified), complete merchant materials rollout, and re-establish T3 IQ timeline with Jan Šrůmek. Bring T2 refusal baseline to a measurable state and complete Oula's agent integration into the Opportunity Scoring Dashboard.</p>
+        <p style="margin-top:8px;"><em>Note: Linda OOO Apr 30–May 10. Iteration 2 execution begins May 12.</em></p>
+      </div>
+
+      <div class="grow-item">
+        <h3>📈 Results</h3>
+        <ul>
+          <li><strong>T1:</strong> Activate 50+ Branch B deals (isGiftable=TRUE) · Oula agent integration complete</li>
+          <li><strong>T2:</strong> Merchant materials sent to target merchants · refusal baseline established</li>
+          <li><strong>T3:</strong> New IQ timeline confirmed with Jan Šrůmek · integration scoped</li>
+        </ul>
+      </div>
+
+      <div class="grow-item">
+        <h3>👥 Owners</h3>
+        <ul>
+          <li><strong>DRI:</strong> Linda Vavrikova</li>
+          <li><strong>T1 Pipeline:</strong> Oula (agent integration) · Pavel Štěpánek (scoring)</li>
+          <li><strong>T1 Activations:</strong> Sales team (Branch B outreach)</li>
+          <li><strong>T2:</strong> Nada Moravcikova (merchant materials)</li>
+          <li><strong>T3:</strong> Linda ↔ Jan Šrůmek (IQ timeline)</li>
+        </ul>
+      </div>
+
+      <div class="grow-item grow-workplan">
+        <h3>🗂️ Workplan</h3>
+        <table>
+          <thead>
+            <tr><th>Track</th><th>Action</th><th>Owner</th><th>Target</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td>Complete Oula's AI agent integration into Opp Scoring Dashboard</td>
+              <td>Oula</td>
+              <td>May 12</td>
+            </tr>
+            <tr>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td>Route Branch B 368 deals for activation (isGiftable=TRUE): Sales + Merchant outreach</td>
+              <td>Sales team / Linda</td>
+              <td>May 15</td>
+            </tr>
+            <tr>
+              <td><span class="pill pill-t1">T1</span></td>
+              <td>Validate scoring quality on first 50 Branch B activations</td>
+              <td>Pavel Štěpánek</td>
+              <td>May 20</td>
+            </tr>
+            <tr>
+              <td><span class="pill pill-t2">T2</span></td>
+              <td>Finalize merchant gifting materials and send to target merchant list</td>
+              <td>Nada Moravcikova</td>
+              <td>May 15</td>
+            </tr>
+            <tr>
+              <td><span class="pill pill-t2">T2</span></td>
+              <td>Establish merchant refusal baseline (measure current refusal rate)</td>
+              <td>Nada Moravcikova</td>
+              <td>May 20</td>
+            </tr>
+            <tr>
+              <td><span class="pill pill-t3">T3</span></td>
+              <td>Align with Jan Šrůmek on new Groupon IQ integration timeline</td>
+              <td>Linda Vavrikova</td>
+              <td>May 13</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>[SPL] Gifting Supply Depth &amp; Merchant Readiness · Iteration 1 · Generated Apr 28, 2026</p>
+    <p style="margin-top:4px;">Groupon Gifting · DRI: Linda Vavrikova · Bet approved: Apr 14, 2026</p>
+  </footer>
+
+</div>
+</body>
+</html>

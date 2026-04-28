@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuyBox — Iteration 3 | Apr 16–27, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.6; background: #f4f6f9; color: #1a1a2e; }
+  .wrapper { max-width: 900px; margin: 0 auto; padding: 24px 16px 48px; }
+
+  header { background: #1a1a2e; border-left: 6px solid #00a650; border-radius: 10px; padding: 28px 32px; margin-bottom: 24px; color: #fff; }
+  header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  header .meta { font-size: 13px; color: #a0aec0; line-height: 1.8; }
+  header .meta span { margin-right: 16px; }
+
+  .gate-badge { display: inline-block; margin-top: 14px; padding: 6px 18px; border-radius: 20px; font-size: 14px; font-weight: 600; }
+  .gate-continue-flag { background: #f5a623; color: #1a1a2e; }
+
+  .card { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 24px 28px; margin-bottom: 20px; }
+  .card h2 { font-size: 16px; font-weight: 700; margin-bottom: 16px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+  .card h3 { font-size: 14px; font-weight: 600; margin: 14px 0 8px; color: #1a1a2e; }
+
+  p { margin-bottom: 10px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  th { background: #f7f9fc; text-align: left; padding: 8px 12px; font-weight: 600; border-bottom: 2px solid #e2e8f0; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .badge-green { background: #d4f0e0; color: #1a6b40; }
+  .badge-blue { background: #dbeafe; color: #1e40af; }
+  .badge-amber { background: #fef3c7; color: #92400e; }
+  .badge-gray { background: #f1f5f9; color: #475569; }
+  .badge-red { background: #fee2e2; color: #991b1b; }
+
+  .stat-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+  .stat { background: #f7f9fc; border-radius: 8px; padding: 12px 20px; flex: 1; min-width: 140px; }
+  .stat .val { font-size: 26px; font-weight: 700; color: #00a650; }
+  .stat .lbl { font-size: 12px; color: #64748b; margin-top: 2px; }
+
+  .delivery-rate { font-size: 18px; font-weight: 700; }
+
+  .findings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .findings-grid { grid-template-columns: 1fr; } }
+  .finding-card { background: #f7f9fc; border-radius: 8px; padding: 16px; }
+  .finding-card.wins { border-top: 3px solid #00a650; }
+  .finding-card.issues { border-top: 3px solid #f5a623; }
+  .finding-card ul { padding-left: 18px; }
+  .finding-card li { margin-bottom: 6px; font-size: 13px; }
+
+  .kill-gate-table td:last-child { font-size: 18px; }
+
+  .grow2 .grow-section { background: #f7f9fc; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+  .grow2 .grow-section h3 { margin-top: 0; }
+
+  .workplan-stream { margin-bottom: 12px; }
+  .workplan-stream .stream-name { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+  .workplan-stream ul { padding-left: 18px; }
+  .workplan-stream li { font-size: 13px; margin-bottom: 4px; }
+
+  .ooo-banner { background: #fef3c7; border-left: 4px solid #f5a623; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; }
+  .ooo-banner strong { display: block; margin-bottom: 4px; }
+
+  .links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+  .link-btn { display: block; background: #f7f9fc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; text-decoration: none; color: #1a1a2e; font-size: 13px; font-weight: 500; transition: background 0.15s; }
+  .link-btn:hover { background: #e8f5ee; }
+
+  footer { text-align: center; font-size: 12px; color: #94a3b8; margin-top: 32px; }
+  a { color: #00a650; }
+
+  .section-divider { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; margin: 28px 0 12px; padding-left: 4px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<header>
+  <h1>BuyBox — Lekkerland DE Pilot → EMEA Scale</h1>
+  <div class="meta">
+    <span>📅 Iteration 3 &nbsp;·&nbsp; 16 Apr 2026 → 27 Apr 2026</span>
+    <span>🏁 DRI Phase 3 — Day 14</span><br>
+    <span>👤 DRI: Linda Vavríková</span>
+    <span>🎯 Sponsor: Marie Havlíčková</span>
+    <span>✅ Approved: 13 Apr 2026</span>
+  </div>
+  <div class="gate-badge gate-continue-flag">🟡 CONTINUE + FLAG — 5 tickets resolved, sandbox unblocked, T2 at risk</div>
+</header>
+
+<div class="ooo-banner">
+  <strong>⚠️ OOO Note — Linda is away Apr 30–May 10</strong>
+  Iteration report generated today (Apr 27) to capture progress before leave. Next scheduled run (May 1) should be <strong>skipped or postponed to May 15</strong>. Operational coverage during OOO: <strong>Nada Moravcikova</strong> (T2 ops) · <strong>Dennis Otto</strong> (T3 engineering) · Escalation: <strong>Marie Havlíčková</strong>.
+</div>
+
+<!-- ═══════════════════ PART 1: RETROSPECTIVE ═══════════════════ -->
+<div class="section-divider">Part 1 — Retrospective (Apr 16–27)</div>
+
+<div class="card">
+  <h2>📋 Executive Summary</h2>
+  <p>Iteration 3 marks the most significant engineering progress since the bet was approved. The BuyBox sandbox was unblocked on April 22 — after two weeks of follow-up — and immediately enabled five Encore foundation tickets to close in a single week (GPD-168 through GPD-172), completing the full Encore orchestration layer for the API integration. Rahul Agrawal drove the engineering execution; Dennis coordinated API clarifications with BuyBox, resolving code format and idempotency questions that had been open blockers.</p>
+  <p>On the commercial side, Gate 0 was formally closed today (Apr 27), completing the last legal and operational prerequisites for the pilot. T3 (BuyBox API, Germany) is now the lead track and is on pace. T2 (Lekkerland) remains blocked on the partner side — no timeline update received this week, and the originally-planned May 7 launch is not happening. GO is in preparation for "3P Gift Cards EU – Support Readiness" and PS-4055 (MBNXT card type detection) was picked up by the Payment & Orders team in a sprint starting Apr 22.</p>
+  <p>Track sequencing confirmed by Linda: T3 (BuyBox Germany) first → T2 (Lekkerland, pending their readiness) → T4 (Epay + Plebiscom after BuyBox scales to additional countries).</p>
+</div>
+
+<div class="card">
+  <h2>📊 Iteration Results</h2>
+  <div class="stat-row">
+    <div class="stat"><div class="val">5</div><div class="lbl">Jira tickets resolved</div></div>
+    <div class="stat"><div class="val">8</div><div class="lbl">In progress</div></div>
+    <div class="stat"><div class="val delivery-rate" style="color:#f5a623">38%</div><div class="lbl">Delivery rate (expected early-stage)</div></div>
+    <div class="stat"><div class="val" style="color:#00a650">✅</div><div class="lbl">Gate 0 closed (Apr 27)</div></div>
+  </div>
+
+  <table>
+    <thead><tr><th>Ticket</th><th>Summary</th><th>Stream</th><th>Assignee</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><a href="https://groupondev.atlassian.net/browse/GPD-168">GPD-168</a></td>
+        <td>Encore platform onboarding</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>Rahul Agrawal</td>
+        <td>✅ Done (Apr 22)</td>
+      </tr>
+      <tr>
+        <td><a href="https://groupondev.atlassian.net/browse/GPD-169">GPD-169</a></td>
+        <td>BuyBox environment + credentials setup</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>Rahul Agrawal</td>
+        <td>✅ Done (Apr 22)</td>
+      </tr>
+      <tr>
+        <td><a href="https://groupondev.atlassian.net/browse/GPD-170">GPD-170</a></td>
+        <td>BuyBox NVP API client in Encore</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>Rahul Agrawal</td>
+        <td>✅ Done (Apr 22)</td>
+      </tr>
+      <tr>
+        <td><a href="https://groupondev.atlassian.net/browse/GPD-171">GPD-171</a></td>
+        <td>Two-step redemption flow with error handling + currency validation</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>Rahul Agrawal</td>
+        <td>✅ Done (Apr 22)</td>
+      </tr>
+      <tr>
+        <td><a href="https://groupondev.atlassian.net/browse/GPD-172">GPD-172</a></td>
+        <td>Orders API integration for bucks allocation</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>Rahul Agrawal</td>
+        <td>✅ Done (Apr 22)</td>
+      </tr>
+      <tr>
+        <td><a href="https://groupondev.atlassian.net/browse/GPD-173">GPD-173</a></td>
+        <td>Transaction idempotency + recovery</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>Rahul Agrawal</td>
+        <td>🔄 In Progress</td>
+      </tr>
+      <tr>
+        <td><a href="https://groupondev.atlassian.net/browse/GPD-174">GPD-174</a></td>
+        <td>giftcard_service card detection + Encore delegation</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>Rahul Agrawal</td>
+        <td>🔄 In Progress</td>
+      </tr>
+      <tr>
+        <td><a href="https://groupondev.atlassian.net/browse/GPD-178">GPD-178</a></td>
+        <td>Sandbox integration testing</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>Rahul Agrawal</td>
+        <td>🔄 In Progress (unblocked Apr 22)</td>
+      </tr>
+      <tr>
+        <td><a href="https://groupondev.atlassian.net/browse/GPD-179">GPD-179</a></td>
+        <td>Staging validation</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>Rahul Agrawal</td>
+        <td>🔄 In Progress</td>
+      </tr>
+      <tr>
+        <td><a href="https://groupondev.atlassian.net/browse/GPD-211">GPD-211</a></td>
+        <td>[Legacy Web] 4-digit PIN on /giftcards</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>Rahul Agrawal</td>
+        <td>🔄 In Progress (created Apr 23)</td>
+      </tr>
+      <tr>
+        <td>PREPURCH-7389</td>
+        <td>[Legacy Android] 4-digit PIN on checkout</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>—</td>
+        <td>🔄 In Progress (created Apr 24)</td>
+      </tr>
+      <tr>
+        <td>PREPURCH-7390</td>
+        <td>[Legacy iOS] 4-digit PIN on checkout</td>
+        <td><span class="badge badge-green">BuyBox Integration</span></td>
+        <td>Andrei Sofineti</td>
+        <td>🔄 In Progress (created Apr 24)</td>
+      </tr>
+      <tr>
+        <td><a href="https://groupondev.atlassian.net/browse/PS-4055">PS-4055</a></td>
+        <td>[MBNXT] Card type detection in next-pwa-app</td>
+        <td><span class="badge badge-amber">Cross-team</span></td>
+        <td>Payment &amp; Orders Team</td>
+        <td>🔄 In Progress (sprint started Apr 22)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h2>🔍 Key Learnings</h2>
+  <div class="findings-grid">
+    <div class="finding-card wins">
+      <h3>✅ What Worked</h3>
+      <ul>
+        <li><strong>BuyBox sandbox unblocked (Apr 22)</strong> — after persistent follow-up (Apr 20 + Apr 22 Asana + WhatsApp). Jonathan Gordinho provided client_id, API key, sandbox URL, and 200 test codes. Immediately enabled integration testing.</li>
+        <li><strong>5 Encore foundation tickets closed in one week</strong> — complete orchestration layer (onboarding, env setup, NVP API client, redemption flow, Orders API) ready for wiring into giftcard_service.</li>
+        <li><strong>API design decisions locked (Apr 24)</strong> — alphanumeric code detection, idempotency at balance level, adequacy task dropped. Unblocked GPD-174 immediately.</li>
+        <li><strong>Gate 0 closed today (Apr 27)</strong> — all legal, fraud, and technical prerequisites cleared. T3 pilot can proceed without blockers.</li>
+        <li><strong>PS-4055 picked up by Payment & Orders team</strong> — cross-team dependency in active sprint as of Apr 22.</li>
+        <li><strong>GO: Support Readiness prep started</strong> — "3P Gift Cards EU – Support Readiness" task being prepared by GO team (Sharmila).</li>
+      </ul>
+    </div>
+    <div class="finding-card issues">
+      <h3>⚠️ What Needs Attention</h3>
+      <ul>
+        <li><strong>T2 (Lekkerland) — no update from partner side</strong> — iKiosk pilot originally planned for May 7 is not happening. No realistic timeline received. Benjamin Holbeck should escalate to Lekkerland this week.</li>
+        <li><strong>PS-4055 cross-team dependency</strong> — MBNXT card type detection is in Payment & Orders sprint but not yet closed. Risk if sprint slips.</li>
+        <li><strong>GPD-173 + GPD-174 still open</strong> — idempotency and giftcard_service detection are prerequisites for staging. Should close before OOO.</li>
+        <li><strong>Rahul Jira account ID still missing in config</strong> — flagged in Iteration 2, still not updated.</li>
+        <li><strong>Linda OOO Apr 30–May 10</strong> — active engineering sprint runs without DRI. Escalation path must be explicit.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🎯 Kill Gate Status</h2>
+  <table class="kill-gate-table">
+    <thead><tr><th>Track</th><th>Threshold</th><th>Deadline</th><th>Risk Flag</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>T1</strong> Gate 0</td>
+        <td>All 3 blockers cleared (MSA, whitelist, deals)</td>
+        <td>30 Apr 2026</td>
+        <td>20 Apr 2026 ⚠️ passed</td>
+        <td>✅ DONE</td>
+      </tr>
+      <tr>
+        <td><strong>T2</strong> Lekkerland Pilot</td>
+        <td>GMV ≥ €0.4–0.6M + SLAs met over 8–12 weeks</td>
+        <td>30 Jun 2026</td>
+        <td>31 May 2026</td>
+        <td>🟠 AT RISK — no partner timeline</td>
+      </tr>
+      <tr>
+        <td><strong>T3</strong> BuyBox API Pilot</td>
+        <td>API live in 1 country, e2e lifecycle validated</td>
+        <td>30 Jun 2026</td>
+        <td>31 May 2026</td>
+        <td>🟡 ON TRACK — sandbox testing starting</td>
+      </tr>
+      <tr>
+        <td><strong>T4</strong> Phase 2 Go/No-Go</td>
+        <td>T2+T3 results positive → EU rollout approved</td>
+        <td>31 Jul 2026</td>
+        <td>15 Jul 2026</td>
+        <td>⬜ TBD — after T3 success</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h2>🚧 Blockers &amp; Dependencies</h2>
+  <table>
+    <thead><tr><th>Blocker</th><th>Owner</th><th>Expected Resolution</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>PS-4055 — MBNXT card type detection</td>
+        <td>Payment &amp; Orders Team (Martin Ragan)</td>
+        <td>Current sprint (started Apr 22)</td>
+        <td>Required for MBNXT platform support of BuyBox card redemption</td>
+      </tr>
+      <tr>
+        <td>T2 Lekkerland — no launch timeline from partner</td>
+        <td>Benjamin Holbeck / Nada Moravcikova</td>
+        <td>Unknown — follow-up needed this week</td>
+        <td>Delays T2 pilot start; may shift T2 kill-gate deadline</td>
+      </tr>
+      <tr>
+        <td>Rahul Jira account ID missing in bet config</td>
+        <td>Linda Vavrikova</td>
+        <td>Before OOO (Apr 30)</td>
+        <td>Config completeness, Tempo reporting</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════ PART 2: GROW² PLAN ═══════════════════ -->
+<div class="section-divider">Part 2 — GROW² Plan (Next Iteration: Apr 27–May 10)</div>
+
+<div class="card grow2">
+  <h2>🚀 GROW² — Next Iteration Plan</h2>
+
+  <div class="grow-section">
+    <h3>🎯 Goal</h3>
+    <p>Complete the core BuyBox integration layer for the Germany pilot: close GPD-173 (idempotency), GPD-174 (card detection), and GPD-178 (sandbox tests), putting the integration in a position to enter staging validation (GPD-179) before May 15. Secure a realistic timeline from Lekkerland for T2. Ensure smooth DRI coverage during Linda's leave (Apr 30–May 10).</p>
+  </div>
+
+  <div class="grow-section">
+    <h3>📈 Results</h3>
+    <ul style="padding-left:18px; font-size:14px;">
+      <li>GPD-178 sandbox integration tests: ✅ Complete → GPD-179 staging validation started</li>
+      <li>GPD-173 + GPD-174: ✅ Closed → unblocks staging</li>
+      <li>PS-4055: ✅ Closed or firm ETA confirmed from Payment &amp; Orders</li>
+      <li>T2 Lekkerland: realistic timeline received from partner (go/no-go by May 10)</li>
+      <li>Legacy PIN coverage (GPD-211, PREPURCH-7389/7390): ✅ All closed</li>
+    </ul>
+  </div>
+
+  <div class="grow-section">
+    <h3>👥 Owners</h3>
+    <table>
+      <tbody>
+        <tr><td><strong>R (Responsible)</strong></td><td>Linda Vavrikova — DRI (OOO Apr 30–May 10 → cover: Nada Moravcikova for ops, Dennis Otto for eng)</td></tr>
+        <tr><td><strong>A (Accountable)</strong></td><td>Marie Havlíčková — escalation during OOO</td></tr>
+        <tr><td><strong>S — Engineering</strong></td><td>Dennis Otto (coordination), Rahul Agrawal (dev)</td></tr>
+        <tr><td><strong>S — T2 Ops</strong></td><td>Nada Moravcikova (Lekkerland follow-up)</td></tr>
+        <tr><td><strong>S — Cross-team</strong></td><td>Payment &amp; Orders Team (PS-4055)</td></tr>
+        <tr><td><strong>S — GO</strong></td><td>Sharmila Sasikumar (Support Readiness)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grow-section">
+    <h3>📋 Workplan</h3>
+
+    <div class="workplan-stream">
+      <span class="stream-name badge badge-green">BuyBox Integration (T3)</span>
+      <ul>
+        <li>Close GPD-173 (transaction idempotency) → Rahul by May 2</li>
+        <li>Close GPD-174 (giftcard_service detection + feature flag) → Rahul by May 2</li>
+        <li>Complete GPD-178 sandbox integration tests → Rahul by May 5</li>
+        <li>Start GPD-179 staging validation → Rahul from May 5</li>
+        <li>Close legacy PIN: GPD-211 (web), PREPURCH-7389 (Android), PREPURCH-7390 (iOS) → Rahul / Andrei by May 7</li>
+        <li>Coordinate PS-4055 closure with Payment &amp; Orders → Dennis ongoing</li>
+        <li>Update Rahul's Jira account ID in bet config → Dennis / Linda by Apr 30</li>
+      </ul>
+    </div>
+
+    <div class="workplan-stream">
+      <span class="stream-name badge badge-blue">Lekkerland (T2)</span>
+      <ul>
+        <li>Benjamin / Nada: contact Lekkerland for realistic pilot launch timeline → by May 1</li>
+        <li>Update T2 GROW task with revised timeline when received → Linda on return (May 10)</li>
+      </ul>
+    </div>
+
+    <div class="workplan-stream">
+      <span class="stream-name badge badge-amber">GO / Support Readiness</span>
+      <ul>
+        <li>Sharmila: continue "3P Gift Cards EU – Support Readiness" prep → by May 1</li>
+        <li>Dennis: update DT with new changes + send communication (task due May 1) → Dennis</li>
+      </ul>
+    </div>
+
+    <div class="workplan-stream">
+      <span class="stream-name badge badge-gray">Governance (OOO)</span>
+      <ul>
+        <li>Linda departs Apr 30 AM, returns May 10 — next iteration review: May 10</li>
+        <li>May 1 scheduled iteration report: <strong>skip</strong> — next run May 15 (or manual on May 10)</li>
+        <li>Escalation path: engineering blocker → Dennis → Marie Havlíčková</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🔗 Important Links</h2>
+  <div class="links-grid">
+    <a class="link-btn" href="https://app.asana.com/1/8437193015852/project/1214063404259630">📋 Bet Project (Asana)</a>
+    <a class="link-btn" href="https://app.asana.com/1/8437193015852/project/1211705895865941">🎁 Gifting 2026</a>
+    <a class="link-btn" href="https://groupondev.atlassian.net/browse/GPD-167">⚙️ Jira Epic GPD-167</a>
+    <a class="link-btn" href="https://app.asana.com/1/8437193015852/project/1213736809253422">🧠 GI Project</a>
+    <a class="link-btn" href="https://app.asana.com/1/8437193015852/project/1204909591256968">📝 5/15 Linda</a>
+    <a class="link-btn" href="https://groupondev.atlassian.net/browse/PS-4055">🔧 PS-4055 (MBNXT)</a>
+    <a class="link-btn" href="https://app.asana.com/1/8437193015852/project/1211705895865941/task/1211703474350466">🔧 T3 Technical (Asana)</a>
+    <a class="link-btn" href="https://app.asana.com/1/8437193015852/project/1214063404259630/task/1214038083943829">📚 Iterations Log</a>
+  </div>
+</div>
+
+<footer>Generated by Claude · Groupon Gifting · 27 Apr 2026 &nbsp;·&nbsp; BuyBox Iteration 3</footer>
+</div>
+</body>
+</html>

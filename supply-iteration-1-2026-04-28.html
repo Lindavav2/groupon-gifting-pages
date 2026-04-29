@@ -154,42 +154,6 @@
     <span class="gate-badge gate-amber">🟡 CONTINUE + FLAG — T3 deadline tomorrow</span>
   </header>
 
-  <!-- ═══ POST-ITERATION UPDATE ═══ -->
-  <div style="background:#e8f4fd;border-left:5px solid #1565c0;border-radius:10px;padding:18px 24px;margin-bottom:20px;">
-    <div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#1565c0;margin-bottom:10px;">📌 Post-iteration Update · Apr 28–29, 2026</div>
-    <p style="font-size:14px;color:#1a1a2e;margin-bottom:10px;">The following updates were captured after the main report was generated, based on Nada's Apr 28 framework updates and final alignment on Apr 29.</p>
-    <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:4px;">
-      <thead>
-        <tr style="background:#d0e8f8;">
-          <th style="padding:8px 10px;text-align:left;font-size:12px;color:#1565c0;font-weight:700;">Item</th>
-          <th style="padding:8px 10px;text-align:left;font-size:12px;color:#1565c0;font-weight:700;">Track</th>
-          <th style="padding:8px 10px;text-align:left;font-size:12px;color:#1565c0;font-weight:700;">Detail</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="padding:8px 10px;border-bottom:1px solid #c0ddf5;"><strong>Sales Onboarding Alignment — two sub-activities</strong></td>
-          <td style="padding:8px 10px;border-bottom:1px solid #c0ddf5;"><span class="pill pill-t1">T1</span></td>
-          <td style="padding:8px 10px;border-bottom:1px solid #c0ddf5;">Two parallel workstreams defined for quality prevention:<br><br>
-            <strong>Oula Suliman (pre-live):</strong> Reviews deals that are <em>submitted but not yet live</em> — checks gifting criteria alignment before activation. Deadline Apr 30 — Linda's scoring criteria items complete; Oula's UX review plan pending.<br><br>
-            <strong>Petr Fišer / MD Next Best Action (live deals):</strong> Routes scored fix tasks to MDs for deals already live that need adjustment. Alignment requested Apr 27 — Petr has not yet confirmed integration details. Overdue Apr 28.</td>
-        </tr>
-        <tr>
-          <td style="padding:8px 10px;"><strong>Non-transferable clause workflow — approach finalized</strong></td>
-          <td style="padding:8px 10px;"><span class="pill pill-t1">T1</span></td>
-          <td style="padding:8px 10px;">Final workflow agreed Apr 28 after internal debate:<br>
-            <strong>1. DETECT</strong> — BQ scan flags giftable deal with non-transferable clause.<br>
-            <strong>2. ESCALATE</strong> — Sales contacts merchant to request clause removal.<br>
-            <strong>3. AGREES</strong> → clause removed, deal stays giftable. ✅<br>
-            <strong>4. REFUSES</strong> → check gift refunds against criteria score threshold (≥30 pts).<br>
-            <strong>5. DECIDE</strong> → if threshold met: de-gift; otherwise monitor.<br>
-            De-gifting is a fallback for uncooperative merchants. Exact refund thresholds TBD pending Refunds check analysis output.
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
   <!-- ═══ PART 1: RETROSPECTIVE ═══ -->
   <div class="section-label">Part 1 — Retrospective</div>
   <hr class="section-divider">
@@ -334,7 +298,7 @@
           <li><strong>Branch A framework delivered end-to-end:</strong> decision logic, criteria v2 weights, fix routing, Opp Score Dashboard, and framework doc — all live in Iteration 1.</li>
           <li><strong>3PIP first-week impact confirmed:</strong> 786 gift units, 556 gift orders, $10,719 margin, 14.9% gift rate (week Apr 1–7). Validates supply expansion as demand driver.</li>
           <li><strong>Keboola AI agent scoped and assigned:</strong> Pavel Štěpánek took ownership of automating the scoring pipeline (previously manual), with a clear task spec and May 29 deadline.</li>
-          <li><strong>Non-transferable workflow resolved:</strong> After 3 rounds of debate, correct flow agreed on Apr 28 — Sales escalation first, de-gift as fallback. Clarity achieved.</li>
+          <li><strong>Non-transferable clause workflow finalized:</strong> After 3 rounds of internal debate, correct flow agreed Apr 28: (1) DETECT via BQ scan → (2) Sales ESCALATES to merchant → (3) if AGREES: clause removed, stays giftable ✅ → (4) if REFUSES: check gift refunds vs criteria score threshold (≥30 pts) → (5) DECIDE: de-gift if threshold met, otherwise monitor. De-gifting is a fallback for uncooperative merchants; exact refund thresholds TBD pending GC INTL Refunds analysis.</li>
           <li><strong>Gifting criteria cookbook complete:</strong> EN + CZ versions with Sales and Content Ops guides — ready to distribute via Jiri Ponert's merchant education program.</li>
           <li><strong>CRR improving significantly:</strong> W15 20% → W16 50% (vs 12% baseline) — early signal that merchant experience interventions are working.</li>
           <li><strong>Giftability removal process operational:</strong> 19 high-risk deals identified, workflow defined. Weekly cadence target Apr 30.</li>

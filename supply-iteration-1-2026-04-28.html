@@ -161,7 +161,7 @@
   <!-- EXECUTIVE SUMMARY -->
   <div class="card">
     <h2>📋 Executive Summary</h2>
-    <p>Iteration 1 (Apr 14–28) was the foundation-setting phase for all three tracks. T1 delivered the most substantial progress: the Gifting Supply Decision Framework is complete with two operational branches, the Deal Opportunity Scoring Dashboard is live, and the AI Scoring Agent Keboola automation has been assigned to Pavel Štěpánek (due May 29, replacing the previously manual Tomáš Záruba step). An end-to-end giftability removal workflow was initiated to systematically de-list high-risk deals — 19 flagged, 8 requiring immediate action. New supply work embedding gifting criteria into Tomáš Šikola's new leads system is underway. On the T2 front, the gifting criteria cookbook was published (EN + CZ), the merchant education video entered production, and a new INTL gift card refund analysis task was opened (due Apr 30). T3 closes the iteration at risk: the Groupon IQ gifting metrics integration (Jan Šromek) has a 2-week estimate from April 8 — making the April 30 deadline extremely tight. T3 kill gate action: if IQ is not live by tomorrow, renegotiate timeline with Jan Šromek. Linda is OOO Apr 30 – May 10; the next iteration starts May 12.</p>
+    <p>Iteration 1 (Apr 14–28) was the foundation-setting phase for all three tracks. T1 delivered the most substantial progress: the Gifting Supply Decision Framework is complete with two operational branches, the Deal Opportunity Scoring Dashboard is live, and the AI Scoring Agent Keboola automation has been assigned to Pavel Štěpánek (due May 29). An end-to-end giftability management system is taking shape — from criteria scoring and tagging to systematic identification and removal of high-risk deals. Refund monitoring is expanding: INTL gift card refund analysis is underway across 10 markets, and a deal-level analysis of abnormal refund rates (gift vs. standard) is in progress with next steps being defined. On the T2 front, the gifting criteria cookbook was published (EN + CZ) and the merchant education video entered production. Linda is OOO Apr 30 – May 10; the next iteration starts May 12.</p>
   </div>
 
   <!-- ITERATION RESULTS -->
@@ -222,7 +222,7 @@
           <td>Created Apr 28. Due May 29. Pavel published first IQ report Apr 29.</td>
         </tr>
         <tr>
-          <td><strong>End-to-End Giftability Removal Automation</strong><br><small>Weekly removal of high-risk deals via Deal Estate</small></td>
+          <td><strong>End-to-End Giftability Removal Automation</strong><br><small>Yeekly removal of high-risk deals via Deal Estate</small></td>
           <td><span class="pill pill-t1">T1</span></td>
           <td>Linda</td>
           <td><span class="status-amber">🔄 In Progress</span></td>
@@ -298,21 +298,17 @@
           <li><strong>Branch A framework delivered end-to-end:</strong> decision logic, criteria v2 weights, fix routing, Opp Score Dashboard, and framework doc — all live in Iteration 1.</li>
           <li><strong>3PIP first-week impact confirmed:</strong> 786 gift units, 556 gift orders, $10,719 margin, 14.9% gift rate (week Apr 1–7). Validates supply expansion as demand driver.</li>
           <li><strong>Keboola AI agent scoped and assigned:</strong> Pavel Štěpánek took ownership of automating the scoring pipeline (previously manual), with a clear task spec and May 29 deadline.</li>
-          <li><strong>Non-transferable clause workflow finalized:</strong> After 3 rounds of internal debate, correct flow agreed Apr 28: (1) DETECT via BQ scan → (2) Sales ESCALATES to merchant → (3) if AGREES: clause removed, stays giftable ✅ → (4) if REFUSES: check gift refunds vs criteria score threshold (≥30 pts) → (5) DECIDE: de-gift if threshold met, otherwise monitor. De-gifting is a fallback for uncooperative merchants; exact refund thresholds TBD pending GC INTL Refunds analysis.</li>
+          <li><strong>Non-transferable clause workflow established:</strong> Agreed Apr 28: (1) DETECT via BQ scan → (2) Sales ESCALATES to merchant → (3) if AGREES: clause removed, deal stays giftable → (4) if REFUSES: evaluate gift refund impact vs criteria score (≥30 pts threshold) → (5) DECIDE: de-gift or monitor. Exact thresholds to be confirmed after GC INTL Refunds analysis.</li>
           <li><strong>Gifting criteria cookbook complete:</strong> EN + CZ versions with Sales and Content Ops guides — ready to distribute via Jiri Ponert's merchant education program.</li>
-          <li><strong>CRR improving significantly:</strong> W15 20% → W16 50% (vs 12% baseline) — early signal that merchant experience interventions are working.</li>
-          <li><strong>Giftability removal process operational:</strong> 19 high-risk deals identified, workflow defined. Weekly cadence target Apr 30.</li>
+          <li><strong>End-to-end giftability management system operational:</strong> Full pipeline from criteria scoring → deal tagging → automated flagging of high-risk deals (19 identified, 8 requiring immediate action) → systematic removal via Deal Estate. Establishes a repeatable weekly quality cycle.</li>
+          <li><strong>Refund monitoring expanded:</strong> GC INTL refund analysis underway across 10 markets (AU, BE, DE, FR, IE, NL, PL, ES, UK, AE). Separately, deal-level analysis identifies deals where gift refund rate significantly exceeds the standard rate or where absolute monetary impact is high — next steps in progress.</li>
         </ul>
       </div>
       <div class="finding-card issues">
         <h3>❌ What Didn't Work</h3>
         <ul>
-          <li><strong>T3 Groupon IQ at risk:</strong> Jan Šromek's 2-week estimate (from Apr 8) makes Apr 30 delivery extremely tight. No update since Apr 23. Kill gate approaching.</li>
-          <li><strong>MD NBA alignment not progressed:</strong> Petr Fišer integration (scoring → MD tasks) was due Apr 28. No response to Linda's Apr 27 outreach. Critical for Branch A scalability.</li>
-          <li><strong>Non-transferable approach took 3 revisions:</strong> Initial scoping (Apr 12) was overwritten by Nada (Apr 28, "no merchant contact"), then corrected by Linda (same day). Cost alignment time.</li>
-          <li><strong>ROBIN Tool effectively stalled:</strong> Last meaningful activity Feb 2. Low priority signal from engineering side — UE gifting metric adjustment has no owner or timeline.</li>
-          <li><strong>Oula UX plan not ready:</strong> Scoring criteria weights finalized Apr 28 (Linda's items done), but Oula's pre-live review process still undefined ahead of Apr 30 deadline.</li>
-          <li><strong>GC INTL refund analysis opened with same-day deadline:</strong> Created Apr 27 with Apr 30 due date — very tight window.</li>
+          <li><strong>MD NBA alignment not progressed:</strong> Petr Fišer integration (scoring → MD fix tasks in Groupon IQ) was due Apr 28. No response to Linda's Apr 27 outreach. Critical for Branch A scalability — without this, supply quality fixes require manual triage.</li>
+          <li><strong>ROBIN Tool effectively stalled:</strong> Last meaningful activity Feb 2. UE gifting metric adjustment (Buy as Gift + Send as Gift) has no active engineering owner or timeline.</li>
         </ul>
       </div>
     </div>
@@ -368,13 +364,13 @@
       <div class="blocker-title">⚠️ MD NBA Alignment — Petr Fišer not yet engaged</div>
       <div class="blocker-meta">Owner: Petr Fišer (MD Next Best Action bet) | Linda reached out Apr 27 | Overdue Apr 28<br>Integration is critical for Branch A scalability: scoring output → automated fix tasks for MDs in Groupon IQ. Without this, supply quality fixes require manual triage. Next step: follow up with Petr Fišer after Linda returns from OOO (May 12).</div>
     </div>
-    <div class="blocker-row">
-      <div class="blocker-title">⚠️ Oula UX Plan — not yet defined ahead of Apr 30</div>
-      <div class="blocker-meta">Owner: Oula Suliman | Due Apr 30<br>Linda's scoring criteria items are complete. Oula's pre-live deal review process (UX plan for how deals submitted but not yet live are evaluated against gifting criteria) is still undefined. Risk: new deals may go live without gifting quality check.</div>
+    <div class="blocker-row" style="border-left-color:#aab;background:#fafafa;">
+      <div class="blocker-title" style="color:#555;">📎 Dependency: Oula Suliman — pre-live deal scoring UX plan</div>
+      <div class="blocker-meta">Linda's scoring criteria items complete. Oula's process for evaluating pre-live deals against gifting criteria still to be defined. Risk: new deals may go live without gifting quality check. Target: May 12.</div>
     </div>
     <div class="blocker-row">
       <div class="blocker-title">📌 Linda OOO Apr 30 – May 10</div>
-      <div class="blocker-meta">Scheduled iteration report disabled. Next iteration: May 12–26. Any urgent T3 decisions (Groupon IQ renegotiation) need to be resolved before Apr 30 or handed off.</div>
+      <div class="blocker-meta">Scheduled iteration report disabled. Next iteration: May 12–26.</div>
     </div>
   </div>
 

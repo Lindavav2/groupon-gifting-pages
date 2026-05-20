@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Groupon × epay — Sales One-Pager</title>
+<style>
+    /* Reset & Core Document Setup */
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+    body {
+        margin: 0;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f4f6f8;
+        color: #1A1A1A;
+        -webkit-print-color-adjust: exact;
+    }
+
+    /* Container to present pages side-by-side or stacked cleanly */
+    .workspace {
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    /* Page Definition (A4 Landscape: 297mm x 210mm) */
+    .page {
+        width: 297mm;
+        height: 210mm;
+        background-color: #FFFFFF;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        page-break-after: always;
+    }
+
+    /* Layout Table Architecture (Bulletproof multi-column layout without Flex/Grid) */
+    .layout-table {
+        display: table;
+        width: 100%;
+        height: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+    .layout-row {
+        display: table-row;
+    }
+    .layout-column {
+        display: table-cell;
+        vertical-align: top;
+        width: 50%;
+        height: 100%;
+        position: relative;
+    }
+
+    /* Separation border between left/right halves */
+    .divider-left {
+        border-right: 1px solid #E2E8F0;
+    }
+
+    /* Decorative Elements */
+    .corner-ribbon {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        z-index: 10;
+        pointer-events: none;
+    }
+    .ribbon-tl {
+        top: 0;
+        left: 0;
+    }
+    .ribbon-br {
+        bottom: 0;
+        right: 0;
+    }
+
+    /* Typography & Utilities */
+    h1, h2, h3, p, ul {
+        margin: 0;
+        padding: 0;
+    }
+    .section-label {
+        font-size: 8.5pt;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #5C5C5C;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    /* Page 1: Hero Section */
+    .hero-block {
+        background-color: #1A3A0A; /* Deep Forest */
+        padding: 30px 25px 25px 35px;
+        color: #FFFFFF;
+        position: relative;
+    }
+    .hero-headline {
+        font-size: 22pt;
+        line-height: 1.2;
+        margin-bottom: 12px;
+        font-weight: 400;
+    }
+    .hero-headline strong {
+        font-weight: 800;
+        display: block;
+    }
+    .hero-subline {
+        font-size: 10pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #4CAF15; /* Groupon Green */
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+    }
+    .hero-body {
+        font-size: 9.5pt;
+        line-height: 1.4;
+        color: #FFFFFF;
+        max-width: 90%;
+    }
+
+    /* Page 1: Stats Row */
+    .stats-block {
+        background-color: #EEF8E4; /* Light Green */
+        padding: 15px 25px;
+    }
+    .stats-table {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+    .stats-cell {
+        display: table-cell;
+        vertical-align: top;
+        background: #FFFFFF;
+        padding: 10px 8px;
+        margin-right: 6px;
+        border-top: 2px solid #4CAF15;
+        border-left: 3px solid #EEF8E4; /* standard spacer gap via border fallback */
+    }
+    .stats-cell:first-child {
+        border-left: none;
+    }
+    .stat-number {
+        font-size: 15pt;
+        font-weight: 800;
+        color: #4CAF15;
+        display: block;
+        line-height: 1.1;
+    }
+    .stat-label {
+        font-size: 8pt;
+        font-weight: 700;
+        color: #1A3A0A;
+        display: block;
+        margin: 2px 0;
+    }
+    .stat-desc {
+        font-size: 7.5pt;
+        color: #5C5C5C;
+        display: block;
+        line-height: 1.2;
+    }
+
+    /* Page 1: Benefits Section */
+    .benefits-block {
+        padding: 25px 25px 25px 35px;
+        background-color: #FFFFFF;
+    }
+    .benefit-row {
+        display: table;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+    .benefit-icon-cell {
+        display: table-cell;
+        vertical-align: top;
+        width: 42px;
+    }
+    .benefit-icon-circle {
+        width: 32px;
+        height: 32px;
+        background-color: #EEF8E4;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 32px;
+    }
+    .benefit-icon-circle svg {
+        width: 16px;
+        height: 16px;
+        fill: #2D6A10;
+        vertical-align: middle;
+    }
+    .benefit-text-cell {
+        display: table-cell;
+        vertical-align: top;
+        padding-left: 12px;
+    }
+    .benefit-title {
+        font-size: 10pt;
+        font-weight: 700;
+        color: #1A3A0A;
+        margin-bottom: 2px;
+    }
+    .benefit-body {
+        font-size: 9pt;
+        line-height: 1.35;
+        color: #1A1A1A;
+    }
+
+    /* Page 1: What We Offer Section */
+    .offer-block {
+        padding: 30px 35px 30px 25px;
+        height: 100%;
+        background-color: #FFFFFF;
+    }
+    .offer-headline {
+        font-size: 20pt;
+        font-weight: 700;
+        color: #1A3A0A;
+        margin-bottom: 8px;
+    }
+    .offer-body {
+        font-size: 9.5pt;
+        color: #5C5C5C;
+        line-height: 1.4;
+        margin-bottom: 20px;
+    }
+
+    /* Category Tiles Grid */
+    .tiles-table {
+        display: table;
+        width: 100%;
+        border-separate: collapse;
+    }
+    .tiles-row {
+        display: table-row;
+    }
+    .tile-cell {
+        display: table-cell;
+        width: 50%;
+        padding: 0 8px 16px 8px;
+        vertical-align: top;
+    }
+    .tiles-row .tile-cell:first-child { padding-left: 0; }
+    .tiles-row .tile-cell:last-child { padding-right: 0; }
+    
+    .category-card {
+        background: #FFFFFF;
+        border-radius: 4px;
+        padding: 12px 14px;
+        min-height: 78px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border: 1px solid #E2E8F0;
+    }
+    .card-title {
+        font-size: 9.5pt;
+        font-weight: 700;
+        color: #1A3A0A;
+        margin-bottom: 4px;
+    }
+    .card-desc {
+        font-size: 8.5pt;
+        color: #5C5C5C;
+        line-height: 1.3;
+    }
+
+    /* Page 2: Markets Section */
+    .markets-block {
+        padding: 30px 25px 15px 35px;
+    }
+    .markets-headline {
+        font-size: 18pt;
+        font-weight: 700;
+        color: #1A3A0A;
+        line-height: 1.2;
+        margin-bottom: 15px;
+    }
+    .pills-container {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .pill-row {
+        margin-bottom: 8px;
+        display: block;
+    }
+    .country-pill {
+        display: inline-block;
+        background-color: #EEF8E4;
+        color: #1A3A0A;
+        font-weight: 700;
+        font-size: 8.5pt;
+        padding: 5px 12px;
+        border-radius: 12px;
+        margin-right: 6px;
+        margin-bottom: 4px;
+    }
+
+    /* Page 2: Gift Card Section */
+    .giftcard-block {
+        padding: 15px 25px 25px 35px;
+    }
+    .giftcard-headline {
+        font-size: 16pt;
+        font-weight: 700;
+        color: #1A3A0A;
+        margin-bottom: 6px;
+    }
+    .giftcard-intro {
+        font-size: 9.5pt;
+        color: #1A1A1A;
+        line-height: 1.4;
+        margin-bottom: 18px;
+    }
+    
+    /* Dual Columns inside Left Half Page 2 */
+    .features-table {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+    .features-cell {
+        display: table-cell;
+        width: 50%;
+        vertical-align: top;
+        padding-right: 15px;
+    }
+    .features-cell:last-child {
+        padding-right: 0;
+        padding-left: 5px;
+    }
+    .column-subheading {
+        font-size: 10pt;
+        font-weight: 700;
+        color: #1A3A0A;
+        margin-bottom: 10px;
+    }
+    
+    /* Bullet points */
+    .bullet-list {
+        list-style: none;
+    }
+    .bullet-list li {
+        position: relative;
+        padding-left: 14px;
+        font-size: 8.5pt;
+        line-height: 1.35;
+        color: #1A1A1A;
+        margin-bottom: 8px;
+    }
+    .bullet-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #4CAF15;
+        font-weight: bold;
+        font-size: 11pt;
+        top: -1px;
+    }
+
+    /* Numbered steps */
+    .step-item {
+        display: table;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    .step-number-cell {
+        display: table-cell;
+        vertical-align: top;
+        width: 20px;
+    }
+    .step-number-circle {
+        width: 16px;
+        height: 16px;
+        background-color: #4CAF15;
+        color: #FFFFFF;
+        font-size: 7.5pt;
+        font-weight: 700;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 16px;
+    }
+    .step-text-cell {
+        display: table-cell;
+        vertical-align: top;
+        padding-left: 6px;
+        font-size: 8.5pt;
+        line-height: 1.3;
+        color: #1A1A1A;
+    }
+    .italic-note {
+        font-size: 7.5pt;
+        font-style: italic;
+        color: #5C5C5C;
+        margin-top: 10px;
+        display: block;
+        line-height: 1.25;
+    }
+
+    /* Page 2: Partnership Section */
+    .partnership-block {
+        background-color: #1A3A0A;
+        padding: 30px 35px 20px 25px;
+        color: #FFFFFF;
+    }
+    .partnership-headline {
+        font-size: 16pt;
+        font-weight: 700;
+        color: #FFFFFF;
+        margin-bottom: 15px;
+    }
+    
+    /* Horizontal Flow Architecture */
+    .flow-table {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+    .flow-cell {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+    .flow-box {
+        border-radius: 4px;
+        padding: 10px 6px;
+        text-align: left;
+        min-height: 58px;
+    }
+    .flow-box-title {
+        font-size: 8.5pt;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 2px;
+    }
+    .flow-box-desc {
+        font-size: 7.5pt;
+        display: block;
+        line-height: 1.2;
+        opacity: 0.9;
+    }
+    .flow-arrow {
+        font-size: 12pt;
+        color: #7BC441;
+        font-weight: 700;
+    }
+
+    /* Page 2: Closing Section */
+    .closing-block {
+        background-color: #EEF8E4;
+        padding: 20px 35px 20px 25px;
+    }
+    .closing-subheading {
+        font-size: 11pt;
+        font-weight: 700;
+        color: #1A3A0A;
+        margin-bottom: 6px;
+    }
+    .closing-body {
+        font-size: 9pt;
+        color: #5C5C5C;
+        line-height: 1.4;
+    }
+
+    /* Page 2: Contact Bar */
+    .contact-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #1A3A0A;
+        padding: 15px 35px 15px 35px;
+        color: #FFFFFF;
+    }
+    .contact-table {
+        display: table;
+        width: 100%;
+    }
+    .contact-left {
+        display: table-cell;
+        vertical-align: middle;
+        font-size: 8.5pt;
+        line-height: 1.35;
+    }
+    .contact-left strong {
+        font-size: 9pt;
+        display: block;
+    }
+    .contact-right {
+        display: table-cell;
+        vertical-align: bottom;
+        text-align: right;
+        font-size: 8pt;
+        font-style: italic;
+        color: #7BC441;
+        line-height: 1.4;
+    }
+    .contact-right span {
+        display: block;
+        font-weight: 700;
+        font-style: normal;
+    }
+</style>
+</head>
+<body>
+
+<div class="workspace">
+
+    <!-- ========================================== -->
+    <!-- PAGE 1                                     -->
+    <!-- ========================================== -->
+    <div class="page">
+        <!-- Corner Ribbon Top Left -->
+        <div class="corner-ribbon ribbon-tl">
+            <svg viewBox="0 0 100 100" width="100%" height="100%">
+                <polygon points="0,0 70,0 0,70" fill="#4CAF15"/>
+                <line x1="0" y1="70" x2="70" y2="0" stroke="#7BC441" stroke-width="2"/>
+            </svg>
+        </div>
+
+        <div class="layout-table">
+            <div class="layout-row">
+                
+                <!-- PAGE 1 — LEFT HALF -->
+                <div class="layout-column divider-left">
+                    
+                    <!-- HERO SECTION -->
+                    <div class="hero-block">
+                        <div class="hero-subline">GROUPON Gift Cards</div>
+                        <h1 class="hero-headline">Add Groupon Gift Cards<strong>to Your Portfolio</strong></h1>
+                        <p class="hero-body">Europe's leading local commerce marketplace — now available through the Epay distribution network.</p>
+                    </div>
+
+                    <!-- STATS ROW -->
+                    <div class="stats-block">
+                        <span class="section-label">GROUPON AT A GLANCE</span>
+                        <div class="stats-table">
+                            <div class="stats-cell">
+                                <span class="stat-number">2008</span>
+                                <span class="stat-label">Year Founded</span>
+                                <span class="stat-desc">Chicago, USA</span>
+                            </div>
+                            <div class="stats-cell">
+                                <span class="stat-number">20M+</span>
+                                <span class="stat-label">Active Customers</span>
+                                <span class="stat-desc">Globally</span>
+                            </div>
+                            <div class="stats-cell">
+                                <span class="stat-number">11</span>
+                                <span class="stat-label">European Markets</span>
+                                <span class="stat-desc">Active today</span>
+                            </div>
+                            <div class="stats-cell">
+                                <span class="stat-number">29M+</span>
+                                <span class="stat-label">Orders Per Year</span>
+                                <span class="stat-desc">Globally</span>
+                            </div>
+                            <div class="stats-cell">
+                                <span class="stat-number">57%</span>
+                                <span class="stat-label">Repeat Purchase Rate</span>
+                                <span class="stat-desc">Customers who return</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BENEFITS SECTION -->
+                    <div class="benefits-block">
+                        <span class="section-label">WHY GROUPON GIFT CARDS SELL</span>
+                        
+                        <!-- Row 1 -->
+                        <div class="benefit-row">
+                            <div class="benefit-icon-cell">
+                                <div class="benefit-icon-circle">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/></svg>
+                                </div>
+                            </div>
+                            <div class="benefit-text-cell">
+                                <div class="benefit-title">A brand people already trust</div>
+                                <div class="benefit-body">Groupon has been a trusted deals destination in Europe for 15+ years. Customers recognise and trust the name — reducing hesitation at the point of sale.</div>
+                            </div>
+                        </div>
+
+                        <!-- Row 2 -->
+                        <div class="benefit-row">
+                            <div class="benefit-icon-cell">
+                                <div class="benefit-icon-circle">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 13h-2v-2h2v2zm0-4h-2V7h2v4z"/></svg>
+                                </div>
+                            </div>
+                            <div class="benefit-text-cell">
+                                <div class="benefit-title">Unbeatable perceived value</div>
+                                <div class="benefit-body">Every Groupon deal is already discounted — often by 30–60%. A EUR 50 Gift Card can unlock EUR 80–100 worth of experiences. Recipients feel the difference immediately.</div>
+                            </div>
+                        </div>
+
+                        <!-- Row 3 -->
+                        <div class="benefit-row">
+                            <div class="benefit-icon-cell">
+                                <div class="benefit-icon-circle">
+                                    <svg viewBox="0 0 24 24"><path d="M5 19.23h14v2H5zM9 15.8h2.67v1.43H9zm4.44-4.76h2.67v6.19h-2.67zM4.56 5.68h2.67v11.55H4.56zM13.44 2.15h2.67v6.19h-2.67z"/></svg>
+                                </div>
+                            </div>
+                            <div class="benefit-text-cell">
+                                <div class="benefit-title">High activation, proven demand</div>
+                                <div class="benefit-body">29M+ orders are placed on Groupon each year. 57% of customers return to buy again. Gift cards tap into a platform people already love — making sell-through reliable and recipient satisfaction high.</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- PAGE 1 — RIGHT HALF -->
+                <div class="layout-column">
+                    <div class="offer-block">
+                        <h2 class="offer-headline">What We Offer</h2>
+                        <p class="offer-body">Hundreds of thousands of deals across every major lifestyle category — something for every taste, occasion, and budget.</p>
+
+                        <!-- 3x2 Grid Matrix of Category Tiles -->
+                        <div class="tiles-table">
+                            <!-- Row 1 -->
+                            <div class="tiles-row">
+                                <div class="tile-cell">
+                                    <div class="category-card" style="border-left: 6px solid #1A3A0A;">
+                                        <div class="card-title">Dining & Restaurants</div>
+                                        <div class="card-desc">Bistros to fine dining — up to 60% off</div>
+                                    </div>
+                                </div>
+                                <div class="tile-cell">
+                                    <div class="category-card" style="border-left: 6px solid #76448A;">
+                                        <div class="card-title">Spa & Wellness</div>
+                                        <div class="card-desc">Massages, facials, hot stone treatments — Groupon's #1 gifted category</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Row 2 -->
+                            <div class="tiles-row">
+                                <div class="tile-cell">
+                                    <div class="category-card" style="border-left: 6px solid #1A5276;">
+                                        <div class="card-title">Travel & Short Breaks</div>
+                                        <div class="card-desc">Boutique hotels, city breaks, spa weekends</div>
+                                    </div>
+                                </div>
+                                <div class="tile-cell">
+                                    <div class="category-card" style="border-left: 6px solid #CA6F1E;">
+                                        <div class="card-title">Experiences & Activities</div>
+                                        <div class="card-desc">Escape rooms, cocktail classes, hot air balloons</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Row 3 -->
+                            <div class="tiles-row">
+                                <div class="tile-cell">
+                                    <div class="category-card" style="border-left: 6px solid #6E2F8B;">
+                                        <div class="card-title">Health & Beauty</div>
+                                        <div class="card-desc">Hair, nails, skin treatments, yoga, pilates</div>
+                                    </div>
+                                </div>
+                                <div class="tile-cell">
+                                    <div class="category-card" style="border-left: 6px solid #B03A2E;">
+                                        <div class="card-title">Family & Things To Do</div>
+                                        <div class="card-desc">Theme parks, workshops — fun for every age</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- PAGE 2                                     -->
+    <!-- ========================================== -->
+    <div class="page">
+        
+        <div class="layout-table" style="height: calc(100% - 70px);"> <!-- Offset to prevent background content clipping contact bar -->
+            <div class="layout-row">
+                
+                <!-- PAGE 2 — LEFT HALF -->
+                <div class="layout-column divider-left">
+                    
+                    <!-- MARKETS SECTION -->
+                    <div class="markets-block">
+                        <h2 class="markets-headline">Available Across<br>11 European Markets</h2>
+                        
+                        <div class="pills-container">
+                            <div class="pill-row">
+                                <span class="country-pill">Germany</span>
+                                <span class="country-pill">United Kingdom</span>
+                                <span class="country-pill">France</span>
+                                <span class="country-pill">Italy</span>
+                                <span class="country-pill">Poland</span>
+                                <span class="country-pill">Ireland</span>
+                            </div>
+                            <div class="pill-row">
+                                <span class="country-pill">Belgium</span>
+                                <span class="country-pill">Netherlands</span>
+                                <span class="country-pill">Spain</span>
+                                <span class="country-pill">Austria</span>
+                                <span class="country-pill">Switzerland</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GIFT CARD SECTION -->
+                    <div class="giftcard-block">
+                        <h2 class="giftcard-headline">The Groupon Gift Card</h2>
+                        <p class="giftcard-intro">A digital prepaid gift card that unlocks Groupon's full catalogue for the recipient — the ideal gift for any occasion, delivered instantly.</p>
+                        
+                        <div class="features-table">
+                            <!-- Left Column: Key Features -->
+                            <div class="features-cell">
+                                <h3 class="column-subheading">Key Features</h3>
+                                <ul class="bullet-list">
+                                    <li>Fully digital — instant code delivery, no physical fulfilment required</li>
+                                    <li>Full card value credited as Groupon Bucks</li>
+                                    <li>Redeemable across the entire Groupon catalogue (excluding purchase of another gift card and a very small number of select partner offers)</li>
+                                    <li>Gift cards are valid for a set period — see market-specific terms</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Right Column: How Redemption Works -->
+                            <div class="features-cell">
+                                <h3 class="column-subheading">How Redemption Works</h3>
+                                
+                                <div class="step-item">
+                                    <div class="step-number-cell"><div class="step-number-circle">1</div></div>
+                                    <div class="step-text-cell">Recipient visits groupon.com/giftcards</div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number-cell"><div class="step-number-circle">2</div></div>
+                                    <div class="step-text-cell">Recipient enters the unique gift card code</div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number-cell"><div class="step-number-circle">3</div></div>
+                                    <div class="step-text-cell">Full value is credited to their account as Groupon Bucks</div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number-cell"><div class="step-number-circle">4</div></div>
+                                    <div class="step-text-cell">Bucks are applied at checkout on any eligible deal</div>
+                                </div>
+
+                                <span class="italic-note">Groupon Bucks can be combined with other promotions — maximising the value for every recipient.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- PAGE 2 — RIGHT HALF -->
+                <div class="layout-column">
+                    
+                    <!-- PARTNERSHIP SECTION -->
+                    <div class="partnership-block">
+                        <h2 class="partnership-headline">How the Partnership Works</h2>
+                        
+                        <div class="flow-table">
+                            <!-- Box 1 -->
+                            <div class="flow-cell" style="width: 22%;">
+                                <div class="flow-box" style="background-color: #1A3A0A; border: 1px solid #FFFFFF;">
+                                    <span class="flow-box-title">GROUPON</span>
+                                    <span class="flow-box-desc">Gift card codes & Groupon Bucks</span>
+                                </div>
+                            </div>
+                            <!-- Arrow 1 -->
+                            <div class="flow-cell" style="width: 4%;"><span class="flow-arrow">→</span></div>
+                            <!-- Box 2 -->
+                            <div class="flow-cell" style="width: 22%;">
+                                <div class="flow-box" style="background-color: #2D6A10;">
+                                    <span class="flow-box-title">BuyBox Processor</span>
+                                    <span class="flow-box-desc">Activation & balance tracking</span>
+                                </div>
+                            </div>
+                            <!-- Arrow 2 -->
+                            <div class="flow-cell" style="width: 4%;"><span class="flow-arrow">→</span></div>
+                            <!-- Box 3 -->
+                            <div class="flow-cell" style="width: 22%;">
+                                <div class="flow-box" style="background-color: #4CAF15;">
+                                    <span class="flow-box-title">Epay Network</span>
+                                    <span class="flow-box-desc">Retail, digital & corporate</span>
+                                </div>
+                            </div>
+                            <!-- Arrow 3 -->
+                            <div class="flow-cell" style="width: 4%;"><span class="flow-arrow">→</span></div>
+                            <!-- Box 4 -->
+                            <div class="flow-cell" style="width: 22%;">
+                                <div class="flow-box" style="background-color: #7BC441;">
+                                    <span class="flow-box-title">Distribution Channels</span>
+                                    <span class="flow-box-desc">Stores, platforms & corporate clients</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CLOSING SECTION -->
+                    <div class="closing-block">
+                        <h3 class="closing-subheading">Ready to Add Groupon to Your Portfolio?</h3>
+                        <p class="closing-body">
+                            Groupon Gift Cards are available for distribution across all 11 European markets — through retail, digital, and corporate channels.<br><br>
+                            We look forward to exploring how Groupon can complement and grow your existing gift card range.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CONTACT BAR (Full width at bottom of Page 2) -->
+        <div class="contact-bar">
+            <div class="contact-table">
+                <div class="contact-left">
+                    <strong>Contact</strong>
+                    Linda Vavrikova<br>
+                    Business Owner, Gifting — Groupon International<br>
+                    c_lvavrikova@groupon.com
+                </div>
+                <div class="contact-right">
+                    Confidential · For epay sales team use only · May 2026
+                    <span>groupon.com</span>
+                </div>
+            </div>
+            
+            <!-- Corner Ribbon Bottom Right -->
+            <div class="corner-ribbon ribbon-br">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <polygon points="100,30 30,100 100,100" fill="#4CAF15"/>
+                    <line x1="30" y1="100" x2="100" y2="30" stroke="#7BC441" stroke-width="2"/>
+                </svg>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
